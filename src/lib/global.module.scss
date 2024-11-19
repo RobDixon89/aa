@@ -1,0 +1,110 @@
+@use "./helpers" as *;
+
+.subtitle {
+  font-size: $font-size-subtitle;
+  line-height: 1.33;
+  letter-spacing: 0.15em;
+  font-weight: 300;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+.richText {
+  --accentColour: var(--tertiary);
+
+  h2,
+  h3,
+  h4 {
+    margin: 0.66em 0 0.5em;
+  }
+
+  p,
+  ul,
+  ol {
+    margin-bottom: 1em;
+  }
+
+  h2,
+  [class~="h2-style"] {
+    font-size: $font-size-h3;
+  }
+
+  h3,
+  [class~="h3-style"] {
+    font-size: $font-size-h4;
+  }
+
+  h4,
+  [class~="h4-style"] {
+    font-size: $font-size-h5;
+  }
+
+  [class~="subtitle"] {
+    @extend .subtitle;
+  }
+
+  [class~="large"] {
+    font-size: $font-size-large;
+  }
+
+  [class~="small"] {
+    font-size: $font-size-small;
+  }
+
+  a {
+    color: currentColor;
+    text-underline-offset: 3px;
+    background: linear-gradient(
+      to right,
+      var(--accentColour) 50%,
+      transparent 50%
+    );
+    background-size: calc(200% + 1px) 100%;
+    background-position: right bottom;
+
+    &:focus-visible,
+    &:hover {
+      background-position: left bottom;
+      text-decoration-color: transparent;
+    }
+
+    @include transition("background-position, text-decoration-color");
+  }
+
+  blockquote {
+    position: relative;
+    padding-left: fluid(16, 20);
+    margin: 1.25em 0;
+
+    &::before,
+    &::after {
+      content: "";
+    }
+
+    &::before {
+      display: block;
+      content: "\201C";
+      font-size: fluid(80, 120);
+      line-height: 0.8;
+      margin-bottom: -0.375em;
+      color: var(--tertiary);
+    }
+
+    &::after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: fluid(3, 4);
+      background-color: var(--tertiary);
+    }
+  }
+
+  > *:first-child {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}

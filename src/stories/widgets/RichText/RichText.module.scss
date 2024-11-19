@@ -1,0 +1,57 @@
+@use "../../../lib/helpers" as *;
+
+.container {
+  grid-column: 1 / -1;
+
+  @include respond(tablet) {
+    grid-column: 2 / -2;
+  }
+
+  @include respond(tabletLarge) {
+    grid-column: 3 / -3;
+  }
+
+  @include respond(desktopLarge) {
+    grid-column: 4 / -4;
+  }
+
+  &[data-align="center"] {
+    text-align: center;
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    [class*="ctaBlock"],
+    [class*="uspList"] {
+      justify-content: center;
+    }
+  }
+
+  [class*="ctaBlock"] {
+    margin-top: fluid(20, 32);
+  }
+
+  [class*="uspList"] {
+    margin-top: fluid(32, 56);
+  }
+}
+
+.title {
+  font-size: $font-size-h3;
+  margin-bottom: 0.5em;
+}
+
+.richText {
+  [data-columns="true"] & {
+    @include respond(mobileLarge) {
+      columns: 2;
+      gap: fluid(16, 24);
+    }
+
+    @include respond(tabletLarge) {
+      columns: 3;
+    }
+  }
+}

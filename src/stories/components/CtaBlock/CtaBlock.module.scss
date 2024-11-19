@@ -1,0 +1,7 @@
+@use "../../../lib/helpers" as *;
+
+.ctaBlock {
+  display: flex;
+  gap: fluid(16, 24);
+  flex-wrap: wrap;
+}

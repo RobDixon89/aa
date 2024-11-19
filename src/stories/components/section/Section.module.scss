@@ -1,0 +1,48 @@
+@use "../../../lib/helpers" as *;
+
+.container {
+  $padding: fluid(24, 40);
+
+  padding-top: $padding;
+  padding-bottom: $padding;
+  display: flex;
+  justify-content: center;
+
+  &[data-theme="default"] {
+    background-color: var(--white);
+  }
+
+  &[data-theme="navy"] {
+    background-color: var(--body);
+  }
+
+  &[data-theme="blue"] {
+    background-color: var(--secondary);
+  }
+
+  &[data-theme="light-blue"] {
+    background-color: var(--tertiary);
+  }
+
+  &[data-theme="yellow"] {
+    background-color: var(--highlight);
+  }
+
+  &[data-theme="navy"],
+  &[data-theme="blue"] {
+    color: var(--white);
+  }
+
+  &[data-grid="true"] .inner {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--gutterWidth);
+  }
+}
+
+.inner {
+  --gutterWidth: fluid(16, 32);
+
+  flex: 0 1 var(--max-width);
+  padding: 0 $site-padding;
+}

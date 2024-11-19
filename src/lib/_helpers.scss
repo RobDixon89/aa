@@ -1,0 +1,99 @@
+@use "sass:math";
+@use "sass:map";
+
+$breakpoints: (
+  mobile: 375,
+  mobileLarge: 480,
+  tabletSmall: 568,
+  tablet: 768,
+  tabletLarge: 1024,
+  desktopSmall: 1280,
+  desktop: 1366,
+  desktopLarge: 1600,
+  actualDesktop: 1920,
+);
+
+@function transparency($name, $opacity) {
+  @return hsla($name, $opacity);
+}
+
+$REM_PIXELS: 16;
+$DEFAULT_MIN: map.get($breakpoints, tabletLarge);
+$DEFAULT_MAX: map.get($breakpoints, actualDesktop);
+
+@function fluid($min, $max, $minWidth: $DEFAULT_MIN, $maxWidth: $DEFAULT_MAX) {
+  $minRem: math.div($min, $REM_PIXELS);
+  $maxRem: math.div($max, $REM_PIXELS);
+  $minWidthRem: math.div($minWidth, $REM_PIXELS);
+  $maxWidthRem: math.div($maxWidth, $REM_PIXELS);
+
+  $slope: math.div(($maxRem - $minRem), ($maxWidthRem - $minWidthRem));
+  $yAxisIntersection: ($minWidthRem * -1) * $slope + $minRem;
+
+  $clampMin: #{$minRem}rem;
+  $clampVal: calc(#{$yAxisIntersection}rem + #{$slope * 100}vw);
+  $clampMax: #{$maxRem}rem;
+
+  @return clamp($clampMin, $clampVal, $clampMax);
+}
+
+// Mixins
+
+@mixin testmixin {
+  background-color: transparency(var(--bodyValues), 60%);
+}
+
+@mixin respond($size) {
+  @if (
+    $size ==
+      mobile or
+      $size ==
+      mobileLarge or
+      $size ==
+      tabletSmall or
+      $size ==
+      tablet or
+      $size ==
+      tabletLarge or
+      $size ==
+      desktopSmall or
+      $size ==
+      desktop
+      desktopLarge or
+      $size ==
+      actualDesktop
+  ) {
+    @media screen and (min-width: #{map.get($breakpoints, $size)}px) {
+      @content;
+    }
+  } @else {
+    @media screen and (min-width: $size) {
+      @content;
+    }
+  }
+}
+
+@mixin transition(
+  $properties,
+  $duration: 0.3s,
+  $timing: cubic-bezier(0.33, 1, 0.68, 1)
+) {
+  @media (prefers-reduced-motion: no-preference) {
+    transition-duration: $duration;
+    transition-property: #{$properties};
+    transition-timing-function: $timing;
+    will-change: #{$properties};
+  }
+}
+
+$font-size-h1: fluid(32, 100);
+$font-size-h2: fluid(28, 75);
+$font-size-h3: fluid(26, 56);
+$font-size-h4: fluid(22, 42);
+$font-size-h5: fluid(21, 32);
+$font-size-subtitle: fluid(14, 18);
+$font-size-large: fluid(18, 20);
+$font-size-regular: fluid(16, 18);
+$font-size-small: fluid(12, 14);
+
+$site-padding: fluid(24, 32);

@@ -1,0 +1,9 @@
+@use "../../../lib/helpers" as *;
+
+.homeHero {
+  @include testmixin;
+
+  h1 {
+    font-size: $font-size-h1;
+  }
+}
