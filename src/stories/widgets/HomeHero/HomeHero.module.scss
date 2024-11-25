@@ -1,9 +1,118 @@
 @use "../../../lib/helpers" as *;
 
 .homeHero {
-  @include testmixin;
+  --gridRowGap: #{fluid(20, 24)};
+  --paddingY: #{fluid(24, 60)};
+  --sectionPaddingTop: calc(var(--paddingY) + var(--headerHeight));
+  --sectionPaddingBottom: var(--paddingY);
+  --sitePadding: 16px;
 
-  h1 {
-    font-size: $font-size-h1;
+  min-height: 100dvh;
+  position: relative;
+  background-color: transparent;
+
+  @include respond(tablet) {
+    --sitePadding: #{fluid(24, 32)};
+
+    align-items: center;
   }
+
+  [class*="uspList"] {
+    grid-column: span 12;
+    margin-bottom: auto;
+    gap: var(--gridRowGap);
+  }
+}
+
+.bgImage {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.contentWrapper {
+  grid-column: span 12;
+  display: flex;
+  flex-direction: column;
+  gap: fluid(16, 20);
+  background-color: hsla(var(--tertiaryValues), 85%);
+  padding: fluid(16, 24) fluid(12, 32) fluid(24, 32);
+
+  @include respond(tabletLarge) {
+    grid-column: span 10;
+  }
+
+  @include respond(desktop) {
+    grid-column: span 9;
+  }
+}
+
+.title {
+  font-size: var(--font-size-h1);
+
+  [class~="highlight"] {
+    background: linear-gradient(
+      to right,
+      var(--highlight) 50%,
+      transparent 50%
+    );
+    background-size: calc(200% + 1px) 100%;
+    background-position: left bottom;
+
+    @include shouldAnimate() {
+      background-position: right bottom;
+      animation: highlightWord 0.5s forwards 1s;
+    }
+
+    @keyframes highlightWord {
+      0% {
+        background-position: right bottom;
+      }
+      100% {
+        background-position: left bottom;
+      }
+    }
+  }
+}
+
+.content {
+  max-width: 66ch;
+
+  p,
+  li {
+    font-size: var(--font-size-large);
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style-type: none;
+    padding-left: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      &::before {
+        content: "";
+        width: 30px;
+        height: 30px;
+        mask-image: url("../../../img/icons/filled-tick.svg");
+        mask-repeat: no-repeat;
+        background-color: var(--secondary);
+      }
+    }
+  }
+}
+
+.ctaBlock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: fluid(12, 24);
+  margin-top: fluid(12, 16);
 }

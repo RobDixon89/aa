@@ -1,12 +1,15 @@
 @use "../../../lib/helpers" as *;
 
 .container {
-  $padding: fluid(24, 40);
+  --sectionPadding: #{fluid(24, 40)};
+  --sectionPaddingTop: var(--sectionPadding);
+  --sectionPaddingBottom: var(--sectionPadding);
 
-  padding-top: $padding;
-  padding-bottom: $padding;
+  padding-top: var(--sectionPaddingTop);
+  padding-bottom: var(--sectionPaddingBottom);
   display: flex;
   justify-content: center;
+  overflow: clip;
 
   &[data-theme="default"] {
     background-color: var(--white);
@@ -36,13 +39,11 @@
   &[data-grid="true"] .inner {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    gap: var(--gutterWidth);
+    gap: var(--gridRowGap, 0px) var(--gutterWidth);
   }
 }
 
 .inner {
-  --gutterWidth: fluid(16, 32);
-
-  flex: 0 1 var(--max-width);
-  padding: 0 $site-padding;
+  flex: 0 1 var(--maxWidth);
+  padding: 0 var(--sitePadding);
 }

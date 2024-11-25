@@ -39,10 +39,6 @@ $DEFAULT_MAX: map.get($breakpoints, actualDesktop);
 
 // Mixins
 
-@mixin testmixin {
-  background-color: transparency(var(--bodyValues), 60%);
-}
-
 @mixin respond($size) {
   @if (
     $size ==
@@ -73,27 +69,21 @@ $DEFAULT_MAX: map.get($breakpoints, actualDesktop);
   }
 }
 
+@mixin shouldAnimate() {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
 @mixin transition(
   $properties,
   $duration: 0.3s,
   $timing: cubic-bezier(0.33, 1, 0.68, 1)
 ) {
-  @media (prefers-reduced-motion: no-preference) {
+  @include shouldAnimate() {
     transition-duration: $duration;
     transition-property: #{$properties};
     transition-timing-function: $timing;
     will-change: #{$properties};
   }
 }
-
-$font-size-h1: fluid(32, 100);
-$font-size-h2: fluid(28, 75);
-$font-size-h3: fluid(26, 56);
-$font-size-h4: fluid(22, 42);
-$font-size-h5: fluid(21, 32);
-$font-size-subtitle: fluid(14, 18);
-$font-size-large: fluid(18, 20);
-$font-size-regular: fluid(16, 18);
-$font-size-small: fluid(12, 14);
-
-$site-padding: fluid(24, 32);

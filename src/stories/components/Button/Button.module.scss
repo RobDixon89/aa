@@ -20,7 +20,7 @@
 
 .outline-button {
   --bgColour: transparent;
-  --bgColourHover: hsla(var(--bodyValues), 20%);
+  --bgColourHover: hsla(var(--bodyValues), 15%);
   --borderColour: var(--fgColour);
   --fgColour: var(--body);
 
@@ -67,10 +67,10 @@
 }
 
 .button {
-  display: inline-flex;
+  display: flex;
   gap: fluid(10, 12);
   align-items: center;
-  min-height: fluid(36, 40);
+  min-height: fluid(36, 42);
   color: var(--fgColour);
   background-color: var(--bgColour);
   border-radius: 4px;
@@ -143,5 +143,5 @@
 }
 
 .text {
-  transform: translateY(3%);
+  transform: translateY(2.5%);
 }

@@ -7,3 +7,8 @@ declare type CtaModel = {
   url: string;
   target?: "_self" | "_blank";
 };
+
+declare type ImageModel = {
+  altText?: string;
+  src: string;
+};

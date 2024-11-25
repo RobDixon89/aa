@@ -77,7 +77,7 @@
   }
 
   body {
-    font-size: $font-size-regular;
+    font-size: var(--font-size-regular);
     line-height: 1.5;
     font-family: var(--font-family-sans);
     color: var(--body);
@@ -97,6 +97,22 @@
   --highlightValues: 51, 100%, 47%;
   --highlight: hsl(var(--highlightValues));
 
-  --site-padding: 18px;
-  --max-width: calc(1760px - var(--site-padding) * 2);
+  --font-size-h1: #{fluid(32, 92)};
+  --font-size-h2: #{fluid(28, 75)};
+  --font-size-h3: #{fluid(26, 56)};
+  --font-size-h4: #{fluid(22, 42)};
+  --font-size-h5: #{fluid(21, 32)};
+  --font-size-subtitle: #{fluid(14, 18)};
+  --font-size-large: #{fluid(18, 20)};
+  --font-size-regular: #{fluid(16, 18)};
+  --font-size-small: #{fluid(12, 14)};
+
+  --maxWidth: calc(1760px - var(--sitePadding) * 2);
+  --sitePadding: #{fluid(24, 32)};
+  --gutterWidth: #{fluid(16, 32)};
+  --headerHeight: 60px;
+
+  @include respond(tabletLarge) {
+    --headerHeight: 65px;
+  }
 }
