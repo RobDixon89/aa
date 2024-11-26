@@ -1,0 +1,19 @@
+@use "../../../lib/helpers" as *;
+
+.imageWrapper {
+  display: block;
+  aspect-ratio: var(--ar);
+
+  @include richTextColumns();
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.caption {
+  font-size: var(--font-size-small);
+  margin-top: fluid(6, 10);
+}

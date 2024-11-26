@@ -11,4 +11,5 @@ declare type CtaModel = {
 declare type ImageModel = {
   altText?: string;
   src: string;
+  aspectRatio?: number;
 };

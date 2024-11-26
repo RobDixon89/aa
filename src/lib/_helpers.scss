@@ -87,3 +87,19 @@ $DEFAULT_MAX: map.get($breakpoints, actualDesktop);
     will-change: #{$properties};
   }
 }
+
+@mixin richTextColumns() {
+  grid-column: 1 / -1;
+
+  @include respond(tablet) {
+    grid-column: 2 / -2;
+  }
+
+  @include respond(tabletLarge) {
+    grid-column: 3 / -3;
+  }
+
+  @include respond(desktopLarge) {
+    grid-column: 4 / -4;
+  }
+}
