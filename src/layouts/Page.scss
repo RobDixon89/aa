@@ -109,6 +109,7 @@
 
   --maxWidth: calc(1760px - var(--sitePadding) * 2);
   --sitePadding: #{fluid(24, 32)};
+  --gridRowGap: #{fluid(20, 32)};
   --gutterWidth: #{fluid(16, 32)};
   --headerHeight: 60px;
 

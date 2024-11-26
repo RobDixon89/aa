@@ -10,26 +10,24 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    viewports: {
-      mobile: {
-        name: "Mobile",
-        width: "375px",
-        height: "812px",
-      },
-      tablet: {
-        name: "Tablet",
-        width: "768px",
-        height: "1024px",
-      },
-      laptop: {
-        name: "Laptop",
-        width: "1280px",
-        height: "720px",
-      },
-      desktop: {
-        name: "Desktop",
-        width: "1366px",
-        height: "768px",
+    viewport: {
+      viewports: {
+        mobile: {
+          name: "Mobile",
+          styles: { width: "375px", height: "812px" },
+        },
+        tablet: {
+          name: "Tablet",
+          styles: { width: "768px", height: "1024px" },
+        },
+        laptop: {
+          name: "Laptop",
+          styles: { width: "1280px", height: "720px" },
+        },
+        desktop: {
+          name: "Desktop",
+          styles: { width: "1366px", height: "768px" },
+        },
       },
     },
   },

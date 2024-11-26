@@ -1,0 +1,65 @@
+@use "../../../lib/helpers" as *;
+
+.container {
+  &[data-img-align="right"] {
+    @include respond(tabletLarge) {
+      .imageWrapper {
+        grid-column: 7 / span 6;
+        order: 2;
+      }
+    }
+
+    @include respond(tabletLarge) {
+      .contentWrapper {
+        grid-column-start: 1;
+      }
+    }
+  }
+}
+
+.contentWrapper {
+  margin: auto 0;
+  grid-column: 1 / -1;
+
+  [class*="ctaBlock"] {
+    margin-top: fluid(16, 28);
+  }
+
+  @include respond(tabletLarge) {
+    grid-column: span 6;
+  }
+
+  @include respond(desktop) {
+    grid-column: 8 / span 5;
+  }
+}
+
+.title {
+  font-size: var(--font-size-h3);
+  margin-bottom: fluid(12, 16);
+}
+
+.imageWrapper {
+  display: block;
+  grid-column: 1 / -1;
+
+  @include respond(tabletLarge) {
+    grid-column: span 6;
+  }
+}
+
+.imageInner {
+  aspect-ratio: 327 / 225;
+  position: sticky;
+  top: calc(var(--sectionPaddingTop) + var(--headerHeight));
+
+  @include respond(tabletLarge) {
+    aspect-ratio: 864 / 508;
+  }
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

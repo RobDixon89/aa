@@ -1,20 +1,6 @@
 @use "../../../lib/helpers" as *;
 
 .container {
-  grid-column: 1 / -1;
-
-  @include respond(tablet) {
-    grid-column: 2 / -2;
-  }
-
-  @include respond(tabletLarge) {
-    grid-column: 3 / -3;
-  }
-
-  @include respond(desktopLarge) {
-    grid-column: 4 / -4;
-  }
-
   &[data-align="center"] {
     text-align: center;
 
@@ -36,6 +22,8 @@
   [class*="uspList"] {
     margin-top: fluid(32, 56);
   }
+
+  @include richTextColumns();
 }
 
 .title {

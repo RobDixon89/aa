@@ -39,7 +39,7 @@
   &[data-grid="true"] .inner {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    gap: var(--gridRowGap, 0px) var(--gutterWidth);
+    gap: var(--gridRowGap) var(--gutterWidth);
   }
 }
 
