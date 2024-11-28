@@ -8,7 +8,7 @@ export type UspModel = {
   text: string;
 };
 
-type UspListTheme = "default" | "light";
+type UspListTheme = "default" | "light" | "dark";
 
 export type UspListProps = {
   id: string;

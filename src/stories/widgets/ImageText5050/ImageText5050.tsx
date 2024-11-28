@@ -27,14 +27,12 @@ const ImageText5050: React.FC<Props> = (props) => {
       grid={true}
     >
       <div className={s.imageWrapper}>
-        <div className={s.imageInner}>
-          <img
-            className={s.image}
-            src={props.image.src}
-            alt={props.image.altText}
-            loading="lazy"
-          />
-        </div>
+        <img
+          className={s.image}
+          src={props.image.src}
+          alt={props.image.altText}
+          loading="lazy"
+        />
       </div>
 
       <div className={s.contentWrapper}>

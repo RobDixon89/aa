@@ -54,7 +54,8 @@ $DEFAULT_MAX: map.get($breakpoints, actualDesktop);
       $size ==
       desktopSmall or
       $size ==
-      desktop
+      desktop or
+      $size ==
       desktopLarge or
       $size ==
       actualDesktop
@@ -63,7 +64,38 @@ $DEFAULT_MAX: map.get($breakpoints, actualDesktop);
       @content;
     }
   } @else {
-    @media screen and (min-width: $size) {
+    @media screen and (min-width: #{$size}px) {
+      @content;
+    }
+  }
+}
+
+@mixin respondContainer($size) {
+  @if (
+    $size ==
+      mobile or
+      $size ==
+      mobileLarge or
+      $size ==
+      tabletSmall or
+      $size ==
+      tablet or
+      $size ==
+      tabletLarge or
+      $size ==
+      desktopSmall or
+      $size ==
+      desktop or
+      $size ==
+      desktopLarge or
+      $size ==
+      actualDesktop
+  ) {
+    @container (min-width: #{map.get($breakpoints, $size)}px) {
+      @content;
+    }
+  } @else {
+    @container (min-width: #{$size}px) {
       @content;
     }
   }
