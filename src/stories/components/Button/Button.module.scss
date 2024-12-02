@@ -58,16 +58,17 @@
   &:not(:disabled) {
     &:focus-visible,
     &:hover {
+      text-decoration-color: currentColor;
+
       &::after {
         opacity: 1;
       }
-      text-decoration-color: currentColor;
     }
   }
 }
 
 .button {
-  display: flex;
+  display: inline-flex;
   gap: fluid(10, 12);
   align-items: center;
   min-height: fluid(36, 42);
@@ -124,7 +125,8 @@
 
   svg {
     display: block;
-    width: 18px;
+    width: fluid(14, 16);
+    flex-shrink: 0;
   }
 
   &[data-icon="arrow"] {
@@ -144,5 +146,5 @@
 }
 
 .text {
-  transform: translateY(2.5%);
+  transform: translateY(-1.5%);
 }

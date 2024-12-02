@@ -4,6 +4,7 @@ export enum IconType {
   arrow = "arrow",
   brain = "brain",
   clipboard = "clipboard",
+  chevron = "chevron",
   filledTick = "filled-tick",
   ratingTick = "rating-tick",
   thumbsUp = "thumbs-up",
@@ -32,8 +33,8 @@ const Icon: React.FC<IconProps> = ({ icon, ...props }) => {
             fill="currentColor"
           />
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M8.18188 0.85353L12.8284 5.50008L8.18209 10.1464L8.8892 10.8535L13.8892 5.85353L13.8855 5.84988L14.2354 5.49997L13.8854 5.14997L13.889 5.14642L8.88899 0.146423L8.18188 0.85353Z"
             fill="currentColor"
           />
@@ -157,12 +158,24 @@ const Icon: React.FC<IconProps> = ({ icon, ...props }) => {
         </svg>
       );
 
+    case "chevron":
+      return (
+        <svg viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M0.946289 1.35359L5.59284 6.00014L0.946495 10.6465L1.6536 11.3536L6.6536 6.35359L6.64995 6.34994L6.99985 6.00003L6.64985 5.65003L6.6534 5.64648L1.6534 0.646484L0.946289 1.35359Z"
+            fill="currentColor"
+          />
+        </svg>
+      );
+
     case "filled-tick":
       return (
         <svg viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M15 2.0625C7.57868 2.0625 1.5625 8.07868 1.5625 15.5C1.5625 22.9214 7.57868 28.9375 15 28.9375C22.4214 28.9375 28.4375 22.9214 28.4375 15.5C28.4375 8.07868 22.4214 2.0625 15 2.0625ZM9.41305 15.4621C9.04694 15.096 8.45335 15.096 8.08722 15.4621C7.72111 15.8282 7.72111 16.4218 8.08722 16.7879L11.8372 20.5379C12.2034 20.904 12.797 20.904 13.163 20.5379L21.913 11.7879C22.2791 11.4218 22.2791 10.8282 21.913 10.4621C21.5469 10.096 20.9534 10.096 20.5873 10.4621L12.5001 18.5491L9.41305 15.4621Z"
             fill="currentColor"
           />

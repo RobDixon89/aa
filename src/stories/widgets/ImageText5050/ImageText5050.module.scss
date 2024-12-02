@@ -2,14 +2,14 @@
 
 .container {
   &[data-img-align="right"] {
-    @include respond(tabletLarge) {
+    @include from(tabletLarge) {
       .imageWrapper {
         grid-column: 7 / span 6;
         order: 2;
       }
     }
 
-    @include respond(tabletLarge) {
+    @include from(tabletLarge) {
       .contentWrapper {
         grid-column-start: 1;
       }
@@ -25,11 +25,11 @@
     margin-top: fluid(16, 28);
   }
 
-  @include respond(tabletLarge) {
+  @include from(tabletLarge) {
     grid-column: span 6;
   }
 
-  @include respond(desktop) {
+  @include from(desktop) {
     grid-column: 8 / span 5;
   }
 }
@@ -43,7 +43,7 @@
   display: block;
   grid-column: 1 / -1;
 
-  @include respond(tabletLarge) {
+  @include from(tabletLarge) {
     grid-column: span 6;
   }
 }
@@ -53,7 +53,7 @@
   position: sticky;
   top: calc(var(--sectionPaddingTop) + var(--headerHeight));
 
-  @include respond(tabletLarge) {
+  @include from(tabletLarge) {
     aspect-ratio: 864 / 508;
   }
   object-fit: cover;

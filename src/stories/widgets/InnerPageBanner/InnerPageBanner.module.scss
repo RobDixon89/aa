@@ -22,11 +22,11 @@
     --accentTextColour: var(--highlight);
   }
 
-  @include respond(tablet) {
+  @include from(tablet) {
     --sitePadding: #{fluid(24, 32)};
   }
 
-  @include respond(tabletLarge) {
+  @include from(tabletLarge) {
     --sectionPaddingTop: calc(var(--paddingY) + var(--headerHeight));
   }
 
@@ -34,7 +34,7 @@
     grid-column: span 12;
     margin-bottom: auto;
 
-    @include respond(tabletLarge) {
+    @include from(tabletLarge) {
       grid-column: span 7;
     }
   }
@@ -43,7 +43,7 @@
     min-height: unset;
 
     [class*="uspList"] {
-      @include respond(tabletLarge) {
+      @include from(tabletLarge) {
         grid-column: 8 / span 5;
         grid-row: 1 / span 1;
         justify-content: flex-end;
@@ -51,7 +51,7 @@
         margin: auto 0 0;
       }
 
-      @include respond(desktop) {
+      @include from(desktop) {
         grid-column: 9 / span 4;
       }
     }
@@ -70,7 +70,7 @@
     object-fit: cover;
   }
 
-  @include respond(tabletLarge) {
+  @include from(tabletLarge) {
     display: flex;
     grid-column: 8 / span 4;
     grid-row: 1 / span 2;
@@ -84,11 +84,11 @@
     }
   }
 
-  @include respond(tabletLarge) {
+  @include from(tabletLarge) {
     grid-column: 8 / span 5;
   }
 
-  @include respond("1700") {
+  @include from("1700") {
     width: calc(100% + var(--sitePadding) + ((100vw - var(--maxWidth)) / 2));
   }
 }
@@ -101,12 +101,12 @@
   flex-direction: column;
   gap: var(--gap);
 
-  @include respond(tabletLarge) {
+  @include from(tabletLarge) {
     grid-column: span 7;
     grid-row: 1;
   }
 
-  @include respond(desktop) {
+  @include from(desktop) {
     grid-column: span 6;
   }
 
@@ -160,7 +160,7 @@
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
 
-  @include respond(tabletLarge) {
+  @include from(tabletLarge) {
     display: block;
     max-width: 58ch;
   }

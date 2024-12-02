@@ -1,0 +1,298 @@
+@use "../../../lib/helpers" as *;
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--body);
+  color: var(--white);
+  z-index: 99;
+}
+
+.inner {
+  display: flex;
+  height: var(--headerHeight);
+  align-items: center;
+  gap: fluid(16, 32);
+  justify-content: space-between;
+}
+
+.logo {
+  display: block;
+  width: fluid(224, 392);
+
+  img {
+    width: 100%;
+  }
+}
+
+.trayStyles {
+  @include transition("transform, opacity", 0.5s);
+
+  display: flex;
+  flex-direction: column;
+  gap: fluid(12, 16);
+  height: calc(100dvh - var(--headerHeight));
+  width: 100%;
+  position: fixed;
+  top: var(--headerHeight);
+  left: 0;
+  background-color: var(--secondary);
+  padding: 18px var(--sitePadding);
+  transform: translateX(0%);
+  margin: 0;
+  list-style-type: none;
+
+  @include until(tabletLarge) {
+    max-width: 480px;
+  }
+
+  &[data-open="false"] {
+    transform: translateX(101%);
+  }
+
+  // Variable tray height for mobile menu
+  @supports (-webkit-touch-callout: none) {
+    height: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+}
+
+.navigation {
+  @include from(tabletLarge) {
+    height: 100%;
+  }
+
+  > ul {
+    @extend .trayStyles;
+
+    @include from(tabletLarge) {
+      position: static;
+      background-color: inherit;
+      flex-direction: row;
+      align-items: center;
+      height: 100%;
+      min-height: auto;
+      width: auto;
+      padding: 0;
+      transform: none !important;
+
+      > li {
+        display: flex;
+        align-items: center;
+        height: 100%;
+      }
+
+      > li[data-type="simple"] {
+        position: relative;
+      }
+    }
+
+    > li:last-child {
+      margin: auto auto 0;
+
+      @include from(tabletLarge) {
+        margin: 0 0 0 fluid(10, 14);
+      }
+    }
+  }
+}
+
+.navigationLink {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  color: currentColor;
+  text-decoration: none;
+  padding-bottom: fluid(12, 18);
+  border-bottom: 1px solid currentColor;
+  position: relative;
+
+  > svg {
+    display: block;
+    width: 8px;
+  }
+
+  @include from(tabletLarge) {
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background-color: inherit;
+
+    > svg {
+      display: none;
+    }
+  }
+}
+
+.activeIndicator {
+  display: none;
+
+  @include from(tabletLarge) {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: var(--tertiary);
+    height: 4px;
+    width: 100%;
+  }
+}
+
+.dropdown {
+  @extend .trayStyles;
+
+  top: 0;
+  z-index: 1;
+
+  @include until(tabletLarge) {
+    [class*="button"] {
+      width: 100%;
+      justify-content: space-between;
+      padding: 0 0 fluid(12, 18);
+      border-bottom: 1px solid currentColor;
+      border-radius: 0;
+
+      path:nth-child(1) {
+        transform: scaleX(1);
+      }
+
+      path:nth-child(2) {
+        transform: translateX(0);
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  @include from(tabletLarge) {
+    position: absolute;
+    top: 100%;
+    right: calc(fluid(12, 18) * -1);
+    left: auto;
+    height: auto;
+    width: max-content;
+    transform: translateY(0);
+    opacity: 1;
+    white-space: nowrap;
+
+    &[data-open="false"] {
+      transform: translateY(-12px);
+      pointer-events: none;
+      opacity: 0;
+    }
+  }
+}
+
+.backButton {
+  button[class*="button"] {
+    color: var(--tertiaryLighter);
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    font-size: var(--font-size-h5);
+    gap: 14px;
+    border-width: 2px;
+    width: calc(100% + var(--sitePadding) * 2);
+    margin: 0 calc(var(--sitePadding) * -1) 10px;
+    padding-left: var(--sitePadding);
+    padding-right: var(--sitePadding);
+    padding-bottom: fluid(14, 20);
+
+    svg {
+      transform: scaleX(-1);
+    }
+  }
+
+  @include from(tabletLarge) {
+    display: none;
+  }
+}
+
+.dropdownComplex {
+  @extend .dropdown;
+
+  @include from(tabletLarge) {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: calc(var(--maxWidth) - (var(--sitePadding) * 2));
+    width: calc(100vw - (var(--sitePadding) * 2));
+    right: 0;
+
+    .dropdown {
+      position: static;
+      opacity: 1;
+      pointer-events: auto;
+      padding: 0;
+    }
+  }
+}
+
+.menuButton {
+  position: relative;
+  color: var(--white);
+  height: 24px;
+  width: 24px;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 2px;
+  cursor: pointer;
+
+  @include from(tabletLarge) {
+    display: none;
+  }
+
+  span {
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background-color: currentColor;
+  }
+}
+
+.mobileLink {
+  @include from(tabletLarge) {
+    display: none;
+  }
+}
+
+.locationButton {
+  > button[class*="button"] {
+    svg {
+      width: 8px;
+    }
+  }
+
+  @include from(tabletLarge) {
+    button[class*="button"] {
+      color: var(--tertiaryLighter);
+      height: auto;
+      font-size: var(--font-size-h5);
+      padding: 0;
+      margin-bottom: fluid(24, 28);
+      cursor: default;
+
+      svg,
+      &::after {
+        display: none;
+      }
+    }
+  }
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 98;
+  background-color: hsla(var(--bodyValues), 25%);
+  pointer-events: none;
+  backdrop-filter: blur(5px);
+}

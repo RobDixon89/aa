@@ -39,7 +39,7 @@ $DEFAULT_MAX: map.get($breakpoints, actualDesktop);
 
 // Mixins
 
-@mixin respond($size) {
+@mixin from($size) {
   @if (
     $size ==
       mobile or
@@ -70,7 +70,38 @@ $DEFAULT_MAX: map.get($breakpoints, actualDesktop);
   }
 }
 
-@mixin respondContainer($size) {
+@mixin until($size) {
+  @if (
+    $size ==
+      mobile or
+      $size ==
+      mobileLarge or
+      $size ==
+      tabletSmall or
+      $size ==
+      tablet or
+      $size ==
+      tabletLarge or
+      $size ==
+      desktopSmall or
+      $size ==
+      desktop or
+      $size ==
+      desktopLarge or
+      $size ==
+      actualDesktop
+  ) {
+    @media screen and (max-width: #{map.get($breakpoints, $size) - 1}px) {
+      @content;
+    }
+  } @else {
+    @media screen and (max-width: #{$size - 1}px) {
+      @content;
+    }
+  }
+}
+
+@mixin fromContainer($size) {
   @if (
     $size ==
       mobile or
@@ -123,15 +154,15 @@ $DEFAULT_MAX: map.get($breakpoints, actualDesktop);
 @mixin richTextColumns() {
   grid-column: 1 / -1;
 
-  @include respond(tablet) {
+  @include from(tablet) {
     grid-column: 2 / -2;
   }
 
-  @include respond(tabletLarge) {
+  @include from(tabletLarge) {
     grid-column: 3 / -3;
   }
 
-  @include respond(desktopLarge) {
+  @include from(desktopLarge) {
     grid-column: 4 / -4;
   }
 }

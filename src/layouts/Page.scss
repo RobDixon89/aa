@@ -94,6 +94,7 @@
   --secondary: hsl(var(--secondaryValues));
   --tertiaryValues: 211, 93%, 73%;
   --tertiary: hsl(var(--tertiaryValues));
+  --tertiaryLighter: #afd4fc;
   --highlightValues: 51, 100%, 47%;
   --highlight: hsl(var(--highlightValues));
 
@@ -113,7 +114,7 @@
   --gutterWidth: #{fluid(16, 32)};
   --headerHeight: 60px;
 
-  @include respond(tabletLarge) {
+  @include from(tabletLarge) {
     --headerHeight: 65px;
   }
 }

@@ -33,12 +33,12 @@
 
 .richText {
   [data-columns="true"] & {
-    @include respond(mobileLarge) {
+    @include from(mobileLarge) {
       columns: 2;
       gap: fluid(16, 24);
     }
 
-    @include respond(tabletLarge) {
+    @include from(tabletLarge) {
       columns: 3;
     }
   }

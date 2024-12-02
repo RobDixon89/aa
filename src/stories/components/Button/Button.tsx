@@ -23,11 +23,11 @@ const Button: React.FC<ButtonProps> = ({
     <button
       className={`${s.button}${classes ? " " + classes : ""}`}
       data-theme={theme ?? "default"}
-      data-icon={icon ?? "arrow"}
+      data-icon={icon ?? IconType.arrow}
       {...attributes}
     >
       <span className={s.text}>{label}</span>
-      <Icon icon={icon ?? "arrow"} />
+      <Icon icon={icon ?? IconType.arrow} />
     </button>
   );
 };
@@ -46,11 +46,11 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
     <a
       className={`${s.button}${classes ? " " + classes : ""}`}
       data-theme={theme ?? "default"}
-      data-icon={icon ?? "arrow"}
+      data-icon={icon ?? IconType.arrow}
       {...attributes}
     >
       <span className={s.text}>{label}</span>
-      <Icon icon={icon ?? "arrow"} />
+      <Icon icon={icon ?? IconType.arrow} />
     </a>
   );
 };

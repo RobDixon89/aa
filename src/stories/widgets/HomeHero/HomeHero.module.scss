@@ -11,7 +11,7 @@
   position: relative;
   background-color: transparent;
 
-  @include respond(tablet) {
+  @include from(tablet) {
     --sitePadding: #{fluid(24, 32)};
 
     align-items: center;
@@ -41,11 +41,11 @@
   background-color: hsla(var(--tertiaryValues), 85%);
   padding: fluid(16, 24) fluid(12, 32) fluid(24, 32);
 
-  @include respond(tabletLarge) {
+  @include from(tabletLarge) {
     grid-column: span 10;
   }
 
-  @include respond(desktop) {
+  @include from(desktop) {
     grid-column: span 9;
   }
 }
