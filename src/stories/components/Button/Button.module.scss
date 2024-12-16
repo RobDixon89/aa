@@ -41,6 +41,7 @@
   position: relative;
   padding-left: 0;
   padding-right: 0;
+  min-height: calc(var(--font-size-body) * 1.5);
 
   &::after {
     content: "";

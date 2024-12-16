@@ -1,0 +1,9 @@
+export declare const contact: string;
+export declare const container: string;
+export declare const copyright: string;
+export declare const copyrightLinks: string;
+export declare const linkList: string;
+export declare const linkLists: string;
+export declare const listTitle: string;
+export declare const logo: string;
+export declare const phoneNumbers: string;

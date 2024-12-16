@@ -72,6 +72,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                     role="menuitem"
                     aria-haspopup="menu"
                     aria-expanded={active === link.id}
+                    aria-controls={`${link.id}-dropdown`}
                   >
                     <span>
                       {link.text}
@@ -94,6 +95,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 
                   {link.dropdown.type === "simple" ? (
                     <Dropdown
+                      id={`${link.id}-dropdown`}
                       active={active === link.id}
                       backId={"menu"}
                       backLabel={link.text}
@@ -104,6 +106,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                     />
                   ) : link.dropdown.type === "complex" ? (
                     <ul
+                      id={`${link.id}-dropdown`}
                       className={s.dropdownComplex}
                       data-open={active.includes(link.id)}
                       role="menu"
@@ -288,6 +291,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 };
 
 type DropdownProps = {
+  id?: string;
   active: boolean;
   backId: string;
   backLabel: string;
@@ -299,7 +303,12 @@ type DropdownProps = {
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
   return (
-    <ul role="menu" className={s.dropdown} data-open={props.active}>
+    <ul
+      id={props.id}
+      role="menu"
+      className={s.dropdown}
+      data-open={props.active}
+    >
       <li className={s.backButton}>
         <Button
           theme="text"

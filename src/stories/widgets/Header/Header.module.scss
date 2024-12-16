@@ -233,15 +233,13 @@
 }
 
 .menuButton {
+  @include buttonReset();
+
   position: relative;
   color: var(--white);
   height: 24px;
   width: 24px;
-  background: none;
-  border: 0;
-  border-radius: 0;
   padding: 2px;
-  cursor: pointer;
 
   @include from(tabletLarge) {
     display: none;
