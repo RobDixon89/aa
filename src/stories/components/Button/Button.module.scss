@@ -41,7 +41,7 @@
   position: relative;
   padding-left: 0;
   padding-right: 0;
-  min-height: calc(var(--font-size-body) * 1.5);
+  min-height: calc(var(--font-size-regular) * 1.5);
 
   &::after {
     content: "";
@@ -76,7 +76,7 @@
   color: var(--fgColour);
   background-color: var(--bgColour);
   border-radius: 4px;
-  font-size: var(--font-size-body);
+  font-size: var(--font-size-regular);
   text-decoration: none;
   border: 1px solid var(--borderColour);
   padding: 6px fluid(10, 14);

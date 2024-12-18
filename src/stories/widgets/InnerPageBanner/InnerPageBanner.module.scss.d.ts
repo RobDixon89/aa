@@ -1,3 +1,4 @@
+export declare const breadcrumbs: string;
 export declare const content: string;
 export declare const contentWrapper: string;
 export declare const highlightWord: string;

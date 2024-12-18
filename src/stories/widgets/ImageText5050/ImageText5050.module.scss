@@ -52,9 +52,9 @@
   aspect-ratio: 327 / 225;
   position: sticky;
   top: calc(var(--sectionPaddingTop) + var(--headerHeight));
+  object-fit: cover;
 
   @include from(tabletLarge) {
     aspect-ratio: 864 / 508;
   }
-  object-fit: cover;
 }

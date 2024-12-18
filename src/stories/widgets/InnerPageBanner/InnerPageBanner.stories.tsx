@@ -18,6 +18,20 @@ const Template: StoryFn<InnerPageBannerProps> = (
 
 export const Blue = Template.bind({});
 Blue.args = {
+  breadcrumbs: [
+    {
+      text: "Home",
+      url: "#",
+    },
+    {
+      text: "Parent Page",
+      url: "#",
+    },
+    {
+      text: "Lorem Ipsum Dolor Sit",
+      url: "#",
+    },
+  ],
   subtitle: "Parent Title",
   title: "Lorem Ipsum Dolor Sit",
   content: `<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>`,

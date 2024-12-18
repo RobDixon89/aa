@@ -1,7 +1,7 @@
 import React from "react";
 import g from "../../../lib/global.module.scss";
 import { highlightTitleWords } from "../../../utils";
-import type { CtaIconModel } from "../../../utils/icon";
+import Icon, { IconType, type CtaIconModel } from "../../../utils/icon";
 import CtaBlock from "../../components/CtaBlock/CtaBlock";
 import Section, { Themes } from "../../components/Section/Section";
 import type { UspModel } from "../../components/UspList/UspList";
@@ -10,13 +10,14 @@ import s from "./InnerPageBanner.module.scss";
 
 export type InnerPageBannerProps = React.HTMLAttributes<HTMLDivElement> & {
   _type: "innerPageBanner";
+  breadcrumbs: CtaModel[];
   content?: string;
   ctas?: CtaIconModel[];
   image?: ImageModel;
   subtitle?: string;
+  theme: Exclude<Themes, Themes.default | Themes.navy>;
   title: string;
   uspList?: UspModel[];
-  theme: Exclude<Themes, Themes.default | Themes.navy>;
 };
 
 type Props = Omit<InnerPageBannerProps, "_type">;
@@ -35,6 +36,27 @@ const InnerPageBanner: React.FC<Props> = (props) => {
           />
         </div>
       ) : null}
+
+      <nav aria-label="Breadcrumb" className={s.breadcrumbs}>
+        <ol>
+          {props.breadcrumbs.map((b, i) => (
+            <li key={`breadcrumb-${i}`}>
+              <a
+                href={b.url}
+                target={b.target}
+                aria-current={
+                  i === props.breadcrumbs.length - 1 ? "page" : undefined
+                }
+              >
+                {b.text}
+              </a>
+              {i < props.breadcrumbs.length - 1 ? (
+                <Icon icon={IconType.chevron} />
+              ) : null}
+            </li>
+          ))}
+        </ol>
+      </nav>
 
       <div className={s.contentWrapper}>
         {props.subtitle && <p className={g.subtitle}>{props.subtitle}</p>}
