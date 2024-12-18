@@ -13,10 +13,6 @@ $breakpoints: (
   actualDesktop: 1920,
 );
 
-@function transparency($name, $opacity) {
-  @return hsla($name, $opacity);
-}
-
 $REM_PIXELS: 16;
 $DEFAULT_MIN: map.get($breakpoints, tabletLarge);
 $DEFAULT_MAX: map.get($breakpoints, actualDesktop);

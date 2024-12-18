@@ -41,6 +41,10 @@
     grid-template-columns: repeat(12, 1fr);
     gap: var(--gridRowGap) var(--gutterWidth);
   }
+
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+  }
 }
 
 .inner {

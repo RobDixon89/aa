@@ -132,8 +132,6 @@
     gap: 8px;
 
     li a {
-      @include transition("text-decoration-color");
-
       white-space: nowrap;
       color: currentColor;
       text-decoration-color: transparent;
@@ -143,6 +141,8 @@
       &:hover {
         text-decoration-color: currentColor;
       }
+
+      @include transition("text-decoration-color");
     }
 
     li:last-of-type {

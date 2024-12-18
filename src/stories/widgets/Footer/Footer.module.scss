@@ -80,14 +80,14 @@
   align-items: center;
   gap: 12px;
   justify-content: space-between;
-  font-size: var(--font-size-h5) !important;
+  font-size: var(--font-size-h5);
   color: var(--tertiary);
 
   svg {
-    @include transition("transform");
-
     width: 9px;
     transform: translateX(-3px) rotate(90deg);
+
+    @include transition("transform");
   }
 
   &[aria-expanded="true"] svg {
@@ -101,7 +101,7 @@
   }
 
   @include from(tabletLarge) {
-    font-size: var(--font-size-large) !important;
+    font-size: var(--font-size-large);
 
     svg {
       display: none;

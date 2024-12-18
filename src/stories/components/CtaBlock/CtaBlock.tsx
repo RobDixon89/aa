@@ -6,6 +6,7 @@ import s from "./CtaBlock.module.scss";
 export type CtaBlockProps = {
   id: string;
   items: CtaIconModel[];
+  tabIndex?: number;
 };
 
 const CtaBlock: React.FC<CtaBlockProps> = (props) => {
@@ -23,6 +24,7 @@ const CtaBlock: React.FC<CtaBlockProps> = (props) => {
           label={cta.text}
           icon={cta.icon}
           target={cta.target}
+          tabIndex={props.tabIndex}
         />
       ))}
     </div>
