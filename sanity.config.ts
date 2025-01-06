@@ -1,10 +1,13 @@
+import { visionTool } from "@sanity/vision";
+import { defineConfig } from "sanity";
+import { media } from "sanity-plugin-media";
+import { structureTool } from "sanity/structure";
+import { schemaTypes } from "./schema";
+import { structure } from "./schema/structure";
+
 // Different environments use different variables
-const projectId =
-  import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID! ||
-  import.meta.env.PUBLIC_SANITY_PROJECT_ID!;
-const dataset =
-  import.meta.env.PUBLIC_SANITY_STUDIO_DATASET! ||
-  import.meta.env.PUBLIC_SANITY_DATASET!;
+const projectId = import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID! || "";
+const dataset = import.meta.env.PUBLIC_SANITY_STUDIO_DATASET! || "production";
 
 // Feel free to remove this check if you don't need it
 if (!projectId || !dataset) {
@@ -17,17 +20,12 @@ if (!projectId || !dataset) {
   );
 }
 
-import { defineConfig } from "sanity";
-import { structureTool } from "sanity/structure";
-import { visionTool } from "@sanity/vision";
-import { schemaTypes } from "./schema";
-
 export default defineConfig({
-  name: "project-name",
-  title: "Project Name",
+  name: "ashley-aerials",
+  title: "Ashley Aerials",
   projectId,
   dataset,
-  plugins: [structureTool(), visionTool()],
+  plugins: [structureTool({ structure }), media(), visionTool()],
   schema: {
     types: schemaTypes,
   },
