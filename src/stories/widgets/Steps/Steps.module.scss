@@ -1,0 +1,10 @@
+@use "../../../lib/helpers" as *;
+
+.container {
+  text-align: left;
+}
+
+.title {
+  font-size: var(--font-size-h3);
+  margin-bottom: 0.5em;
+}

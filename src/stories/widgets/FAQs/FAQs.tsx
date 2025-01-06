@@ -9,6 +9,49 @@ import CtaBlock from "../../components/CtaBlock/CtaBlock";
 import Section, { Themes } from "../../components/Section/Section";
 import s from "./FAQs.module.scss";
 
+import { UnknownIcon } from "@sanity/icons";
+import { defineField, defineType } from "sanity";
+import { blockContent } from "../../../../schema/blockContent";
+
+export const faqsSchema = defineType({
+  icon: UnknownIcon,
+  name: "faqs",
+  type: "object",
+  title: "FAQs",
+  fields: [
+    defineField({
+      name: "title",
+      type: "string",
+      title: "Heading",
+    }),
+    defineField({
+      name: "items",
+      type: "array",
+      title: "FAQ List",
+      of: [
+        defineField({
+          type: "object",
+          name: "faq",
+          fields: [
+            defineField({
+              name: "question",
+              type: "string",
+              title: "Question",
+              validation: (Rule) => Rule.required(),
+            }),
+            blockContent("contentOnly", undefined, "Answer", "answer"),
+            defineField({
+              name: "ctas",
+              title: "Link List",
+              type: "linkList",
+            }),
+          ],
+        }),
+      ],
+    }),
+  ],
+});
+
 type FaqItem = {
   id: string;
   question: string;

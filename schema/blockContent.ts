@@ -1,60 +1,72 @@
-import {defineType, defineArrayMember} from 'sanity'
+import { defineField } from "sanity";
+import { linkField } from "./linkList";
 
-/**
- * This is the schema definition for the rich text fields used for
- * for this blog studio. When you import it in schemas.js it can be
- * reused in other parts of the studio with:
- *  {
- *    name: 'someName',
- *    title: 'Some title',
- *    type: 'blockContent'
- *  }
- */
-export default defineType({
-  title: 'Block Content',
-  name: 'blockContent',
-  type: 'array',
-  of: [
-    defineArrayMember({
-      title: 'Block',
-      type: 'block',
-      // Styles let you set what your user can mark up blocks with. These
-      // correspond with HTML tags, but you can set any title or value
-      // you want and decide how you want to deal with it where you want to
-      // use your content.
-      styles: [
-        {title: 'Normal', value: 'normal'},
-        {title: 'H1', value: 'h1'},
-        {title: 'H2', value: 'h2'},
-        {title: 'H3', value: 'h3'},
-        {title: 'H4', value: 'h4'},
-        {title: 'Quote', value: 'blockquote'},
-      ],
-      lists: [{title: 'Bullet', value: 'bullet'}],
-      // Marks let you mark up inline text in the block editor.
-      marks: {
-        // Decorators usually describe a single property – e.g. a typographic
-        // preference or highlighting by editors.
-        decorators: [
-          {title: 'Strong', value: 'strong'},
-          {title: 'Emphasis', value: 'em'},
-        ],
-        // Annotations can be any object structure – e.g. a link or a footnote.
-        annotations: [
-          {
-            title: 'URL',
-            name: 'link',
-            type: 'object',
-            fields: [
-              {
-                title: 'URL',
-                name: 'href',
-                type: 'url',
+const blocks = [
+  { type: "embeddedForm", name: "embeddedForm" },
+  { type: "faqs", name: "faqs" },
+  { type: "imageBlock", name: "imageBlock" },
+  { type: "imageText5050", name: "imageText5050" },
+  { type: "locationList", name: "locationList" },
+  { type: "richText", name: "richText" },
+  { type: "serviceCards", name: "serviceCards" },
+  { type: "steps", name: "steps" },
+  { type: "testimonials", name: "testimonials" },
+];
+
+export const blockContent = (
+  type: "all" | "contentOnly",
+  group?: string,
+  title?: string,
+  name?: string,
+  description?: string
+) =>
+  defineField({
+    title: title ?? "Content",
+    name: name ?? "blockContent",
+    type: "array",
+    group: group ?? undefined,
+    description: description ?? undefined,
+    of: [
+      {
+        title: "Block",
+        type: "block",
+        styles:
+          type !== "all"
+            ? [
+                { title: "Normal", value: "normal" },
+                { title: "Large", value: "large" },
+                { title: "Small", value: "small" },
+                { title: "Subtitle", value: "subtitle" },
+                { title: "H3", value: "h3" },
+                { title: "H4", value: "h4" },
+                { title: "Quote", value: "blockquote" },
+              ]
+            : [],
+        lists:
+          type !== "all"
+            ? [
+                { title: "Bullet", value: "bullet" },
+                { title: "Numbered", value: "number" },
+              ]
+            : [],
+        // Marks let you mark up inline text in the block editor.
+        marks:
+          type !== "all"
+            ? {
+                // Decorators usually describe a single property – e.g. a typographic
+                // preference or highlighting by editors.
+                decorators: [
+                  { title: "Strong", value: "strong" },
+                  { title: "Emphasis", value: "em" },
+                ],
+                // Annotations can be any object structure – e.g. a link or a footnote.
+                annotations: [linkField],
+              }
+            : {
+                decorators: [],
+                annotations: [],
               },
-            ],
-          },
-        ],
       },
-    }),
-  ],
-})
+      ...(type === "all" ? blocks : []),
+    ],
+  });
