@@ -54,14 +54,13 @@ export const testimonialsSchema = defineType({
   ],
 });
 
-export type TestimonialsProps = {
+export type TestimonialsProps = React.HTMLAttributes<HTMLDivElement> & {
   id: string;
-  content: string;
   title?: string;
 };
 
 const Testimonials: React.FC<TestimonialsProps> = (props) => {
-  if (!props.content) {
+  if (!props.children) {
     return null;
   }
 
@@ -69,10 +68,7 @@ const Testimonials: React.FC<TestimonialsProps> = (props) => {
     <Section grid={true}>
       <div className={s.container}>
         {props.title && <h2 className={s.title}>{props.title}</h2>}
-        <div
-          className={`${g.richText}`}
-          dangerouslySetInnerHTML={{ __html: props.content }}
-        />
+        <div className={`${g.richText}`}>{props.children}</div>
       </div>
     </Section>
   );

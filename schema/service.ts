@@ -47,6 +47,14 @@ export default defineType({
   fields: [
     ...settingFields,
     defineField({
+      name: "description",
+      type: "text",
+      validation: (Rule) => Rule.required(),
+      description:
+        "Add a short description of this service, this will be used for Service Cards",
+      group: "settings",
+    }),
+    defineField({
       title: "Parent service",
       name: "parentService",
       type: "reference",
@@ -54,14 +62,7 @@ export default defineType({
       description: "Parent service is used to define the page structure.",
       options: {
         disableNew: true,
-        filter: ({ document }) => {
-          return {
-            filter: "_id != $currentId",
-            params: {
-              currentId: document._id,
-            },
-          };
-        },
+        filter: "!defined(parentService)",
       },
       validation: (rule) =>
         rule.custom((parentService, context) => {

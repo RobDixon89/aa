@@ -18,5 +18,14 @@ export const Default = Template.bind({});
 Default.args = {
   id: "t-vwg97b2f9o8sisdi",
   title: "Reviews",
-  content: `<p>Vestibulum in enim condimentum, tristique ligula vel, scelerisque felis. Fusce suscipit hendrerit metus et sodales. Phasellus ut euismod lacus. Mauris hendrerit dolor ligula, sit amet congue mauris luctus a. Ut volutpat sagittis fermentum.</p>`,
+  children: (
+    <>
+      <p>
+        Vestibulum in enim condimentum, tristique ligula vel, scelerisque felis.
+        Fusce suscipit hendrerit metus et sodales. Phasellus ut euismod lacus.
+        Mauris hendrerit dolor ligula, sit amet congue mauris luctus a. Ut
+        volutpat sagittis fermentum.
+      </p>
+    </>
+  ),
 };

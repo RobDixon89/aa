@@ -7,95 +7,6 @@ import { LinkButton } from "../../components/Button/Button";
 import Section, { Themes } from "../../components/Section/Section";
 import s from "./Footer.module.scss";
 
-import { LinkIcon } from "@sanity/icons";
-import { defineField } from "sanity";
-import { internalLink } from "../../../../schema/linkList";
-
-export const footerFields = [
-  defineField({
-    name: "linkGroups",
-    type: "array",
-    title: "Link Groups",
-    group: "footer",
-    validation: (Rule) => Rule.max(6),
-    of: [
-      defineField({
-        icon: LinkIcon,
-        name: "linkGroup",
-        title: "Link Group",
-        type: "object",
-        fields: [
-          defineField({
-            name: "groupTitle",
-            type: "string",
-            title: "Title",
-            validation: (Rule) => Rule.required(),
-          }),
-          defineField({
-            name: "groupLinks",
-            type: "array",
-            title: "Links",
-            of: [internalLink],
-          }),
-        ],
-      }),
-    ],
-  }),
-  defineField({
-    name: "phoneLinks",
-    type: "array",
-    title: "Contact Number Links",
-    group: "footer",
-    validation: (Rule) => Rule.max(3),
-    of: [
-      defineField({
-        name: "phoneLink",
-        type: "object",
-        title: "Link",
-        validation: (rule) => rule.required(),
-        fields: [
-          defineField({
-            name: "phoneNumber",
-            title: "Phone Number",
-            description:
-              "The telephone number which will open in the user's phone app",
-            type: "string",
-            validation: (rule) => rule.required(),
-          }),
-          defineField({
-            name: "text",
-            type: "string",
-            title: "Link Text",
-            description: "If not populated, will default to the phone number",
-          }),
-        ],
-      }),
-    ],
-  }),
-  defineField({
-    name: "footerButtonText",
-    type: "string",
-    title: "Contact Button Text",
-    group: "footer",
-    description:
-      "If left blank, no Contact Button will be displayed in the footer",
-  }),
-  defineField({
-    name: "copyrightText",
-    type: "string",
-    title: "Copyright Text",
-    group: "footer",
-    description: "For the placement of the year, use the placeholder ##year##",
-  }),
-  defineField({
-    name: "copyrightLinks",
-    type: "array",
-    title: "Copyright Links",
-    group: "footer",
-    of: [internalLink],
-  }),
-];
-
 export type LinkList = {
   title: string;
   items: CtaModel[];
@@ -104,7 +15,7 @@ export type LinkList = {
 export type FooterProps = {
   copyrightLinks: CtaModel[];
   copyrightText: string;
-  enquiryCta: CtaModel;
+  enquiryCta?: CtaModel;
   links: LinkList[];
   phoneNumbers: CtaModel[];
 };
@@ -112,6 +23,15 @@ export type FooterProps = {
 const Footer: React.FC<FooterProps> = (props) => {
   const isMobile = useMediaQuery("(max-width: 1024px)");
   const [active, setActive] = React.useState<number>(-1);
+  const [copyright, setCopyright] = React.useState<string>(props.copyrightText);
+
+  React.useEffect(() => {
+    if (props.copyrightText) {
+      const year = new Date().getFullYear();
+
+      setCopyright(props.copyrightText.replaceAll("##year##", year.toString()));
+    }
+  }, [props.copyrightText]);
 
   return (
     <Section className={s.container} grid={true} theme={Themes.navy}>
@@ -210,9 +130,9 @@ const Footer: React.FC<FooterProps> = (props) => {
             ))}
           </ul>
         )}
-        {props.copyrightText && (
-          <p dangerouslySetInnerHTML={{ __html: props.copyrightText }} />
-        )}
+        {copyright ? (
+          <p dangerouslySetInnerHTML={{ __html: copyright }} />
+        ) : null}
       </div>
     </Section>
   );

@@ -1,0 +1,102 @@
+---
+import { sanityClient } from "sanity:client";
+import {
+  locationInnerPagesQuery,
+  type LocationInnerPagesQueryResponse,
+  type LocationInnerTemplateResponse,
+} from "../../../queries/locations";
+import { type SiteSettingsResponse } from "../../../queries/settings";
+import type { LocationLink } from "../../../schema/linkList";
+import PortableText from "../../components/richTextBlocks/portableText.astro";
+import Widgets from "../../components/widgets.astro";
+import Page from "../../layouts/Page.astro";
+import InnerPageBanner from "../../stories/widgets/InnerPageBanner/InnerPageBanner";
+import type { ServiceCardResponse } from "../../stories/widgets/ServiceCards/schema";
+import { mapLinkAttributes } from "../../utils/mapping";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const res = (await sanityClient.fetch(
+    locationInnerPagesQuery
+  )) as LocationInnerPagesQueryResponse;
+
+  return res.locations.map((location) => {
+    return {
+      params: {
+        slug: `${location.name.toLowerCase().replaceAll(/\W+/g, "-")}`,
+      },
+      props: {
+        ...res,
+        location,
+      },
+    };
+  });
+}
+
+type Props = {
+  settings: SiteSettingsResponse;
+  location: LocationLink;
+  template: LocationInnerTemplateResponse;
+  locations: LocationLink[];
+  services: ServiceCardResponse[];
+};
+
+const { slug } = Astro.params;
+const { template, location, locations, services, settings } = Astro.props;
+---
+
+<Page
+  title={template.metaTitle ?? location.name}
+  description={template.metaDescription}
+  image={template.metaImage}
+  settings={settings}
+  locations={locations}
+  services={services}
+>
+  {
+    template.banner ? (
+      <InnerPageBanner
+        breadcrumbs={[
+          {
+            text: "Home",
+            url: "/",
+          },
+          {
+            text: location.name,
+            url: `/${slug}`,
+          },
+        ]}
+        subtitle={
+          template.banner.subtitle ? template.banner.subtitle : location.area
+        }
+        title={template.banner.title.replaceAll("##location##", location.name)}
+        ctas={
+          template.banner.ctas !== null
+            ? template.banner.ctas.map((cta) => mapLinkAttributes(cta))
+            : []
+        }
+        uspList={template.banner.usps ? settings.usps : []}
+        theme={template.banner.theme}
+        location={location.name}
+        client:visible
+      >
+        {template.banner.blockContent ? (
+          <PortableText blockContent={template.banner.blockContent} />
+        ) : undefined}
+      </InnerPageBanner>
+    ) : null
+  }
+
+  {
+    template.blockContent ? (
+      <Widgets
+        widgets={template.blockContent}
+        usps={settings.usps}
+        locations={locations}
+        services={services}
+        locationName={location.name}
+      />
+    ) : null
+  }
+</Page>

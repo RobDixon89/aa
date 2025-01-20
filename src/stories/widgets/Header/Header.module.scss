@@ -8,6 +8,8 @@
   background-color: var(--body);
   color: var(--white);
   z-index: 99;
+  display: flex;
+  justify-content: center;
 }
 
 .inner {
@@ -35,7 +37,7 @@
   width: 100%;
   position: fixed;
   top: var(--headerHeight);
-  left: 0;
+  right: 0;
   background-color: var(--secondary);
   padding: 18px var(--sitePadding);
   transform: translateX(0%);
@@ -47,7 +49,7 @@
   }
 
   &[data-open="false"] {
-    transform: translateX(101%);
+    transform: translateX(101vw);
   }
 
   // Variable tray height for mobile menu
@@ -100,7 +102,7 @@
   }
 }
 
-.navigationLink {
+a.navigationLink {
   display: flex;
   gap: 12px;
   justify-content: space-between;
@@ -142,7 +144,7 @@
   }
 }
 
-.dropdown {
+ul.dropdown {
   @extend .trayStyles;
 
   top: 0;
@@ -180,6 +182,8 @@
     transform: translateY(0);
     opacity: 1;
     white-space: nowrap;
+    max-height: calc(100dvh - var(--headerHeight));
+    overflow: auto;
 
     &[data-open="false"] {
       transform: translateY(-12px);
@@ -213,21 +217,26 @@
   }
 }
 
-.dropdownComplex {
+ul.dropdownComplex {
   @extend .dropdown;
 
   @include from(tabletLarge) {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    flex-direction: row;
+    flex-wrap: wrap;
     max-width: calc(var(--maxWidth) - (var(--sitePadding) * 2));
     width: calc(100vw - (var(--sitePadding) * 2));
     right: 0;
+    gap: fluid(28, 36) fluid(24, 28);
 
-    .dropdown {
+    ul.dropdown {
       position: static;
       opacity: 1;
       pointer-events: auto;
       padding: 0;
+    }
+
+    &:not(:has(> li.locationButton:nth-child(8))) {
+      justify-content: center;
     }
   }
 }
@@ -259,7 +268,7 @@
   }
 }
 
-.locationButton {
+li.locationButton {
   > button[class*="button"] {
     svg {
       width: 8px;
@@ -272,7 +281,7 @@
       height: auto;
       font-size: var(--font-size-h5);
       padding: 0;
-      margin-bottom: fluid(24, 28);
+      margin-bottom: fluid(14, 18);
       cursor: default;
 
       svg,

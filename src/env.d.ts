@@ -12,4 +12,11 @@ declare type ImageModel = {
   altText?: string;
   src: string;
   aspectRatio?: number;
+  hotspot?: {
+    _type?: string;
+    width: number;
+    height: number;
+    x: number;
+    y: number;
+  } | null;
 };

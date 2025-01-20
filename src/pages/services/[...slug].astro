@@ -1,0 +1,193 @@
+---
+import { sanityClient } from "sanity:client";
+import type { PageResponse } from "../../../queries/pages";
+import {
+  servicePagesQuery,
+  type ServicePagesQueryResponse,
+} from "../../../queries/services";
+import { type SiteSettingsResponse } from "../../../queries/settings";
+import type { LocationLink, ServiceLink } from "../../../schema/linkList";
+import PortableText from "../../components/richTextBlocks/portableText.astro";
+import Widgets from "../../components/widgets.astro";
+import Page from "../../layouts/Page.astro";
+import InnerPageBanner from "../../stories/widgets/InnerPageBanner/InnerPageBanner";
+import type { ServiceCardResponse } from "../../stories/widgets/ServiceCards/schema";
+import { getServiceLinkUrl, mapLinkAttributes } from "../../utils/mapping";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const res = (await sanityClient.fetch(
+    servicePagesQuery
+  )) as ServicePagesQueryResponse;
+
+  const serviceCards: ServiceCardResponse[] = [];
+  let locationPages: ServicePageResponse[] = [];
+
+  const servicePages: ServicePageResponse[] = res.services.map((service) => {
+    // Create link from service
+    const serviceLink: ServiceLink = {
+      _type: "service",
+      title: service.title,
+      parent: service.parent,
+    };
+
+    // Create card data from service
+    serviceCards.push({
+      _type: "service",
+      _id: service._id,
+      _createdAt: service._createdAt,
+      parent: service.parent,
+      title: service.title,
+      description: service.description,
+      bannerImage: service.landing.banner?.image ?? null,
+      metaImage: service.landing.metaImage,
+    });
+
+    // Map all location children pages for this service
+    res.locations.map((location) => {
+      locationPages.push({
+        _type: "location",
+        _id: `${service._id}-${location.name.toLowerCase().replaceAll(/\W+/g, "-")}`,
+        _createdAt: service._createdAt,
+        _updatedAt: service._updatedAt,
+        slug: getServiceLinkUrl(serviceLink, location.name, true).substring(1),
+        title: `${service.title} in ${location.name}`,
+        parent: location.area,
+        ...service.location,
+        serviceLink: serviceLink,
+        locationName: location.name,
+      });
+    });
+
+    return {
+      _type: "service",
+      _id: service._id,
+      _createdAt: service._createdAt,
+      _updatedAt: service._updatedAt,
+      slug: getServiceLinkUrl(serviceLink, undefined, true).substring(1),
+      parent: service.parent,
+      title: service.title,
+      ...service.landing,
+      serviceLink: serviceLink,
+      locationName: "",
+    } as ServicePageResponse;
+  });
+
+  const pages = servicePages.concat(locationPages);
+
+  return pages.map((page) => {
+    return {
+      params: {
+        slug: page.slug,
+      },
+      props: {
+        page,
+        locations: res.locations,
+        settings: res.settings,
+        services: serviceCards,
+        service: page.serviceLink,
+      },
+    };
+  });
+}
+
+type ServicePageResponse = Omit<PageResponse, "_type" | "parent"> & {
+  _type: "service" | "location";
+  parent?: string;
+  serviceLink: ServiceLink;
+  locationName: string;
+};
+
+type Props = {
+  settings: SiteSettingsResponse;
+  page: ServicePageResponse;
+  locations: LocationLink[];
+  services: ServiceCardResponse[];
+  locationName: string;
+  service: ServiceLink;
+};
+
+const { slug } = Astro.params;
+const { page, locations, services, settings } = Astro.props;
+
+let breadcrumbs = [
+  {
+    text: "Home",
+    url: "/",
+  },
+];
+
+if (page.parent && page._type === "service") {
+  breadcrumbs.push({
+    text: page.parent,
+    url: getServiceLinkUrl(
+      {
+        _type: "service",
+        title: page.parent,
+        parent: null,
+      },
+      undefined
+    ),
+  });
+}
+
+if (page._type === "location") {
+  breadcrumbs.push({
+    text: page.serviceLink.title,
+    url: getServiceLinkUrl(page.serviceLink, undefined),
+  });
+}
+
+breadcrumbs.push({
+  text: page.title,
+  url: `/services/${slug}`,
+});
+---
+
+<Page
+  title={page.metaTitle ? page.metaTitle : page.title}
+  description={page.metaDescription}
+  image={page.metaImage}
+  settings={settings}
+  locations={locations}
+  services={services}
+>
+  {
+    page.banner ? (
+      <InnerPageBanner
+        breadcrumbs={breadcrumbs}
+        subtitle={
+          page.banner.subtitle
+            ? page.banner.subtitle
+            : page.parent
+              ? page.parent
+              : undefined
+        }
+        title={page.banner.title.replaceAll("##location##", page.locationName)}
+        ctas={
+          page.banner.ctas !== null
+            ? page.banner.ctas.map((cta) => mapLinkAttributes(cta))
+            : []
+        }
+        uspList={page.banner.usps ? settings.usps : []}
+        theme={page.banner.theme}
+      >
+        <PortableText blockContent={page.banner.blockContent} />
+      </InnerPageBanner>
+    ) : null
+  }
+
+  {
+    page.blockContent ? (
+      <Widgets
+        widgets={page.blockContent}
+        usps={settings.usps}
+        locations={locations}
+        services={services}
+        locationName={page.locationName}
+        service={page.serviceLink}
+      />
+    ) : null
+  }
+</Page>

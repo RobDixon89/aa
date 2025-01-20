@@ -8,70 +8,6 @@ import { Themes } from "../../components/Section/Section";
 import ss from "../../components/Section/Section.module.scss";
 import s from "./Header.module.scss";
 
-import { LinkIcon, MarkerIcon, WrenchIcon } from "@sanity/icons";
-import { defineField } from "sanity";
-import { internalLink } from "../../../../schema/linkList";
-
-export const headerFields = [
-  defineField({
-    name: "navigationLinks",
-    type: "array",
-    title: "Navigation Links",
-    group: "navigation",
-    of: [
-      defineField({
-        icon: LinkIcon,
-        name: "dropdown",
-        type: "object",
-        title: "Navigation Dropdown Link",
-        fields: [
-          defineField({
-            name: "text",
-            type: "string",
-            title: "Link Text",
-            description: `If this isn't populated will default to the page title`,
-          }),
-          internalLink,
-        ],
-      }),
-      defineField({
-        icon: MarkerIcon,
-        name: "locationDropdown",
-        type: "object",
-        fields: [
-          defineField({
-            name: "text",
-            type: "string",
-            title: "Title",
-            validation: (Rule) => Rule.required(),
-          }),
-        ],
-      }),
-      defineField({
-        icon: WrenchIcon,
-        name: "servicesDropdown",
-        type: "object",
-        fields: [
-          defineField({
-            name: "text",
-            type: "string",
-            title: "Title",
-            validation: (Rule) => Rule.required(),
-          }),
-        ],
-      }),
-    ],
-  }),
-  defineField({
-    name: "headerButtonText",
-    type: "string",
-    title: "Contact Button Text",
-    group: "navigation",
-    description:
-      "If left blank, no Contact Button will be displayed in the header",
-  }),
-];
-
 type NavigationDropdownSimple = {
   type: "simple";
   items: CtaModel[];
@@ -87,14 +23,14 @@ type NavigationDropdownComplex = {
   items: NavigationDropdownGroup[];
 };
 
-type NavigationLink = CtaModel & {
+export type NavigationLink = CtaModel & {
   id: string;
   dropdown: NavigationDropdownSimple | NavigationDropdownComplex;
 };
 
 export type HeaderProps = {
   links: NavigationLink[];
-  contactLink: CtaModel;
+  contactLink?: CtaModel;
 };
 
 const Header: React.FC<HeaderProps> = (props) => {
@@ -233,8 +169,8 @@ const Header: React.FC<HeaderProps> = (props) => {
                 </li>
               ))}
 
-              <li>
-                {props.contactLink ? (
+              {props.contactLink ? (
+                <li>
                   <LinkButton
                     theme="default"
                     label={props.contactLink.text}
@@ -242,8 +178,8 @@ const Header: React.FC<HeaderProps> = (props) => {
                     onMouseEnter={() => handleUnhover()}
                     onFocus={() => handleUnhover()}
                   />
-                ) : null}
-              </li>
+                </li>
+              ) : null}
             </ul>
           </nav>
 

@@ -26,12 +26,12 @@
   @include richTextColumns();
 }
 
-.title {
+h2.title {
   font-size: var(--font-size-h3);
   margin-bottom: 0.5em;
 }
 
-.richText {
+div.richText {
   [data-columns="true"] & {
     @include from(mobileLarge) {
       columns: 2;

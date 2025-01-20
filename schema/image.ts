@@ -1,4 +1,5 @@
 import { ImageIcon } from "@sanity/icons";
+import type { SanityImageObject } from "@sanity/image-url/lib/types/types";
 import { defineField, defineType } from "sanity";
 
 export default defineType({
@@ -18,3 +19,15 @@ export default defineType({
     }),
   ],
 });
+
+export type ImageWithAlt = SanityImageObject & {
+  _type: "imageWithAlt";
+  altText: string;
+  imageUrl: string;
+};
+
+export const imageWithAltSnippet = `
+  ...,
+  "imageUrl": asset->url,
+  "aspectRatio": asset->width / asset->height
+`;

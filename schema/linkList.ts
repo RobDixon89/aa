@@ -18,6 +18,56 @@ export const internalLink = defineField({
   ],
 });
 
+type PageLink = {
+  _type: "page" | "serviceLandingTemplate" | "locationTemplates";
+  title: string;
+  url: string;
+};
+
+export type LocationLink = {
+  _type: "location";
+  name: string;
+  area: string;
+  addToNav: boolean | null;
+};
+
+export type ServiceLink = {
+  _type: "service";
+  title: string;
+  parent: string | null;
+};
+
+export type InternalLink = PageLink | LocationLink | ServiceLink;
+
+export const locationLinkSnippet = `
+  name,
+  "area": areaRef-> name,
+  addToNav
+`;
+
+export const serviceLinkSnippet = `
+  title,
+  "parent": parentService-> title
+`;
+
+export const internalLinkSnippet = `
+  ...,  
+  _type=='location'=>{ ${locationLinkSnippet} },
+  _type=='locationTemplates'=>{
+    title,
+    "url": "locations"
+  },
+  _type=='page'=>{
+    title,
+    "url": slug.current,
+  },
+  _type=='service'=>{ ${serviceLinkSnippet} },
+  _type=='serviceLandingTemplate'=>{
+    title,
+    "url": "services"
+  },
+`;
+
 const externalLink = defineField({
   name: "externalUrl",
   title: "External URL",
@@ -65,6 +115,26 @@ export const labelledLinkField = defineField({
     contactLink,
   ],
 });
+
+export const linkSnippet = `
+  externalUrl,
+  internalLink-> {
+    ${internalLinkSnippet}
+  },
+  contactLink
+`;
+
+export const labelledLinkSnippet = `
+  "title": text,
+  ${linkSnippet}
+`;
+
+export type LabelledLink = {
+  title: string | null;
+  externalUrl: string | null;
+  internalLink: InternalLink | null;
+  contactLink: boolean | null;
+};
 
 export default defineType({
   icon: LinkIcon,

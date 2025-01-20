@@ -1,121 +1,87 @@
 import React from "react";
 import g from "../../../lib/global.module.scss";
+import { insertLocationName } from "../../../utils";
 import Section, { Themes } from "../../components/Section/Section";
 import s from "./Steps.module.scss";
 
-import { DashboardIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
-import { blockContent } from "../../../../schema/blockContent";
-import { themeList } from "../../../../schema/themes";
-
-export const stepsSchema = defineType({
-  icon: DashboardIcon,
-  name: "steps",
-  type: "object",
-  title: "Steps",
-  preview: {
-    select: {
-      title: "title",
-      blockContent: "blockContent",
-    },
-    prepare(selection) {
-      const { title, blockContent } = selection;
-      return {
-        title: title ? title : blockContent?.[0]?.children[0].text,
-      };
-    },
-  },
-  fields: [
-    defineField({
-      name: "title",
-      type: "string",
-      title: "Heading",
-      description: "Will be a h2 tag",
-    }),
-    blockContent("contentOnly", undefined, "Introduction"),
-    defineField({
-      name: "items",
-      title: "Steps",
-      type: "array",
-      of: [
-        defineField({
-          name: "step",
-          type: "object",
-          title: "Content Step",
-          preview: {
-            select: {
-              title: "blockContent",
-            },
-          },
-          fields: [
-            blockContent("contentOnly", undefined, "Content"),
-            themeList([Themes.default, Themes.blue]),
-          ],
-        }),
-        defineField({
-          name: "stepImage",
-          type: "object",
-          title: "Image Step",
-          preview: {
-            select: {
-              title: "image.altText",
-            },
-          },
-          fields: [
-            defineField({
-              name: "image",
-              title: "Image",
-              type: "imageWithAlt",
-            }),
-            defineField({
-              name: "imageType",
-              title: "Image Type",
-              type: "string",
-              description:
-                "Should the image expand to cover the entire square or should it be contained within without cropping (eg. a logo)",
-              initialValue: "cover",
-              options: {
-                list: [
-                  { value: "contain", title: "Cover" },
-                  { value: "cover", title: "Contain" },
-                ],
-              },
-              validation: (Rule) => Rule.required(),
-            }),
-          ],
-        }),
-      ],
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "ctas",
-      title: "Link List",
-      type: "linkList",
-    }),
-    themeList([Themes.lightBlue, Themes.yellow, Themes.navy]),
-  ],
-});
-
-export type StepsProps = {
+export type StepCardModel = {
+  _type: "step";
   id: string;
   content: string;
+  theme: Themes;
+};
+
+export type ImageCardModel = {
+  _type: "stepImage";
+  id: string;
+  image: ImageModel;
+  imageType: "contain" | "cover";
+};
+
+export type StepsProps = React.HTMLAttributes<HTMLDivElement> & {
+  id: string;
   title?: string;
+  items: (StepCardModel | ImageCardModel)[];
   theme: Exclude<Themes, Themes.lightBlue | Themes.yellow | Themes.navy>;
+  hasIntroduction: boolean;
+  location?: string;
 };
 
 const Steps: React.FC<StepsProps> = (props) => {
-  if (!props.content) {
+  if (!props.items || props.items.length === 0) {
     return null;
   }
+
+  // Split children, which contains introduction as well as step card contents
+  const children = props.children
+    ? insertLocationName(props.children, props.location)
+        .split("</div>")
+        .filter((c) => c !== "")
+    : [];
+
+  // Create array of step card IDs to use as index for the content location
+  const stepIds = props.items
+    .filter((item) => item._type === "step")
+    .map((item) => item.id);
 
   return (
     <Section grid={true}>
       <div className={s.container}>
         {props.title && <h2 className={s.title}>{props.title}</h2>}
-        <div
-          className={`${g.richText}`}
-          dangerouslySetInnerHTML={{ __html: props.content }}
-        />
+        {props.hasIntroduction ? (
+          <div
+            className={`${g.richText}`}
+            dangerouslySetInnerHTML={{ __html: children[0] }}
+          />
+        ) : null}
+
+        <ol>
+          {props.items.map((item) => (
+            <React.Fragment key={`${props.id}-${item.id}`}>
+              {item._type === "step" ? (
+                <li
+                  data-theme={item.theme}
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      children[
+                        stepIds.findIndex((s) => s === item.id) +
+                          (props.hasIntroduction ? 1 : 0)
+                      ],
+                  }}
+                />
+              ) : (
+                <li>
+                  <img
+                    // className={s.image}
+                    src={item.image.src}
+                    alt={item.image.altText}
+                    loading="lazy"
+                  />
+                </li>
+              )}
+            </React.Fragment>
+          ))}
+        </ol>
       </div>
     </Section>
   );

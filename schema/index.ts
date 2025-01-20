@@ -4,21 +4,21 @@ import linkList from "./linkList";
 import uspList from "./uspList";
 
 // Widget schema definitions
-import { innerPageBannerSchema } from "../src/stories/widgets/InnerPageBanner/InnerPageBanner";
-
-// Page schema definitions
-import { embeddedFormSchema } from "../src/stories/widgets/EmbeddedForm/EmbeddedForm";
-import { faqsSchema } from "../src/stories/widgets/FAQs/FAQs";
-import { homeHeroSchema } from "../src/stories/widgets/HomeHero/HomeHero";
-import { imageBlockSchema } from "../src/stories/widgets/ImageBlock/ImageBlock";
-import { imageText5050Schema } from "../src/stories/widgets/ImageText5050/ImageText5050";
+import { embeddedFormSchema } from "../src/stories/widgets/EmbeddedForm/schema";
+import { faqsSchema } from "../src/stories/widgets/FAQs/schema";
+import { homeHeroSchema } from "../src/stories/widgets/HomeHero/schema";
+import { imageBlockSchema } from "../src/stories/widgets/ImageBlock/schema";
+import { imageText5050Schema } from "../src/stories/widgets/ImageText5050/schema";
+import { innerPageBannerSchema } from "../src/stories/widgets/InnerPageBanner/schema";
 import {
   locationListSchema,
   richTextSchema,
-} from "../src/stories/widgets/RichText/RichText";
-import { serviceCardsSchema } from "../src/stories/widgets/ServiceCards/ServiceCards";
-import { stepsSchema } from "../src/stories/widgets/Steps/Steps";
+} from "../src/stories/widgets/RichText/schema";
+import { serviceCardsSchema } from "../src/stories/widgets/ServiceCards/schema";
+import { stepsSchema } from "../src/stories/widgets/Steps/schema";
 import { testimonialsSchema } from "../src/stories/widgets/Testimonials/Testimonials";
+
+// Page schema definitions
 import area from "./area";
 import homepage from "./homepage";
 import location from "./location";

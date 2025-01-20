@@ -2,36 +2,11 @@ import React from "react";
 import Section, { Themes } from "../../components/Section/Section";
 import s from "./ImageBlock.module.scss";
 
-import { ImageIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
-import { themeList } from "../../../../schema/themes";
-
-export const imageBlockSchema = defineType({
-  icon: ImageIcon,
-  name: "imageBlock",
-  type: "object",
-  title: "Image Block",
-  fields: [
-    defineField({
-      name: "image",
-      title: "Image",
-      type: "imageWithAlt",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "caption",
-      type: "string",
-      title: "Caption",
-    }),
-    themeList([Themes.blue, Themes.yellow]),
-  ],
-});
-
 export type ImageBlockProps = React.HTMLAttributes<HTMLDivElement> & {
   _type: "ImageBlock";
   image: ImageModel;
   theme?: Exclude<Themes, Themes.blue | Themes.yellow>;
-  caption?: string;
+  caption: string | null;
 };
 
 type Props = Omit<ImageBlockProps, "_type">;

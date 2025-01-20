@@ -64,6 +64,18 @@ function locationGroup(count: number, i: number): NavigationDropdownGroup {
   };
 }
 
+function serviceGroup(count: number, i: number): NavigationDropdownGroup {
+  const n = Math.floor((Math.random() * 10) / 2);
+
+  return {
+    title: `Parent Service ${i + 1}`,
+    items: Array.from({ length: count }).map((_, i) => ({
+      text: i === 0 ? "Parent Service" : "Service Name",
+      url: "#",
+    })),
+  };
+}
+
 export const Default = Template.bind({});
 Default.args = {
   links: [
@@ -72,8 +84,8 @@ Default.args = {
       text: "Services",
       url: "#",
       dropdown: {
-        type: "simple",
-        items: dropdownlinks,
+        type: "complex",
+        items: [...[5, 3, 4, 2, 3, 4, 6].map((n, i) => serviceGroup(n, i))],
       },
     },
     {

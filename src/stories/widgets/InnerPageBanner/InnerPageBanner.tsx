@@ -1,6 +1,6 @@
 import React from "react";
 import g from "../../../lib/global.module.scss";
-import { highlightTitleWords } from "../../../utils";
+import { highlightTitleWords, insertLocationName } from "../../../utils";
 import Icon, { IconType, type CtaIconModel } from "../../../utils/icon";
 import CtaBlock from "../../components/CtaBlock/CtaBlock";
 import Section, { Themes } from "../../components/Section/Section";
@@ -8,65 +8,29 @@ import type { UspModel } from "../../components/UspList/UspList";
 import UspList from "../../components/UspList/UspList";
 import s from "./InnerPageBanner.module.scss";
 
-import { defineField, defineType } from "sanity";
-import { blockContent } from "../../../../schema/blockContent";
-import { themeList } from "../../../../schema/themes";
-
-export const innerPageBannerSchema = defineType({
-  name: "innerPageBanner",
-  type: "object",
-  title: "Page Banner",
-  fields: [
-    defineField({
-      name: "image",
-      title: "Image",
-      type: "imageWithAlt",
-    }),
-    defineField({
-      name: "title",
-      type: "string",
-      title: "Heading",
-      description:
-        "Wrap words in asterisks to add a highlight, eg. Your local TV Aerial and Satellite *specialists*",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "subtitle",
-      type: "string",
-      title: "Sub Heading",
-      description:
-        "Displayed before the heading, will default to the name of the parent page if unpopulated",
-    }),
-    blockContent("contentOnly", undefined, "Text Content"),
-    defineField({
-      name: "ctas",
-      title: "Link List",
-      type: "linkList",
-    }),
-    defineField({
-      name: "usps",
-      title: "Display USP List",
-      type: "boolean",
-    }),
-    themeList([Themes.default, Themes.navy]),
-  ],
-});
-
 export type InnerPageBannerProps = React.HTMLAttributes<HTMLDivElement> & {
   _type: "innerPageBanner";
   breadcrumbs: CtaModel[];
-  content?: string;
   ctas?: CtaIconModel[];
   image?: ImageModel;
   subtitle?: string;
   theme: Exclude<Themes, Themes.default | Themes.navy>;
   title: string;
   uspList?: UspModel[];
+  location?: string;
 };
 
 type Props = Omit<InnerPageBannerProps, "_type">;
 
 const InnerPageBanner: React.FC<Props> = (props) => {
+  const children = React.useMemo(
+    () =>
+      props.children
+        ? insertLocationName(props.children, props.location)
+        : undefined,
+    []
+  );
+
   return (
     <Section className={s.innerPageBanner} grid={true} theme={props.theme}>
       {props.image && props.image.src ? (
@@ -107,12 +71,13 @@ const InnerPageBanner: React.FC<Props> = (props) => {
           className={s.title}
           dangerouslySetInnerHTML={{ __html: highlightTitleWords(props.title) }}
         />
-        {props.content && (
+
+        {children ? (
           <div
             className={`${g.richText} ${s.content}`}
-            dangerouslySetInnerHTML={{ __html: props.content }}
+            dangerouslySetInnerHTML={{ __html: children }}
           />
-        )}
+        ) : null}
 
         {props.ctas && props.ctas.length > 0 ? (
           <CtaBlock id="page-banner" items={props.ctas} />

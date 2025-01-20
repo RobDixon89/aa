@@ -18,12 +18,19 @@ const Template: StoryFn<HomeHeroProps> = (args: HomeHeroProps) => (
 export const Default = Template.bind({});
 Default.args = {
   title: "Your local TV Aerial and Satellite *specialists*",
-  content: `<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-  <ul>
-    <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-    <li>Vestibulum auctor dapibus neque.</li>
-    <li>Aliquam tincidunt mauris eu risus.</li>
-  </ul>`,
+  children: (
+    <>
+      <p>
+        Pellentesque habitant morbi tristique senectus et netus et malesuada
+        fames ac turpis egestas.
+      </p>
+      <ul>
+        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+        <li>Vestibulum auctor dapibus neque.</li>
+        <li>Aliquam tincidunt mauris eu risus.</li>
+      </ul>
+    </>
+  ),
   ctas: [
     {
       text: "Book an appointment",

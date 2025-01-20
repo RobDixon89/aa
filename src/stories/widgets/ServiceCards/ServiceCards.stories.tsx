@@ -18,5 +18,17 @@ export const Default = Template.bind({});
 Default.args = {
   id: "sc-sjdgldskjabsaldj",
   title: "Our Services",
-  content: `<p>Vestibulum in enim condimentum, tristique ligula vel, scelerisque felis. Fusce suscipit hendrerit metus et sodales. Phasellus ut euismod lacus. Mauris hendrerit dolor ligula, sit amet congue mauris luctus a. Ut volutpat sagittis fermentum. </p>`,
+  children: (
+    <>
+      <p>
+        Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod
+        in, pharetra a, ultricies in, diam. Sed arcu. Cras consequat.
+      </p>
+      <p>
+        Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue,
+        eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi,
+        tincidunt quis, accumsan porttitor, facilisis luctus, metus.
+      </p>
+    </>
+  ),
 };

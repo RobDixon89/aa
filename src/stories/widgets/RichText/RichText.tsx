@@ -1,5 +1,6 @@
 import React from "react";
 import g from "../../../lib/global.module.scss";
+import { insertLocationName } from "../../../utils";
 import { type CtaIconModel } from "../../../utils/icon";
 import CtaBlock from "../../components/CtaBlock/CtaBlock";
 import Section from "../../components/Section/Section";
@@ -7,91 +8,21 @@ import type { UspModel } from "../../components/UspList/UspList";
 import UspList from "../../components/UspList/UspList";
 import s from "./RichText.module.scss";
 
-import { MarkerIcon, TextIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
-import { blockContent } from "../../../../schema/blockContent";
-
-export const richTextSchema = defineType({
-  icon: TextIcon,
-  name: "richText",
-  type: "object",
-  title: "Rich Text Block",
-  preview: {
-    select: {
-      title: "title",
-      blockContent: "blockContent",
-    },
-    prepare(selection) {
-      const { title, blockContent } = selection;
-      return {
-        title: title ? title : blockContent?.[0]?.children[0].text,
-      };
-    },
-  },
-  fields: [
-    defineField({
-      name: "title",
-      type: "string",
-      title: "Heading",
-      description: "Will be a h2 tag",
-    }),
-    blockContent("contentOnly", undefined, "Text Content"),
-    defineField({
-      name: "alignment",
-      title: "Text Alignment",
-      type: "string",
-      initialValue: "left",
-      options: {
-        list: [
-          { value: "left", title: "Left" },
-          { value: "center", title: "Centre" },
-        ],
-      },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "ctas",
-      title: "Link List",
-      type: "linkList",
-    }),
-    defineField({
-      name: "usps",
-      title: "Display USP List",
-      type: "boolean",
-    }),
-  ],
-});
-
-export const locationListSchema = defineType({
-  icon: MarkerIcon,
-  name: "locationList",
-  type: "object",
-  title: "Location List",
-  description:
-    "Will display a list of all locations in a column, when placed on a category page this will link to the location page for that category",
-  fields: [
-    defineField({
-      name: "title",
-      type: "string",
-      title: "Heading",
-    }),
-  ],
-});
-
-export type RichTextProps = {
+export type RichTextProps = React.HTMLAttributes<HTMLDivElement> & {
   id: string;
   alignment?: "left" | "center";
   ctas: CtaIconModel[];
   columns?: boolean;
-  content: string;
-  title?: string;
+  title?: string | null;
   uspList?: UspModel[];
+  location?: string;
 };
 
 const RichText: React.FC<RichTextProps> = (props) => {
-  if (!props.content) {
-    return null;
-  }
+  const children = React.useMemo(
+    () => insertLocationName(props.children, props.location),
+    []
+  );
 
   return (
     <Section grid={true}>
@@ -101,9 +32,10 @@ const RichText: React.FC<RichTextProps> = (props) => {
         data-columns={props.columns}
       >
         {props.title && <h2 className={s.title}>{props.title}</h2>}
+
         <div
           className={`${g.richText} ${s.richText}`}
-          dangerouslySetInnerHTML={{ __html: props.content }}
+          dangerouslySetInnerHTML={{ __html: children }}
         />
 
         {props.ctas && props.ctas.length > 0 ? (

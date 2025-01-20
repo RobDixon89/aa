@@ -1,0 +1,85 @@
+---
+import { sanityClient } from "sanity:client";
+import {
+  serviceLandingPageQuery,
+  type ServiceLandingPageQueryResponse,
+  type ServiceLandingTemplateResponse,
+} from "../../../queries/services";
+import type { SiteSettingsResponse } from "../../../queries/settings";
+import type { LocationLink } from "../../../schema/linkList";
+import PortableText from "../../components/richTextBlocks/portableText.astro";
+import Widgets from "../../components/widgets.astro";
+import Page from "../../layouts/Page.astro";
+import InnerPageBanner from "../../stories/widgets/InnerPageBanner/InnerPageBanner";
+import type { ServiceCardResponse } from "../../stories/widgets/ServiceCards/schema";
+import { mapLinkAttributes } from "../../utils/mapping";
+
+export const prerender = true;
+
+const res = (await sanityClient.fetch(
+  serviceLandingPageQuery
+)) as ServiceLandingPageQueryResponse;
+
+type Props = {
+  settings: SiteSettingsResponse;
+  template: ServiceLandingTemplateResponse;
+  locations: LocationLink[];
+  services: ServiceCardResponse[];
+};
+
+const { template, locations, services, settings } = {
+  ...res,
+};
+---
+
+<Page
+  title={template.metaTitle ? template.metaTitle : template.title}
+  description={template.metaDescription}
+  image={template.metaImage}
+  settings={settings}
+  locations={locations}
+  services={services}
+>
+  {
+    template.banner ? (
+      <InnerPageBanner
+        breadcrumbs={[
+          {
+            text: "Home",
+            url: "/",
+          },
+          {
+            text: template.title,
+            url: `/locations`,
+          },
+        ]}
+        subtitle={
+          template.banner.subtitle ? template.banner.subtitle : undefined
+        }
+        title={template.banner.title}
+        ctas={
+          template.banner.ctas !== null
+            ? template.banner.ctas.map((cta) => mapLinkAttributes(cta))
+            : []
+        }
+        uspList={template.banner.usps ? settings.usps : []}
+        theme={template.banner.theme}
+      >
+        {template.banner.blockContent ? (
+          <PortableText blockContent={template.banner.blockContent} />
+        ) : undefined}
+      </InnerPageBanner>
+    ) : null
+  }
+
+  {
+    template.blockContent ? (
+      <Widgets
+        widgets={template.blockContent}
+        usps={settings.usps}
+        locations={locations}
+        services={services}
+      />
+    ) : null
+  }
+</Page>

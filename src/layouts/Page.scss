@@ -32,10 +32,6 @@
   --gutterWidth: #{fluid(16, 32)};
   --headerHeight: 60px;
 
-  @include from(tabletLarge) {
-    --headerHeight: 65px;
-  }
-
   /* CSS Reset - https://www.joshwcomeau.com/css/custom-css-reset/ */
   /* 1. Use a more-intuitive box-sizing model */
   *,
@@ -109,6 +105,7 @@
     line-height: 1.5;
     font-family: var(--font-family-sans);
     color: var(--body);
+    padding-top: var(--headerHeight);
   }
 
   // Line heights
@@ -117,6 +114,10 @@
   h3,
   h4 {
     line-height: 1.25;
+  }
+
+  @include from(tabletLarge) {
+    --headerHeight: 65px;
   }
 
   @media (prefers-reduced-motion: no-preference) {

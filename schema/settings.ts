@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
-import { footerFields } from "../src/stories/widgets/Footer/Footer";
-import { headerFields } from "../src/stories/widgets/Header/Header";
+import { footerFields } from "../src/stories/widgets/Footer/schema";
+import { headerFields } from "../src/stories/widgets/Header/schema";
 
 export default defineType({
   name: "siteSettings",

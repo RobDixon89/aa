@@ -2,68 +2,25 @@ import { motion, MotionConfig } from "motion/react";
 import React from "react";
 import { useFirstMountState } from "react-use";
 import g from "../../../lib/global.module.scss";
-import { clamp } from "../../../utils";
+import { clamp, insertLocationName } from "../../../utils";
 import Icon, { IconType } from "../../../utils/icon";
 import { useMediaQuery } from "../../../utils/useMediaQuery";
 import CtaBlock from "../../components/CtaBlock/CtaBlock";
 import Section, { Themes } from "../../components/Section/Section";
 import s from "./FAQs.module.scss";
 
-import { UnknownIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
-import { blockContent } from "../../../../schema/blockContent";
-
-export const faqsSchema = defineType({
-  icon: UnknownIcon,
-  name: "faqs",
-  type: "object",
-  title: "FAQs",
-  fields: [
-    defineField({
-      name: "title",
-      type: "string",
-      title: "Heading",
-    }),
-    defineField({
-      name: "items",
-      type: "array",
-      title: "FAQ List",
-      of: [
-        defineField({
-          type: "object",
-          name: "faq",
-          fields: [
-            defineField({
-              name: "question",
-              type: "string",
-              title: "Question",
-              validation: (Rule) => Rule.required(),
-            }),
-            blockContent("contentOnly", undefined, "Answer", "answer"),
-            defineField({
-              name: "ctas",
-              title: "Link List",
-              type: "linkList",
-            }),
-          ],
-        }),
-      ],
-    }),
-  ],
-});
-
 type FaqItem = {
   id: string;
   question: string;
-  answer: string;
   ctas: CtaModel[];
 };
 
-export type FaqsProps = {
+export type FaqsProps = React.HTMLAttributes<HTMLDivElement> & {
   id: string;
   items: FaqItem[];
-  title?: string;
+  title?: string | null;
   variant: "default" | "dark";
+  location?: string;
 };
 
 const Faqs: React.FC<FaqsProps> = (props) => {
@@ -83,6 +40,15 @@ const Faqs: React.FC<FaqsProps> = (props) => {
     }, 301);
   }, [active]);
 
+  // Split children as each child div is a FAQ answer
+  const children = React.useMemo(
+    () =>
+      insertLocationName(props.children, props.location)
+        .split("</div>")
+        .filter((c) => c !== ""),
+    []
+  );
+
   if (!props.items || !props.items.length) {
     return null;
   }
@@ -90,7 +56,7 @@ const Faqs: React.FC<FaqsProps> = (props) => {
   return (
     <Section className={s.wrapper} grid={true} data-variant={props.variant}>
       <div className={s.container}>
-        {props.title && <h2 className={s.title}>{props.title}</h2>}
+        {props.title !== null && <h2 className={s.title}>{props.title}</h2>}
 
         <MotionConfig transition={{ duration: 0.3 }}>
           {props.items.map((item, i) => (
@@ -155,18 +121,8 @@ const Faqs: React.FC<FaqsProps> = (props) => {
                 <div className={s.answer}>
                   <div
                     className={g.richText}
-                    dangerouslySetInnerHTML={{
-                      __html: item.answer
-                        .replaceAll(
-                          "<a",
-                          `<a tabindex="${active === i ? undefined : -1}"`
-                        )
-                        .replaceAll(
-                          "<button",
-                          `<button tabindex="${active === i ? undefined : -1}"`
-                        ),
-                    }}
-                  />
+                    dangerouslySetInnerHTML={{ __html: children[i] }}
+                  ></div>
 
                   {item.ctas && item.ctas.length > 0 ? (
                     <CtaBlock
