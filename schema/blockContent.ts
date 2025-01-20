@@ -1,5 +1,5 @@
 import { defineField } from "sanity";
-import { linkField } from "./linkList";
+import { linkField, linkSnippet } from "./linkList";
 
 const blocks = [
   { type: "embeddedForm", name: "embeddedForm" },
@@ -70,3 +70,11 @@ export const blockContent = (
       ...(type === "all" ? blocks : []),
     ],
   });
+
+export const contentOnlySnippet = `
+  ...,
+  markDefs[] {
+    ...,
+    ${linkSnippet}
+  }
+`;

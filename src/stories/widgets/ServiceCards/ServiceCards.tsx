@@ -7,6 +7,12 @@ import { WrenchIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { blockContent } from "../../../../schema/blockContent";
 
+export const serviceCardsQuery = `
+  _type=='serviceCards' => {
+    ...
+  }
+`;
+
 export const serviceCardsSchema = defineType({
   icon: WrenchIcon,
   name: "serviceCards",

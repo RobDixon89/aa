@@ -1,0 +1,36 @@
+---
+export const prerender = true;
+import { sanityClient } from "sanity:client";
+import {
+  siteSettingsQuery,
+  type SiteSettingsResponse,
+} from "../../queries/settings";
+
+export async function getStaticPaths() {
+  console.log(global);
+  // const pages = await sanityClient.fetch(``);
+  const pages = [{ slug: "test" }];
+
+  return pages.map((page: any) => {
+    return {
+      params: {
+        slug: page.slug.current,
+      },
+    };
+  });
+}
+
+const global = (await sanityClient.fetch(
+  `${siteSettingsQuery}`
+)) as SiteSettingsResponse;
+
+const { slug } = Astro.params;
+console.log(global);
+---
+
+<!-- https://developers.netlify.com/guides/how-to-use-sanity-cms-with-astro/#astro-dynamic-routes -->
+<html>
+  <body>
+    <h1>{slug}</h1>
+  </body>
+</html>

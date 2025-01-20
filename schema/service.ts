@@ -54,14 +54,7 @@ export default defineType({
       description: "Parent service is used to define the page structure.",
       options: {
         disableNew: true,
-        filter: ({ document }) => {
-          return {
-            filter: "_id != $currentId",
-            params: {
-              currentId: document._id,
-            },
-          };
-        },
+        filter: "!defined(parentService)",
       },
       validation: (rule) =>
         rule.custom((parentService, context) => {

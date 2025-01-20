@@ -14,6 +14,13 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "rating",
+      title: "Rating",
+      type: "number",
+      description: "Enter a rating between 1 and 5",
+      validation: (Rule) => Rule.required().precision(0).min(1).max(5),
+    }),
+    defineField({
       name: "review",
       title: "Review",
       type: "text",

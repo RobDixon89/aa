@@ -8,54 +8,10 @@ import type { UspModel } from "../../components/UspList/UspList";
 import UspList from "../../components/UspList/UspList";
 import s from "./InnerPageBanner.module.scss";
 
-import { defineField, defineType } from "sanity";
-import { blockContent } from "../../../../schema/blockContent";
-import { themeList } from "../../../../schema/themes";
-
-export const innerPageBannerSchema = defineType({
-  name: "innerPageBanner",
-  type: "object",
-  title: "Page Banner",
-  fields: [
-    defineField({
-      name: "image",
-      title: "Image",
-      type: "imageWithAlt",
-    }),
-    defineField({
-      name: "title",
-      type: "string",
-      title: "Heading",
-      description:
-        "Wrap words in asterisks to add a highlight, eg. Your local TV Aerial and Satellite *specialists*",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "subtitle",
-      type: "string",
-      title: "Sub Heading",
-      description:
-        "Displayed before the heading, will default to the name of the parent page if unpopulated",
-    }),
-    blockContent("contentOnly", undefined, "Text Content"),
-    defineField({
-      name: "ctas",
-      title: "Link List",
-      type: "linkList",
-    }),
-    defineField({
-      name: "usps",
-      title: "Display USP List",
-      type: "boolean",
-    }),
-    themeList([Themes.default, Themes.navy]),
-  ],
-});
-
 export type InnerPageBannerProps = React.HTMLAttributes<HTMLDivElement> & {
   _type: "innerPageBanner";
   breadcrumbs: CtaModel[];
-  content?: string;
+  content?: string | HTMLElement;
   ctas?: CtaIconModel[];
   image?: ImageModel;
   subtitle?: string;
@@ -67,6 +23,7 @@ export type InnerPageBannerProps = React.HTMLAttributes<HTMLDivElement> & {
 type Props = Omit<InnerPageBannerProps, "_type">;
 
 const InnerPageBanner: React.FC<Props> = (props) => {
+  console.log(props);
   return (
     <Section className={s.innerPageBanner} grid={true} theme={props.theme}>
       {props.image && props.image.src ? (
@@ -110,8 +67,14 @@ const InnerPageBanner: React.FC<Props> = (props) => {
         {props.content && (
           <div
             className={`${g.richText} ${s.content}`}
-            dangerouslySetInnerHTML={{ __html: props.content }}
-          />
+            dangerouslySetInnerHTML={
+              typeof props.content === "string"
+                ? { __html: props.content }
+                : undefined
+            }
+          >
+            {typeof props.content === "object" ? <>{props.content}</> : null}
+          </div>
         )}
 
         {props.ctas && props.ctas.length > 0 ? (

@@ -4,7 +4,7 @@ import linkList from "./linkList";
 import uspList from "./uspList";
 
 // Widget schema definitions
-import { innerPageBannerSchema } from "../src/stories/widgets/InnerPageBanner/InnerPageBanner";
+import { innerPageBannerSchema } from "../src/stories/widgets/InnerPageBanner/schema";
 
 // Page schema definitions
 import { embeddedFormSchema } from "../src/stories/widgets/EmbeddedForm/EmbeddedForm";

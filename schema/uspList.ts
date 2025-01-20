@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import type { IconType } from "../src/utils/icon";
 import { iconField } from "./iconField";
 
 export default defineType({
@@ -24,3 +25,17 @@ export default defineType({
     }),
   ],
 });
+
+export const uspListQuery = `
+  "usps": uspItems[] {
+    title,
+    icon
+  }
+`;
+
+export type UspFieldResponse = {
+  usps: {
+    title: string;
+    icon: IconType;
+  };
+};

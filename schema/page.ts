@@ -91,14 +91,7 @@ export default defineType({
       description: "Parent page is used to generate the Slug field.",
       options: {
         disableNew: true,
-        filter: ({ document }) => {
-          return {
-            filter: "_id != $currentId",
-            params: {
-              currentId: document._id,
-            },
-          };
-        },
+        filter: "!defined(parentPage)",
       },
       validation: (rule) =>
         rule.custom((parentPage, context) => {

@@ -1,8 +1,536 @@
 ---
+import { PortableText } from "astro-portabletext";
+import { Block, List } from "astro-portabletext/components";
+import type { PortableTextComponents } from "astro-portabletext/types";
+import Marks from "../components/richTextBlocks/marks.astro";
+import Paragraphs from "../components/richTextBlocks/paragraphs.astro";
 import Page from "../layouts/Page.astro";
+import { Themes } from "../stories/components/Section/Section";
 import HomeHero from "../stories/widgets/HomeHero/HomeHero";
+import InnerPageBanner from "../stories/widgets/InnerPageBanner/InnerPageBanner";
+import type { InnerPageBannerResponse } from "../stories/widgets/InnerPageBanner/schema";
+
+const components: Partial<PortableTextComponents> = {
+  list: List,
+  mark: Marks,
+  block: {
+    h1: Block,
+    h2: Block,
+    h3: Block,
+    h4: Block,
+    h5: Block,
+    h6: Block,
+    blockquote: Block,
+    normal: Block,
+    large: Paragraphs as any,
+    small: Paragraphs as any,
+    subtitle: Paragraphs as any,
+  },
+};
+
+const blockContent = [
+  {
+    children: [
+      {
+        text: "Pellentesque ",
+        _key: "700abb9bbefd",
+        _type: "span",
+        marks: [],
+      },
+      {
+        _type: "span",
+        marks: ["em"],
+        text: "habitant ",
+        _key: "4c6365d9d9a4",
+      },
+      {
+        _type: "span",
+        marks: [],
+        text: "morbi tristique ",
+        _key: "9da11af97e1e",
+      },
+      {
+        text: "senectus ",
+        _key: "459f51724176",
+        _type: "span",
+        marks: ["strong"],
+      },
+      {
+        _type: "span",
+        marks: [],
+        text: "et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu ",
+        _key: "19800405b9ee",
+      },
+      {
+        _type: "span",
+        marks: ["a46c6064104b"],
+        text: "libero sit",
+        _key: "4c0c460da4b0",
+      },
+      {
+        _type: "span",
+        marks: [],
+        text: " amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
+        _key: "b7295b9e9252",
+      },
+    ],
+    _type: "block",
+    style: "normal",
+    _key: "1af0b87da238",
+    markDefs: [
+      {
+        _type: "contentLink",
+        _key: "a46c6064104b",
+        internalLink: {
+          title: "Cookies Policy",
+          url: "cookies-policy",
+        },
+      },
+    ],
+  },
+  {
+    _key: "7771c17fb5df",
+    listItem: "bullet",
+    markDefs: [],
+    children: [
+      {
+        _type: "span",
+        marks: [],
+        text: "Unordered List 1",
+        _key: "a8a19594ee9c",
+      },
+    ],
+    level: 1,
+    _type: "block",
+    style: "normal",
+  },
+  {
+    _key: "d707f1889dfc",
+    listItem: "bullet",
+    markDefs: [],
+    children: [
+      {
+        _key: "7a96d3a42511",
+        _type: "span",
+        marks: [],
+        text: "Unordered List 2",
+      },
+    ],
+    level: 1,
+    _type: "block",
+    style: "normal",
+  },
+  {
+    listItem: "number",
+    markDefs: [],
+    children: [
+      {
+        _type: "span",
+        marks: [],
+        text: "Ordered List 1",
+        _key: "8c7ab3d0bf7b",
+      },
+    ],
+    level: 1,
+    _type: "block",
+    style: "normal",
+    _key: "dd4ed80b7622",
+  },
+  {
+    style: "normal",
+    _key: "3ce7ba06fc37",
+    listItem: "number",
+    markDefs: [],
+    children: [
+      {
+        _key: "81dd0a05c338",
+        _type: "span",
+        marks: [],
+        text: "Ordered List",
+      },
+    ],
+    level: 1,
+    _type: "block",
+  },
+  {
+    _key: "95a4334c2765",
+    markDefs: [
+      {
+        externalUrl: "https://google.com",
+        _type: "contentLink",
+        _key: "3638550b96a1",
+        internalLink: null,
+      },
+    ],
+    children: [
+      {
+        _type: "span",
+        marks: [],
+        text: "Large text with ",
+        _key: "5fd49d1e2ffc",
+      },
+      {
+        _type: "span",
+        marks: ["3638550b96a1"],
+        text: "link",
+        _key: "0391e044cff5",
+      },
+      {
+        text: " inside",
+        _key: "24b3f9f0b04a",
+        _type: "span",
+        marks: [],
+      },
+    ],
+    _type: "block",
+    style: "large",
+  },
+  {
+    markDefs: [],
+    children: [
+      {
+        _type: "span",
+        marks: [],
+        text: "Small text",
+        _key: "02922b60f71f",
+      },
+    ],
+    _type: "block",
+    style: "small",
+    _key: "15c9ba2ce17d",
+  },
+  {
+    style: "subtitle",
+    _key: "d98268c4c3b0",
+    markDefs: [],
+    children: [
+      {
+        _type: "span",
+        marks: [],
+        text: "Subtitle",
+        _key: "aa5d4d23a35a",
+      },
+    ],
+    _type: "block",
+  },
+  {
+    _key: "c3a9e92e4dc1",
+    markDefs: [],
+    children: [
+      {
+        _type: "span",
+        marks: [],
+        text: "Heading 3",
+        _key: "bcd101d3af52",
+      },
+    ],
+    _type: "block",
+    style: "h3",
+  },
+  {
+    style: "h4",
+    _key: "d45a3f198fad",
+    markDefs: [],
+    children: [
+      {
+        _type: "span",
+        marks: [],
+        text: "Heading 4",
+        _key: "b26ca1b28ae1",
+      },
+    ],
+    _type: "block",
+  },
+  {
+    _type: "block",
+    style: "blockquote",
+    _key: "233f77342f83",
+    markDefs: [],
+    children: [
+      {
+        marks: [],
+        text: "quote",
+        _key: "9087058ff014",
+        _type: "span",
+      },
+    ],
+  },
+];
+
+const banner: InnerPageBannerResponse = {
+  theme: Themes.blue,
+  image: {
+    crop: {
+      top: 0,
+      left: 0,
+      bottom: 0,
+      _type: "sanity.imageCrop",
+      right: 0,
+    },
+    altText: "Satellite Dish",
+    hotspot: {
+      x: 0.5121951219512196,
+      y: 0.5237648530331456,
+      height: 0.6672920575359602,
+      _type: "sanity.imageHotspot",
+      width: 0.4803001876172608,
+    },
+    _type: "imageWithAlt",
+    asset: {
+      _ref: "image-a53beb0206a26c36efc86b9ee6957d6b0d2d890b-4592x3448-jpg",
+      _type: "reference",
+    },
+  },
+  title: "Lorem Ipsum Dolor Sit",
+  subtitle: null,
+  blockContent: [
+    {
+      children: [
+        {
+          _type: "span",
+          marks: [],
+          text: "Pellentesque ",
+          _key: "700abb9bbefd",
+        },
+        {
+          _key: "4c6365d9d9a4",
+          _type: "span",
+          marks: ["em"],
+          text: "habitant ",
+        },
+        {
+          _type: "span",
+          marks: [],
+          text: "morbi tristique ",
+          _key: "9da11af97e1e",
+        },
+        {
+          marks: ["strong"],
+          text: "senectus ",
+          _key: "459f51724176",
+          _type: "span",
+        },
+        {
+          _key: "19800405b9ee",
+          _type: "span",
+          marks: [],
+          text: "et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu ",
+        },
+        {
+          _type: "span",
+          marks: ["a46c6064104b"],
+          text: "libero sit",
+          _key: "4c0c460da4b0",
+        },
+        {
+          text: " amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
+          _key: "b7295b9e9252",
+          _type: "span",
+          marks: [],
+        },
+      ],
+      _type: "block",
+      style: "normal",
+      _key: "1af0b87da238",
+      markDefs: [
+        {
+          _key: "a46c6064104b",
+          internalLink: {
+            title: "Cookies Policy",
+            url: "cookies-policy",
+          },
+          externalUrl: null,
+          contactLink: null,
+          _type: "contentLink",
+        },
+      ],
+    },
+    {
+      level: 1,
+      _type: "block",
+      style: "normal",
+      _key: "7771c17fb5df",
+      listItem: "bullet",
+      markDefs: [],
+      children: [
+        {
+          marks: [],
+          text: "Unordered List 1",
+          _key: "a8a19594ee9c",
+          _type: "span",
+        },
+      ],
+    },
+    {
+      markDefs: [],
+      children: [
+        {
+          _type: "span",
+          marks: [],
+          text: "Unordered List 2",
+          _key: "7a96d3a42511",
+        },
+      ],
+      level: 1,
+      _type: "block",
+      style: "normal",
+      _key: "d707f1889dfc",
+      listItem: "bullet",
+    },
+    {
+      level: 1,
+      _type: "block",
+      style: "normal",
+      _key: "dd4ed80b7622",
+      listItem: "number",
+      markDefs: [],
+      children: [
+        {
+          _type: "span",
+          marks: [],
+          text: "Ordered List 1",
+          _key: "8c7ab3d0bf7b",
+        },
+      ],
+    },
+    {
+      _type: "block",
+      style: "normal",
+      _key: "3ce7ba06fc37",
+      listItem: "number",
+      markDefs: [],
+      children: [
+        {
+          _type: "span",
+          marks: [],
+          text: "Ordered List",
+          _key: "81dd0a05c338",
+        },
+      ],
+      level: 1,
+    },
+    {
+      _key: "95a4334c2765",
+      markDefs: [
+        {
+          externalUrl: "https://google.com",
+          _type: "contentLink",
+          _key: "3638550b96a1",
+          internalLink: null,
+          contactLink: null,
+        },
+      ],
+      children: [
+        {
+          _type: "span",
+          marks: [],
+          text: "Large text with ",
+          _key: "5fd49d1e2ffc",
+        },
+        {
+          _type: "span",
+          marks: ["3638550b96a1"],
+          text: "link",
+          _key: "0391e044cff5",
+        },
+        {
+          _type: "span",
+          marks: [],
+          text: " inside",
+          _key: "24b3f9f0b04a",
+        },
+      ],
+      _type: "block",
+      style: "large",
+    },
+    {
+      style: "small",
+      _key: "15c9ba2ce17d",
+      markDefs: [],
+      children: [
+        {
+          _type: "span",
+          marks: [],
+          text: "Small text",
+          _key: "02922b60f71f",
+        },
+      ],
+      _type: "block",
+    },
+    {
+      _key: "d98268c4c3b0",
+      markDefs: [],
+      children: [
+        {
+          text: "Subtitle",
+          _key: "aa5d4d23a35a",
+          _type: "span",
+          marks: [],
+        },
+      ],
+      _type: "block",
+      style: "subtitle",
+    },
+    {
+      _key: "c3a9e92e4dc1",
+      markDefs: [],
+      children: [
+        {
+          text: "Heading 3",
+          _key: "bcd101d3af52",
+          _type: "span",
+          marks: [],
+        },
+      ],
+      _type: "block",
+      style: "h3",
+    },
+    {
+      markDefs: [],
+      children: [
+        {
+          text: "Heading 4",
+          _key: "b26ca1b28ae1",
+          _type: "span",
+          marks: [],
+        },
+      ],
+      _type: "block",
+      style: "h4",
+      _key: "d45a3f198fad",
+    },
+    {
+      _key: "233f77342f83",
+      markDefs: [],
+      children: [
+        {
+          _type: "span",
+          marks: [],
+          text: "quote",
+          _key: "9087058ff014",
+        },
+      ],
+      _type: "block",
+      style: "blockquote",
+    },
+  ],
+  ctas: [],
+  usps: null,
+};
 ---
 
 <Page title="Welcome to Astro.">
   <HomeHero title="This is a test" client:visible />
+  <PortableText value={blockContent} components={components} />
+  <InnerPageBanner
+    client:visible
+    breadcrumbs={[]}
+    title={banner.title}
+    ctas={[]}
+    uspList={[]}
+    theme={banner.theme}
+    ><div slot="content">
+      <PortableText value={banner.blockContent} components={components} />
+    </div></InnerPageBanner
+  >
 </Page>
