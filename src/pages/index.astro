@@ -18,8 +18,6 @@ export const prerender = true;
 
 const res = (await sanityClient.fetch(homepageQuery)) as HomepageQueryResponse;
 
-console.log(res);
-
 type Props = {
   settings: SiteSettingsResponse;
   template: HomepageResponse;
@@ -28,8 +26,6 @@ type Props = {
 };
 
 const { template, locations, services, settings } = res;
-
-console.log(template);
 ---
 
 <Page

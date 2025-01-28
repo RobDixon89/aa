@@ -260,6 +260,9 @@ const { widgets, locationName, locations, service, services, usps } =
             }
             items={w.items.map((item) => mapStepAttributes(item))}
             hasIntroduction={w.blockContent !== null}
+            ctas={
+              w.ctas !== null ? w.ctas.map((cta) => mapLinkAttributes(cta)) : []
+            }
             location={locationName}
             theme={w.theme}
             client:visible

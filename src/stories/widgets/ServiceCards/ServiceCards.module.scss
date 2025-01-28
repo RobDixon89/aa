@@ -27,6 +27,7 @@ ul.cards {
 
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   grid-column: 1 / -1;
   gap: var(--gap);
   padding: 0;
@@ -40,7 +41,11 @@ ul.cards {
     @include from(tabletSmall) {
       --items: 2;
 
-      flex: 0 0 calc((100% / var(--items)) - (var(--gap) * (var(--items) - 1)));
+      flex: 0 0
+        calc(
+          (100% / var(--items)) -
+            (var(--gap) * ((var(--items) - 1) / var(--items)))
+        );
     }
 
     @include from(tabletLarge) {

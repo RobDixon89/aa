@@ -1,6 +1,7 @@
 import React from "react";
 import g from "../../../lib/global.module.scss";
 import { insertLocationName } from "../../../utils";
+import CtaBlock from "../../components/CtaBlock/CtaBlock";
 import Section, { Themes } from "../../components/Section/Section";
 import s from "./Steps.module.scss";
 
@@ -22,6 +23,7 @@ export type StepsProps = React.HTMLAttributes<HTMLDivElement> & {
   id: string;
   title?: string;
   items: (StepCardModel | ImageCardModel)[];
+  ctas: CtaModel[];
   theme: Exclude<Themes, Themes.lightBlue | Themes.yellow | Themes.navy>;
   hasIntroduction: boolean;
   location?: string;
@@ -35,7 +37,7 @@ const Steps: React.FC<StepsProps> = (props) => {
   // Split children, which contains introduction as well as step card contents
   const children = props.children
     ? insertLocationName(props.children, props.location)
-        .split("</div>")
+        ?.split("</div>")
         .filter((c) => c !== "")
     : [];
 
@@ -45,8 +47,8 @@ const Steps: React.FC<StepsProps> = (props) => {
     .map((item) => item.id);
 
   return (
-    <Section grid={true}>
-      <div className={s.container}>
+    <Section className={s.container} grid={true} theme={props.theme}>
+      <div className={s.contentWrapper}>
         {props.title && <h2 className={s.title}>{props.title}</h2>}
         {props.hasIntroduction ? (
           <div
@@ -54,35 +56,41 @@ const Steps: React.FC<StepsProps> = (props) => {
             dangerouslySetInnerHTML={{ __html: children[0] }}
           />
         ) : null}
-
-        <ol>
-          {props.items.map((item) => (
-            <React.Fragment key={`${props.id}-${item.id}`}>
-              {item._type === "step" ? (
-                <li
-                  data-theme={item.theme}
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      children[
-                        stepIds.findIndex((s) => s === item.id) +
-                          (props.hasIntroduction ? 1 : 0)
-                      ],
-                  }}
-                />
-              ) : (
-                <li>
-                  <img
-                    // className={s.image}
-                    src={item.image.src}
-                    alt={item.image.altText}
-                    loading="lazy"
-                  />
-                </li>
-              )}
-            </React.Fragment>
-          ))}
-        </ol>
       </div>
+
+      <ol className={s.cards}>
+        {props.items.map((item) => (
+          <React.Fragment key={`${props.id}-${item.id}`}>
+            {item._type === "step" ? (
+              <li
+                data-theme={item.theme}
+                className={`${g.richText}`}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    children[
+                      stepIds.findIndex((s) => s === item.id) +
+                        (props.hasIntroduction ? 1 : 0)
+                    ],
+                }}
+              />
+            ) : (
+              <li>
+                <img
+                  className={s.image}
+                  src={item.image.src}
+                  alt={item.image.altText}
+                  loading="lazy"
+                  style={{ objectFit: item.imageType }}
+                />
+              </li>
+            )}
+          </React.Fragment>
+        ))}
+      </ol>
+
+      {props.ctas && props.ctas.length > 0 ? (
+        <CtaBlock id={props.id} items={props.ctas} />
+      ) : null}
     </Section>
   );
 };

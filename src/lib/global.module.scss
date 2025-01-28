@@ -10,8 +10,6 @@
 }
 
 .richText {
-  --accentColour: var(--tertiary);
-
   h2,
   h3,
   h4 {
@@ -66,9 +64,10 @@
     &:hover {
       background-position: left bottom;
       text-decoration-color: transparent;
+      color: var(--hoverColour, currentColor);
     }
 
-    @include transition("background-position, text-decoration-color");
+    @include transition("background-position, text-decoration-color, color");
   }
 
   blockquote {

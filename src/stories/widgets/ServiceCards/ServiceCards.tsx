@@ -36,8 +36,6 @@ const ServiceCards: React.FC<ServiceCardsProps> = (props) => {
     []
   );
 
-  console.log(props.children);
-
   return (
     <Section className={s.container} grid={true}>
       {props.title || children ? (

@@ -25,7 +25,9 @@ type Area = {
 export const groupByArea = (locations: LocationLink[]): Area =>
   locations.reduce((acc, a) => {
     const key = a.area;
+    // @ts-ignore
     acc[key] ??= [];
+    // @ts-ignore
     acc[key].push(a);
     return acc;
   }, {});
@@ -37,7 +39,9 @@ type ServiceGroup = {
 export const groupByParent = (services: ServiceCardResponse[]): ServiceGroup =>
   services.reduce((acc, s) => {
     const key = s.parent ? s.parent : s.title;
+    // @ts-ignore
     acc[key] ??= [];
+    // @ts-ignore
     acc[key].push(s);
     return acc;
   }, {});

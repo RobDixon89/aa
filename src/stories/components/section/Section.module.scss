@@ -1,6 +1,8 @@
 @use "../../../lib/helpers" as *;
 
 .container {
+  --accentColour: var(--tertiary);
+  --hoverColour: var(--body);
   --sectionPadding: #{fluid(24, 40)};
   --sectionPaddingTop: var(--sectionPadding);
   --sectionPaddingBottom: var(--sectionPadding);
@@ -10,6 +12,7 @@
   display: flex;
   justify-content: center;
   overflow: clip;
+  scroll-margin: var(--headerHeight) 0 0;
 
   &[data-theme="default"] {
     background-color: var(--white);
@@ -24,6 +27,9 @@
   }
 
   &[data-theme="light-blue"] {
+    --accentColour: var(--body);
+    --hoverColour: var(--white);
+
     background-color: var(--tertiary);
   }
 

@@ -65,8 +65,6 @@ function locationGroup(count: number, i: number): NavigationDropdownGroup {
 }
 
 function serviceGroup(count: number, i: number): NavigationDropdownGroup {
-  const n = Math.floor((Math.random() * 10) / 2);
-
   return {
     title: `Parent Service ${i + 1}`,
     items: Array.from({ length: count }).map((_, i) => ({

@@ -10,6 +10,7 @@ export function useMediaQuery(query: string): boolean {
       return false;
     }
   }, [query, browser]);
+
   const [match, setMatch] = React.useState(
     mediaQuery ? mediaQuery.matches : false
   );
