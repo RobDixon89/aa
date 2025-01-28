@@ -96,6 +96,7 @@ export function mapImageAttributes(image: ImageWithAlt): ImageModel {
     src: image.imageUrl,
     altText: image.altText,
     hotspot: image.hotspot,
+    asset: image.asset,
   };
 }
 

@@ -24,6 +24,7 @@ export type ImageWithAlt = SanityImageObject & {
   _type: "imageWithAlt";
   altText: string;
   imageUrl: string;
+  asset?: SanityReference;
 };
 
 export const imageWithAltSnippet = `

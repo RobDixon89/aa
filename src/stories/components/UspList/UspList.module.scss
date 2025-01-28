@@ -32,7 +32,7 @@
   padding: 10px 8px 4px;
   background-color: var(--cardBgColour);
   color: var(--cardFgColour);
-  flex: 0 0 calc(50% - (var(--gap) * 0.5));
+  flex: 0 0 calc(50% - var(--gap));
 
   svg {
     color: var(--iconColour);
