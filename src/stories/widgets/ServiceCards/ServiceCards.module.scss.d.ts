@@ -1,2 +1,10 @@
+export declare const card: string;
+export declare const cardContent: string;
+export declare const cards: string;
 export declare const container: string;
+export declare const contentWrapper: string;
+export declare const description: string;
+export declare const descriptionWrapper: string;
+export declare const image: string;
+export declare const imageWrapper: string;
 export declare const title: string;

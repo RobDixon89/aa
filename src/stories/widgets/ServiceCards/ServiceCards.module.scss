@@ -1,10 +1,161 @@
 @use "../../../lib/helpers" as *;
 
 .container {
-  text-align: left;
+  [class*="ctaBlock"] {
+    grid-column: 1 / -1;
+    justify-content: center;
+  }
+}
+
+.contentWrapper {
+  text-align: center;
+
+  @include richTextColumns();
 }
 
 h2.title {
   font-size: var(--font-size-h3);
-  margin-bottom: 0.5em;
+
+  &:has(+ div) {
+    margin-bottom: 0.5em;
+  }
+}
+
+ul.cards {
+  --items: 1;
+  --gap: #{fluid(16, 28)};
+
+  display: flex;
+  flex-wrap: wrap;
+  grid-column: 1 / -1;
+  gap: var(--gap);
+  padding: 0;
+  list-style-type: none;
+
+  li {
+    flex: 0 0 100%;
+    display: flex;
+    flex-direction: column;
+
+    @include from(tabletSmall) {
+      --items: 2;
+
+      flex: 0 0 calc((100% / var(--items)) - (var(--gap) * (var(--items) - 1)));
+    }
+
+    @include from(tabletLarge) {
+      --items: 3;
+    }
+  }
+}
+
+a.card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+
+  h3 {
+    font-size: var(--font-size-h5);
+    font-weight: 500;
+    margin: 2px 0 10px;
+  }
+
+  &:focus-visible,
+  &:hover {
+    .image {
+      transform: scale(1.15);
+    }
+
+    path:nth-child(1) {
+      transform: scaleX(1);
+    }
+
+    path:nth-child(2) {
+      transform: translateX(0);
+    }
+  }
+
+  @include from(tabletLarge) {
+    &:not(:has(.imageWrapper)) {
+      .cardContent {
+        justify-content: flex-start;
+      }
+
+      .descriptionWrapper {
+        flex: 1;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+    }
+
+    svg {
+      path {
+        @include transition("transform");
+
+        &:nth-child(1) {
+          transform-origin: center;
+          transform: scaleX(0);
+        }
+
+        &:nth-child(2) {
+          transform: translateX(-25%);
+        }
+      }
+    }
+
+    &:focus-visible,
+    &:hover {
+      path:nth-child(1) {
+        transform: scaleX(1);
+      }
+
+      path:nth-child(2) {
+        transform: translateX(0);
+      }
+    }
+  }
+}
+
+.imageWrapper {
+  aspect-ratio: 566 / 230;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  @include transition("transform");
+}
+
+.cardContent {
+  flex: 1;
+  padding: fluid(12, 24) 16px;
+  color: var(--white);
+  background: var(--secondary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.descriptionWrapper {
+  display: flex;
+  gap: 12px;
+
+  svg {
+    display: none;
+
+    @include from(tabletLarge) {
+      display: block;
+      flex-shrink: 0;
+      width: fluid(24, 42);
+    }
+  }
+}
+
+.description {
+  font-size: var(--font-size-regular);
 }
