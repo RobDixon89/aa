@@ -1,0 +1,146 @@
+@use "../../../lib/helpers" as *;
+
+.container {
+  --gridRowGap: #{fluid(42, 64)};
+}
+
+.contact {
+  grid-column: 1 / -1;
+
+  > [class*="button"] {
+    margin: fluid(24, 36) 0 0;
+  }
+
+  @include from(tabletLarge) {
+    grid-column: span 4;
+  }
+}
+
+.logo {
+  display: block;
+  width: fluid(280, 360);
+
+  img {
+    width: 100%;
+  }
+}
+
+div.phoneNumbers {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: fluid(6, 12);
+  margin: fluid(24, 46) 0 0;
+
+  [class*="button"] {
+    svg {
+      color: var(--highlight);
+      order: -1;
+    }
+  }
+}
+
+.linkLists {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: fluid(10, 64);
+
+  @include from(tabletLarge) {
+    grid-column: span 8;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.linkList {
+  @include listReset();
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: fluid(6, 10);
+  overflow-y: clip;
+
+  @include until(tabletLarge) {
+    li {
+      width: 100%;
+    }
+  }
+
+  @include from(tabletLarge) {
+    height: auto !important;
+  }
+}
+
+button.listTitle {
+  @include buttonReset();
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+  font-size: var(--font-size-h5);
+  color: var(--tertiary);
+
+  svg {
+    width: 9px;
+    transform: translateX(-3px) rotate(90deg);
+
+    @include transition("transform");
+  }
+
+  &[aria-expanded="true"] svg {
+    transform: translateX(-3px) rotate(270deg);
+  }
+
+  @include until(tabletLarge) {
+    width: 100%;
+    padding-bottom: 2px;
+    border-bottom: 1px solid currentColor;
+  }
+
+  @include from(tabletLarge) {
+    font-size: var(--font-size-large);
+
+    svg {
+      display: none;
+    }
+  }
+}
+
+.copyright {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: fluid(18, 32);
+  text-align: center;
+  color: var(--white);
+  padding: fluid(12, 16) 0 0;
+
+  p,
+  [class*="button"] {
+    font-size: var(--font-size-small);
+  }
+
+  [class*="button"] {
+    min-height: calc(var(--font-size-small) * 1.5);
+  }
+
+  @include from(tabletLarge) {
+    text-align: left;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+}
+
+.copyrightLinks {
+  @include listReset();
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 12px;
+  justify-content: center;
+}

@@ -1,0 +1,59 @@
+@use "../../../lib/helpers" as *;
+
+.container {
+  --accentColour: var(--tertiary);
+  --hoverColour: var(--body);
+  --sectionPadding: #{fluid(24, 40)};
+  --sectionPaddingTop: var(--sectionPadding);
+  --sectionPaddingBottom: var(--sectionPadding);
+
+  padding-top: var(--sectionPaddingTop);
+  padding-bottom: var(--sectionPaddingBottom);
+  display: flex;
+  justify-content: center;
+  overflow: clip;
+  scroll-margin: var(--headerHeight) 0 0;
+
+  &[data-theme="default"] {
+    background-color: var(--white);
+  }
+
+  &[data-theme="navy"] {
+    background-color: var(--body);
+  }
+
+  &[data-theme="blue"] {
+    background-color: var(--secondary);
+  }
+
+  &[data-theme="light-blue"] {
+    --accentColour: var(--body);
+    --hoverColour: var(--white);
+
+    background-color: var(--tertiary);
+  }
+
+  &[data-theme="yellow"] {
+    background-color: var(--highlight);
+  }
+
+  &[data-theme="navy"],
+  &[data-theme="blue"] {
+    color: var(--white);
+  }
+
+  &[data-grid="true"] .inner {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--gridRowGap) var(--gutterWidth);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+  }
+}
+
+.inner {
+  flex: 0 1 var(--maxWidth);
+  padding: 0 var(--sitePadding);
+}

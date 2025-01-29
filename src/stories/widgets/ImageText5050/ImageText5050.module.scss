@@ -1,0 +1,60 @@
+@use "../../../lib/helpers" as *;
+
+.container {
+  &[data-img-align="right"] {
+    @include from(tabletLarge) {
+      .imageWrapper {
+        grid-column: 7 / span 6;
+        order: 2;
+      }
+    }
+
+    @include from(tabletLarge) {
+      .contentWrapper {
+        grid-column-start: 1;
+      }
+    }
+  }
+}
+
+div.contentWrapper {
+  margin: auto 0;
+  grid-column: 1 / -1;
+
+  [class*="ctaBlock"] {
+    margin-top: fluid(16, 28);
+  }
+
+  @include from(tabletLarge) {
+    grid-column: span 6;
+  }
+
+  @include from(desktop) {
+    grid-column: 8 / span 5;
+  }
+}
+
+h2.title {
+  font-size: var(--font-size-h3);
+  margin-bottom: fluid(12, 16);
+}
+
+.imageWrapper {
+  display: block;
+  grid-column: 1 / -1;
+
+  @include from(tabletLarge) {
+    grid-column: span 6;
+  }
+}
+
+.image {
+  aspect-ratio: 327 / 225;
+  position: sticky;
+  top: calc(var(--sectionPaddingTop) + var(--headerHeight));
+  object-fit: cover;
+
+  @include from(tabletLarge) {
+    aspect-ratio: 864 / 508;
+  }
+}

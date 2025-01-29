@@ -1,0 +1,289 @@
+---
+import type { Widget } from "../../queries/blockContent";
+import type { LocationLink, ServiceLink } from "../../schema/linkList";
+import type { UspModel } from "../stories/components/UspList/UspList";
+import EmbeddedForm from "../stories/widgets/EmbeddedForm/EmbeddedForm";
+import Faqs from "../stories/widgets/FAQs/FAQs";
+import ImageBlock from "../stories/widgets/ImageBlock/ImageBlock";
+import ImageText5050 from "../stories/widgets/ImageText5050/ImageText5050";
+import RichText from "../stories/widgets/RichText/RichText";
+import type { ServiceCardResponse } from "../stories/widgets/ServiceCards/schema";
+import ServiceCards from "../stories/widgets/ServiceCards/ServiceCards";
+import Steps from "../stories/widgets/Steps/Steps";
+import {
+  CONTACTFORM_ID,
+  getLocationLinkUrl,
+  getServiceLinkUrl,
+  mapImageAttributes,
+  mapLinkAttributes,
+  mapServiceCardAttributes,
+  mapStepAttributes,
+} from "../utils/mapping";
+import PortableText from "./richTextBlocks/portableText.astro";
+
+type Location = LocationLink;
+type Service = Omit<ServiceLink, "_type">;
+
+type Props = {
+  locationName?: string;
+  locations: Location[];
+  service?: Service;
+  services: ServiceCardResponse[];
+  usps: UspModel[];
+  widgets: Widget[];
+};
+
+const { widgets, locationName, locations, service, services, usps } =
+  Astro.props;
+---
+
+{
+  widgets.map((w) => {
+    if (!w || !w._type) {
+      return null;
+    }
+
+    switch (w._type) {
+      case "embeddedForm":
+        return (
+          <EmbeddedForm
+            id={
+              widgets.find((wi) => wi._type === "embeddedForm")?._key === w._key
+                ? CONTACTFORM_ID
+                : w._key
+            }
+            title={
+              w.title
+                ? w.title.replaceAll("##location##", locationName ?? "")
+                : undefined
+            }
+            location={locationName}
+            client:visible
+          >
+            {w.blockContent ? (
+              <PortableText blockContent={w.blockContent} />
+            ) : undefined}
+          </EmbeddedForm>
+        );
+
+      case "faqs":
+        return (
+          <Faqs
+            id={w._key}
+            title={
+              w.title
+                ? w.title.replaceAll("##location##", locationName ?? "")
+                : undefined
+            }
+            items={w.items?.map((item) => ({
+              id: item._key,
+              question: item.question,
+              ctas:
+                item.ctas !== null
+                  ? item.ctas.map((cta) => mapLinkAttributes(cta))
+                  : [],
+            }))}
+            variant={w.variant ? w.variant : "default"}
+            location={locationName}
+            client:visible
+          >
+            {w.items?.map((item) => (
+              <div>
+                <PortableText blockContent={item.answer} />
+              </div>
+            ))}
+          </Faqs>
+        );
+
+      case "imageBlock":
+        // @ts-ignore
+        const [width, height] = w.image.imageUrl.match(
+          /(\d{1,})(?=\.|\x)/g
+        ) as string[];
+
+        return (
+          <ImageBlock
+            id={w._key}
+            image={{
+              ...mapImageAttributes(w.image),
+              aspectRatio: Number(width) / Number(height),
+            }}
+            caption={w.caption}
+            theme={w.theme}
+            client:visible
+          />
+        );
+
+      case "imageText5050":
+        return (
+          <ImageText5050
+            id={w._key}
+            title={
+              w.title
+                ? w.title.replaceAll("##location##", locationName ?? "")
+                : undefined
+            }
+            image={mapImageAttributes(w.image)}
+            imageAlign={w.imageAlign}
+            ctas={
+              w.ctas !== null ? w.ctas.map((cta) => mapLinkAttributes(cta)) : []
+            }
+            theme={w.theme}
+            location={locationName}
+            client:visible
+          >
+            {w.blockContent ? (
+              <PortableText blockContent={w.blockContent} />
+            ) : undefined}
+          </ImageText5050>
+        );
+
+      case "locationList":
+        return (
+          <RichText
+            id={w._key}
+            title={
+              w.title
+                ? w.title.replaceAll("##location##", locationName ?? "")
+                : undefined
+            }
+            columns={true}
+            alignment="center"
+            ctas={[]}
+            theme={null}
+            client:visible
+          >
+            <ul>
+              {locations
+                .filter(
+                  (location) => !locationName || location.name !== locationName
+                )
+                .sort((a, b) =>
+                  a.name.toLowerCase() < b.name.toLowerCase()
+                    ? -1
+                    : a.name.toLowerCase() > b.name.toLowerCase()
+                      ? 1
+                      : 0
+                )
+                .map((location) => (
+                  <li>
+                    <a
+                      href={
+                        service
+                          ? getServiceLinkUrl(
+                              service as ServiceLink,
+                              location.name
+                            )
+                          : getLocationLinkUrl(location as LocationLink)
+                      }
+                    >
+                      {location.name}
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          </RichText>
+        );
+
+      case "richText":
+        return (
+          <RichText
+            id={w._key}
+            title={
+              w.title
+                ? w.title.replaceAll("##location##", locationName ?? "")
+                : undefined
+            }
+            alignment={w.alignment ? w.alignment : "left"}
+            ctas={
+              w.ctas !== null ? w.ctas.map((cta) => mapLinkAttributes(cta)) : []
+            }
+            uspList={w.usps ? usps : []}
+            theme={w.theme}
+            location={locationName}
+            client:visible
+          >
+            {w.blockContent ? (
+              <PortableText blockContent={w.blockContent} />
+            ) : undefined}
+          </RichText>
+        );
+
+      case "serviceCards":
+        let items;
+
+        if (!service || w.items !== null) {
+          items =
+            w.items !== null
+              ? w.items
+              : w.serviceTypes === "parent"
+                ? services.filter((s) => !s.parent)
+                : services;
+        } else {
+          items =
+            w.serviceTypes === "parent"
+              ? services.filter((s) => !s.parent && s.title !== service.title)
+              : w.serviceTypes === "children"
+                ? services.filter((s) => s.parent && s.parent === service.title)
+                : services.filter((s) => s.title !== service.title);
+        }
+
+        return (
+          <ServiceCards
+            id={w._key}
+            title={
+              w.title
+                ? w.title.replaceAll("##location##", locationName ?? "")
+                : undefined
+            }
+            items={items.map((item) =>
+              mapServiceCardAttributes(item, locationName)
+            )}
+            ctas={
+              w.ctas !== null ? w.ctas.map((cta) => mapLinkAttributes(cta)) : []
+            }
+            location={locationName}
+            client:visible
+          >
+            {w.blockContent !== null ? (
+              <PortableText blockContent={w.blockContent} />
+            ) : undefined}
+          </ServiceCards>
+        );
+
+      case "steps":
+        return (
+          <Steps
+            id={w._key}
+            title={
+              w.title
+                ? w.title.replaceAll("##location##", locationName ?? "")
+                : undefined
+            }
+            items={w.items.map((item) => mapStepAttributes(item))}
+            hasIntroduction={w.blockContent !== null}
+            ctas={
+              w.ctas !== null ? w.ctas.map((cta) => mapLinkAttributes(cta)) : []
+            }
+            location={locationName}
+            theme={w.theme}
+            client:visible
+          >
+            {w.blockContent !== null ? (
+              <div>
+                <PortableText blockContent={w.blockContent} />
+              </div>
+            ) : null}
+
+            {w.items
+              .filter((item) => item._type === "step")
+              .map((item) => (
+                <div>
+                  <PortableText blockContent={item.blockContent} />
+                </div>
+              ))}
+          </Steps>
+        );
+    }
+  })
+}

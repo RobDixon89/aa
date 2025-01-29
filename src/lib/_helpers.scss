@@ -1,0 +1,178 @@
+@use "sass:math";
+@use "sass:map";
+
+$breakpoints: (
+  mobile: 375,
+  mobileLarge: 480,
+  tabletSmall: 568,
+  tablet: 768,
+  tabletLarge: 1024,
+  desktopSmall: 1280,
+  desktop: 1366,
+  desktopLarge: 1600,
+  actualDesktop: 1920,
+);
+
+$REM_PIXELS: 16;
+$DEFAULT_MIN: map.get($breakpoints, tabletLarge);
+$DEFAULT_MAX: map.get($breakpoints, actualDesktop);
+
+@function fluid($min, $max, $minWidth: $DEFAULT_MIN, $maxWidth: $DEFAULT_MAX) {
+  $minRem: math.div($min, $REM_PIXELS);
+  $maxRem: math.div($max, $REM_PIXELS);
+  $minWidthRem: math.div($minWidth, $REM_PIXELS);
+  $maxWidthRem: math.div($maxWidth, $REM_PIXELS);
+
+  $slope: math.div(($maxRem - $minRem), ($maxWidthRem - $minWidthRem));
+  $yAxisIntersection: ($minWidthRem * -1) * $slope + $minRem;
+
+  $clampMin: #{$minRem}rem;
+  $clampVal: calc(#{$yAxisIntersection}rem + #{$slope * 100}vw);
+  $clampMax: #{$maxRem}rem;
+
+  @return clamp($clampMin, $clampVal, $clampMax);
+}
+
+// Mixins
+
+@mixin from($size) {
+  @if (
+    $size ==
+      mobile or
+      $size ==
+      mobileLarge or
+      $size ==
+      tabletSmall or
+      $size ==
+      tablet or
+      $size ==
+      tabletLarge or
+      $size ==
+      desktopSmall or
+      $size ==
+      desktop or
+      $size ==
+      desktopLarge or
+      $size ==
+      actualDesktop
+  ) {
+    @media screen and (min-width: #{map.get($breakpoints, $size)}px) {
+      @content;
+    }
+  } @else {
+    @media screen and (min-width: #{$size}px) {
+      @content;
+    }
+  }
+}
+
+@mixin until($size) {
+  @if (
+    $size ==
+      mobile or
+      $size ==
+      mobileLarge or
+      $size ==
+      tabletSmall or
+      $size ==
+      tablet or
+      $size ==
+      tabletLarge or
+      $size ==
+      desktopSmall or
+      $size ==
+      desktop or
+      $size ==
+      desktopLarge or
+      $size ==
+      actualDesktop
+  ) {
+    @media screen and (max-width: #{map.get($breakpoints, $size) - 1}px) {
+      @content;
+    }
+  } @else {
+    @media screen and (max-width: #{$size - 1}px) {
+      @content;
+    }
+  }
+}
+
+@mixin fromContainer($size) {
+  @if (
+    $size ==
+      mobile or
+      $size ==
+      mobileLarge or
+      $size ==
+      tabletSmall or
+      $size ==
+      tablet or
+      $size ==
+      tabletLarge or
+      $size ==
+      desktopSmall or
+      $size ==
+      desktop or
+      $size ==
+      desktopLarge or
+      $size ==
+      actualDesktop
+  ) {
+    @container (min-width: #{map.get($breakpoints, $size)}px) {
+      @content;
+    }
+  } @else {
+    @container (min-width: #{$size}px) {
+      @content;
+    }
+  }
+}
+
+@mixin shouldAnimate() {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
+@mixin transition(
+  $properties,
+  $duration: 0.3s,
+  $timing: cubic-bezier(0.33, 1, 0.68, 1)
+) {
+  @include shouldAnimate() {
+    transition-duration: $duration;
+    transition-property: #{$properties};
+    transition-timing-function: $timing;
+    will-change: #{$properties};
+  }
+}
+
+@mixin richTextColumns() {
+  grid-column: 1 / -1;
+
+  @include from(tablet) {
+    grid-column: 2 / -2;
+  }
+
+  @include from(tabletLarge) {
+    grid-column: 3 / -3;
+  }
+
+  @include from(desktopLarge) {
+    grid-column: 4 / -4;
+  }
+}
+
+@mixin listReset {
+  list-style-type: none;
+  padding: 0;
+}
+
+@mixin buttonReset {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}

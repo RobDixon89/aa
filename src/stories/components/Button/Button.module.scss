@@ -1,0 +1,151 @@
+@use "../../../lib/helpers" as *;
+
+.default-button {
+  --bgColour: var(--body);
+  --bgColourHover: hsl(197, 100%, 19%);
+  --borderColour: var(--bgColour);
+  --fgColour: var(--white);
+
+  &:disabled {
+    opacity: 0.75;
+  }
+
+  [data-theme="navy"] &,
+  [data-theme="blue"] & {
+    --bgColour: var(--highlight);
+    --bgColourHover: #ccac00;
+    --fgColour: var(--body);
+  }
+}
+
+.outline-button {
+  --bgColour: transparent;
+  --bgColourHover: hsla(var(--bodyValues), 15%);
+  --borderColour: var(--fgColour);
+  --fgColour: var(--body);
+
+  [data-theme="navy"] &,
+  [data-theme="blue"] & {
+    --fgColour: var(--white);
+    --bgColourHover: hsla(var(--whiteValues), 15%);
+
+    &:disabled {
+      --bgColour: hsla(var(--whiteValues), 10%);
+    }
+  }
+}
+
+.text-button {
+  --outlineColour: currentColor;
+
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+  min-height: calc(var(--font-size-regular) * 1.5);
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 3px;
+    left: 0;
+    right: 0;
+    height: 1.5px;
+    background-color: currentColor;
+    opacity: 0;
+
+    @include transition("opacity");
+  }
+
+  &:not(:disabled) {
+    &:focus-visible,
+    &:hover {
+      text-decoration-color: currentColor;
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.button {
+  display: inline-flex;
+  gap: fluid(10, 12);
+  align-items: center;
+  min-height: fluid(36, 42);
+  color: var(--fgColour);
+  background-color: var(--bgColour);
+  border-radius: 4px;
+  font-size: var(--font-size-regular);
+  text-decoration: none;
+  border: 1px solid var(--borderColour);
+  padding: 6px fluid(10, 14);
+  line-height: 1;
+
+  &:disabled {
+    opacity: 0.65;
+  }
+
+  &:not(:disabled) {
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--bgColourHover);
+    }
+
+    &[data-icon="arrow"] {
+      path {
+        @include transition("transform");
+      }
+
+      &:hover,
+      &:focus-visible {
+        path:nth-child(1) {
+          transform: scaleX(1);
+        }
+
+        path:nth-child(2) {
+          transform: translateX(0);
+        }
+      }
+    }
+  }
+
+  &[data-theme="default"] {
+    @extend .default-button;
+  }
+
+  &[data-theme="outline"] {
+    @extend .outline-button;
+  }
+
+  &[data-theme="text"] {
+    @extend .text-button;
+  }
+
+  svg {
+    display: block;
+    width: fluid(14, 16);
+    flex-shrink: 0;
+  }
+
+  &[data-icon="arrow"] {
+    gap: fluid(6, 8);
+
+    path:nth-child(1) {
+      transform-origin: center;
+      transform: scaleX(0);
+    }
+
+    path:nth-child(2) {
+      transform: translateX(-25%);
+    }
+  }
+
+  @include transition("background-color");
+}
+
+.text {
+  transform: translateY(-1.5%);
+}

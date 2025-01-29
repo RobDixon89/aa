@@ -1,0 +1,230 @@
+@use "../../../lib/helpers" as *;
+
+.innerPageBanner {
+  --accentColour: var(--highlight);
+  --accentTextColour: currentColor;
+  --gridRowGap: #{fluid(32, 64)};
+  --paddingY: #{fluid(46, 80)};
+  --sectionPaddingTop: var(--headerHeight);
+  --sectionPaddingBottom: var(--paddingY);
+  --sitePadding: 16px;
+
+  min-height: 558px;
+  position: relative;
+  background-color: transparent;
+
+  &[data-theme="blue"] {
+    --accentTextColour: var(--body);
+  }
+
+  &[data-theme="yellow"] {
+    --accentColour: var(--body);
+    --accentTextColour: var(--highlight);
+  }
+
+  @include from(tablet) {
+    --sitePadding: #{fluid(24, 32)};
+  }
+
+  @include from(tabletLarge) {
+    --sectionPaddingTop: calc(var(--paddingY) + var(--headerHeight)) !important;
+  }
+
+  [class*="uspList"] {
+    grid-column: span 12;
+    grid-row: 3;
+    margin-bottom: auto;
+
+    @include from(tabletLarge) {
+      grid-column: span 7;
+    }
+  }
+
+  &:not(:has(.image)) {
+    --sectionPaddingTop: calc(18px + var(--headerHeight));
+
+    min-height: unset;
+
+    [class*="uspList"] {
+      @include from(tabletLarge) {
+        grid-column: 8 / span 5;
+        grid-row: 2 / span 1;
+        justify-content: flex-end;
+        align-items: flex-end;
+        margin: auto 0 0;
+      }
+
+      @include from(desktop) {
+        grid-column: 9 / span 4;
+      }
+    }
+  }
+}
+
+.imageWrapper {
+  display: contents;
+
+  .image {
+    grid-column: 1 / -1;
+    width: calc(100% + (var(--sitePadding) * 2));
+    margin-left: calc(var(--sitePadding) * -1);
+    max-width: unset;
+    aspect-ratio: 375 / 208;
+    object-fit: cover;
+  }
+
+  @include from(tabletLarge) {
+    display: flex;
+    grid-column: 8 / span 4;
+    grid-row: 1 / span 3;
+    width: calc(100% + var(--sitePadding));
+
+    .image {
+      margin: calc(var(--paddingY) * -1) 0;
+      height: calc(100% + (var(--paddingY) * 2));
+      width: 100%;
+      max-width: 1128px;
+    }
+  }
+
+  @include from(tabletLarge) {
+    grid-column: 8 / span 5;
+  }
+
+  @include from("1700") {
+    width: calc(100% + var(--sitePadding) + ((100vw - var(--maxWidth)) / 2));
+  }
+}
+
+.contentWrapper {
+  --gap: #{fluid(8, 16)};
+
+  grid-column: span 12;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+
+  @include from(tabletLarge) {
+    grid-column: span 7;
+    grid-row: 2;
+  }
+
+  @include from(desktop) {
+    grid-column: span 6;
+  }
+
+  [class*="subtitle"] {
+    margin-bottom: calc(var(--gap) * -1);
+  }
+
+  [class*="ctaBlock"] {
+    margin-top: fluid(12, 16);
+  }
+}
+
+.breadcrumbs {
+  grid-column: 1 / -1;
+
+  ol {
+    @include listReset();
+
+    display: flex;
+    gap: 8px;
+
+    li a {
+      white-space: nowrap;
+      color: currentColor;
+      text-decoration-color: transparent;
+      text-underline-offset: 2px;
+
+      &:focus-visible,
+      &:hover {
+        text-decoration-color: currentColor;
+      }
+
+      @include transition("text-decoration-color");
+    }
+
+    li:last-of-type {
+      display: inline;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    li:not(:last-of-type) {
+      display: inline-flex;
+      margin-right: 8px;
+      gap: 8px;
+
+      svg {
+        display: inline-block;
+        color: currentColor;
+        flex: 0 0 6px;
+      }
+    }
+
+    @include until(tablet) {
+      li:nth-last-child(n + 3) {
+        a {
+          display: none;
+        }
+
+        &::before {
+          content: "\2026";
+        }
+      }
+    }
+  }
+
+  @include from(tabletLarge) {
+    grid-column: span 7;
+    grid-row: 1;
+  }
+}
+
+.title {
+  font-size: var(--font-size-h2);
+
+  [class~="highlight"] {
+    background: linear-gradient(
+      to right,
+      var(--accentColour) 50%,
+      transparent 50%
+    );
+    background-size: calc(200% + 1px) 100%;
+    background-position: left bottom;
+    color: var(--accentTextColour);
+
+    @include shouldAnimate() {
+      background-position: right bottom;
+      color: currentColor;
+      animation: highlightWord 0.5s forwards 1s;
+    }
+
+    @keyframes highlightWord {
+      0% {
+        background-position: right bottom;
+        color: currentColor;
+      }
+      100% {
+        background-position: left bottom;
+        color: var(--accentTextColour);
+      }
+    }
+  }
+}
+
+.content {
+  overflow: hidden;
+  overflow: clip;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+
+  @include from(tabletLarge) {
+    display: block;
+    max-width: 58ch;
+  }
+}

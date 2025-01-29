@@ -1,0 +1,47 @@
+@use "../../../lib/helpers" as *;
+
+.uspList {
+  --cardBgColour: hsla(var(--bodyValues), 90%);
+  --cardFgColour: var(--white);
+  --iconColour: var(--highlight);
+  --gap: #{fluid(10, 16)};
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+  container-type: inline-size;
+
+  &[data-theme="light"] {
+    --cardBgColour: hsla(var(--tertiaryValues), 25%);
+    --cardFgColour: var(--body);
+    --iconColour: var(--secondary);
+  }
+
+  &[data-theme="dark"] {
+    --cardBgColour: var(--body);
+  }
+}
+
+.usp {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
+  padding: 10px 8px 4px;
+  background-color: var(--cardBgColour);
+  color: var(--cardFgColour);
+  flex: 0 0 calc(50% - var(--gap));
+
+  svg {
+    color: var(--iconColour);
+    width: 24px;
+    height: 24px;
+  }
+
+  @include fromContainer(tablet) {
+    flex-basis: auto;
+    min-width: 159px;
+  }
+}

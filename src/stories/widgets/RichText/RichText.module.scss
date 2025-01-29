@@ -1,0 +1,45 @@
+@use "../../../lib/helpers" as *;
+
+.container {
+  &[data-align="center"] {
+    text-align: center;
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    [class*="ctaBlock"],
+    [class*="uspList"] {
+      justify-content: center;
+    }
+  }
+
+  [class*="ctaBlock"] {
+    margin-top: fluid(20, 32);
+  }
+
+  [class*="uspList"] {
+    margin-top: fluid(32, 56);
+  }
+
+  @include richTextColumns();
+}
+
+h2.title {
+  font-size: var(--font-size-h3);
+  margin-bottom: 0.5em;
+}
+
+div.richText {
+  [data-columns="true"] & {
+    @include from(mobileLarge) {
+      columns: 2;
+      gap: fluid(16, 24);
+    }
+
+    @include from(tabletLarge) {
+      columns: 3;
+    }
+  }
+}
