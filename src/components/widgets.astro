@@ -150,6 +150,7 @@ const { widgets, locationName, locations, service, services, usps } =
             columns={true}
             alignment="center"
             ctas={[]}
+            theme={null}
             client:visible
           >
             <ul>
@@ -198,6 +199,7 @@ const { widgets, locationName, locations, service, services, usps } =
               w.ctas !== null ? w.ctas.map((cta) => mapLinkAttributes(cta)) : []
             }
             uspList={w.usps ? usps : []}
+            theme={w.theme}
             location={locationName}
             client:visible
           >

@@ -8,6 +8,8 @@ import {
   labelledLinkSnippet,
   type LabelledLink,
 } from "../../../../schema/linkList";
+import { themeList } from "../../../../schema/themes";
+import type { Themes } from "../../components/Section/Section";
 
 export const richTextSchema = defineType({
   icon: TextIcon,
@@ -57,6 +59,7 @@ export const richTextSchema = defineType({
       title: "Display USP List",
       type: "boolean",
     }),
+    themeList([]),
   ],
 });
 
@@ -68,6 +71,7 @@ export const richTextSnippet = `
   ctas[] {
     ${labelledLinkSnippet}
   },
+  theme,
 `;
 
 export type RichTextResponse = {
@@ -78,6 +82,7 @@ export type RichTextResponse = {
   ctas: LabelledLink[] | null;
   alignment: "left" | "center" | null;
   usps: boolean | null;
+  theme: Themes;
 };
 
 export const locationListSchema = defineType({

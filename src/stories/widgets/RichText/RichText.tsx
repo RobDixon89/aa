@@ -3,7 +3,7 @@ import g from "../../../lib/global.module.scss";
 import { insertLocationName } from "../../../utils";
 import { type CtaIconModel } from "../../../utils/icon";
 import CtaBlock from "../../components/CtaBlock/CtaBlock";
-import Section from "../../components/Section/Section";
+import Section, { Themes } from "../../components/Section/Section";
 import type { UspModel } from "../../components/UspList/UspList";
 import UspList from "../../components/UspList/UspList";
 import s from "./RichText.module.scss";
@@ -16,6 +16,7 @@ export type RichTextProps = React.HTMLAttributes<HTMLDivElement> & {
   title?: string | null;
   uspList?: UspModel[];
   location?: string;
+  theme: Themes | null;
 };
 
 const RichText: React.FC<RichTextProps> = (props) => {
@@ -25,7 +26,7 @@ const RichText: React.FC<RichTextProps> = (props) => {
   );
 
   return (
-    <Section grid={true}>
+    <Section grid={true} theme={props.theme ? props.theme : undefined}>
       <div
         className={s.container}
         data-align={props.alignment}
