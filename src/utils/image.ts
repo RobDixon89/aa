@@ -1,12 +1,18 @@
+import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
-import { sanityClient } from "sanity:client";
 
-const builder = imageUrlBuilder(sanityClient);
+const projectId = import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID! || "";
+const dataset = import.meta.env.PUBLIC_SANITY_STUDIO_DATASET! || "production";
+const version = import.meta.env.PUBLIC_SANITY_VERSION! || "2023-03-20";
 
-type ImageParams = {
-  width: number;
-  aspectRatio: number;
-};
+export const client = createClient({
+  projectId: projectId,
+  dataset: dataset,
+  useCdn: true, // set to `false` to bypass the edge cache
+  apiVersion: version,
+});
+
+const builder = imageUrlBuilder(client);
 
 type ImageSources = {
   src: string;
