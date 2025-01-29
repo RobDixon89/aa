@@ -61,7 +61,7 @@ export const homeHeroBannerSnippet = `
 
 export type HomeHeroBannerResponse = {
   title: string;
-  image: ImageWithAlt | null;
+  image: ImageWithAlt;
   blockContent: any;
   ctas: LabelledLink[] | null;
   usps: boolean | null;

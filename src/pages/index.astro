@@ -39,11 +39,7 @@ const { template, locations, services, settings } = res;
   {
     template.banner ? (
       <HomeHero
-        image={
-          template.banner.image
-            ? mapImageAttributes(template.banner.image)
-            : undefined
-        }
+        image={mapImageAttributes(template.banner.image)}
         title={template.banner.title}
         ctas={
           template.banner.ctas !== null

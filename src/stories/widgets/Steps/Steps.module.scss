@@ -48,6 +48,10 @@ ol.cards {
     overflow: hidden;
     max-width: 350px;
 
+    &:has(.image) {
+      padding: 0;
+    }
+
     &::before {
       position: absolute;
       top: 0;
@@ -106,6 +110,7 @@ ol.cards {
 }
 
 .image {
-  position: absolute;
-  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 350 / 220;
 }

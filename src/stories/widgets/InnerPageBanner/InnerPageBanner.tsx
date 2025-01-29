@@ -2,6 +2,7 @@ import React from "react";
 import g from "../../../lib/global.module.scss";
 import { highlightTitleWords, insertLocationName } from "../../../utils";
 import Icon, { IconType, type CtaIconModel } from "../../../utils/icon";
+import { getSrcs } from "../../../utils/image";
 import CtaBlock from "../../components/CtaBlock/CtaBlock";
 import Section, { Themes } from "../../components/Section/Section";
 import type { UspModel } from "../../components/UspList/UspList";
@@ -23,6 +24,10 @@ export type InnerPageBannerProps = React.HTMLAttributes<HTMLDivElement> & {
 type Props = Omit<InnerPageBannerProps, "_type">;
 
 const InnerPageBanner: React.FC<Props> = (props) => {
+  const srcs = props.image
+    ? getSrcs(props.image, 375, 1000, 16, 375 / 208)
+    : undefined;
+
   const children = React.useMemo(
     () =>
       props.children
@@ -33,13 +38,15 @@ const InnerPageBanner: React.FC<Props> = (props) => {
 
   return (
     <Section className={s.innerPageBanner} grid={true} theme={props.theme}>
-      {props.image && props.image.src ? (
+      {props.image && props.image.src && srcs ? (
         <div className={s.imageWrapper}>
           <img
             className={s.image}
-            src={props.image.src}
+            src={srcs.src}
+            srcSet={srcs.srcSet}
             alt={props.image.altText}
             loading="eager"
+            sizes={`(max-width: 1023px) 100%, 33%`}
           />
         </div>
       ) : null}

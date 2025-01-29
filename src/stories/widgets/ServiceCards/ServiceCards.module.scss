@@ -39,18 +39,20 @@ ul.cards {
     flex-direction: column;
 
     @include from(tabletSmall) {
-      --items: 2;
-
       flex: 0 0
         calc(
           (100% / var(--items)) -
             (var(--gap) * ((var(--items) - 1) / var(--items)))
         );
     }
+  }
 
-    @include from(tabletLarge) {
-      --items: 3;
-    }
+  @include from(tabletSmall) {
+    --items: 2;
+  }
+
+  @include from(tabletLarge) {
+    --items: 3;
   }
 }
 

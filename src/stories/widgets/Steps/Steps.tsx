@@ -1,6 +1,7 @@
 import React from "react";
 import g from "../../../lib/global.module.scss";
 import { insertLocationName } from "../../../utils";
+import { getSrcs } from "../../../utils/image";
 import CtaBlock from "../../components/CtaBlock/CtaBlock";
 import Section, { Themes } from "../../components/Section/Section";
 import s from "./Steps.module.scss";
@@ -66,23 +67,15 @@ const Steps: React.FC<StepsProps> = (props) => {
                 data-theme={item.theme}
                 className={`${g.richText}`}
                 dangerouslySetInnerHTML={{
-                  __html:
-                    children[
-                      stepIds.findIndex((s) => s === item.id) +
-                        (props.hasIntroduction ? 1 : 0)
-                    ],
+                  __html: item.content,
+                  // children[
+                  //   stepIds.findIndex((s) => s === item.id) +
+                  //     (props.hasIntroduction ? 1 : 0)
+                  // ],
                 }}
               />
             ) : (
-              <li>
-                <img
-                  className={s.image}
-                  src={item.image.src}
-                  alt={item.image.altText}
-                  loading="lazy"
-                  style={{ objectFit: item.imageType }}
-                />
-              </li>
+              <li>{renderStepImage(item.image, item.imageType)}</li>
             )}
           </React.Fragment>
         ))}
@@ -93,6 +86,25 @@ const Steps: React.FC<StepsProps> = (props) => {
       ) : null}
     </Section>
   );
+
+  function renderStepImage(
+    image: ImageModel,
+    type: "cover" | "contain"
+  ): React.ReactNode {
+    const srcs = getSrcs(image, 216, 350, 3, 350 / 220);
+
+    return (
+      <img
+        className={s.image}
+        src={srcs.src}
+        srcSet={srcs.srcSet}
+        alt={image.altText}
+        loading="lazy"
+        style={{ objectFit: type }}
+        sizes={`(max-width: 476px) 100%, (max-width: 767px) 50%, (max-width: 1365px) 33%, 350px`}
+      />
+    );
+  }
 };
 
 export default Steps;

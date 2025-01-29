@@ -30,5 +30,4 @@ export type ImageWithAlt = SanityImageObject & {
 export const imageWithAltSnippet = `
   ...,
   "imageUrl": asset->url,
-  "aspectRatio": asset->width / asset->height
 `;

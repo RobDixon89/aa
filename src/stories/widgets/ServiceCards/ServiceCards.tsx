@@ -2,6 +2,7 @@ import React from "react";
 import g from "../../../lib/global.module.scss";
 import { insertLocationName } from "../../../utils";
 import Icon, { IconType } from "../../../utils/icon";
+import { getSrcs } from "../../../utils/image";
 import CtaBlock from "../../components/CtaBlock/CtaBlock";
 import Section from "../../components/Section/Section";
 import s from "./ServiceCards.module.scss";
@@ -54,17 +55,7 @@ const ServiceCards: React.FC<ServiceCardsProps> = (props) => {
         {props.items.map((service) => (
           <li key={`${props.id}-${service.id}`}>
             <a href={service.url} className={s.card}>
-              {service.image ? (
-                <div className={s.imageWrapper}>
-                  <img
-                    className={s.image}
-                    src={service.image.src}
-                    alt={service.image.altText}
-                    loading="lazy"
-                  />
-                </div>
-              ) : null}
-
+              {service.image ? renderCardImage(service.image) : null}
               <div className={s.cardContent}>
                 {service.parent ? (
                   <p className={g.subtitle}>{service.parent}</p>
@@ -84,6 +75,23 @@ const ServiceCards: React.FC<ServiceCardsProps> = (props) => {
       ) : null}
     </Section>
   );
+
+  function renderCardImage(image: ImageModel): React.ReactNode {
+    const srcs = getSrcs(image, 375, 525, 6, 566 / 230);
+
+    return (
+      <div className={s.imageWrapper}>
+        <img
+          className={s.image}
+          src={srcs.src}
+          srcSet={srcs.srcSet}
+          alt={image.altText}
+          loading="lazy"
+          sizes={`(max-width: 567px) 100%, (max-width: 1023px) 50%, (max-width: 1920px) 33%, 525px`}
+        />
+      </div>
+    );
+  }
 };
 
 export default ServiceCards;
