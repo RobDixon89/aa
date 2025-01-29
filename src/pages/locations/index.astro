@@ -64,6 +64,7 @@ const { template, locations, services, settings } = {
         }
         uspList={template.banner.usps ? settings.usps : []}
         theme={template.banner.theme}
+        client:load
       >
         {template.banner.blockContent ? (
           <PortableText blockContent={template.banner.blockContent} />

@@ -26,10 +26,9 @@ const HomeHero: React.FC<Props> = (props) => {
   return (
     <Section className={s.homeHero} grid={true}>
       {srcs.src ? (
-        <picture>
+        <picture className={s.bgImage}>
           <source media="(min-width:768px)" srcSet={srcs.srcSet} />
           <img
-            className={s.bgImage}
             src={srcsMobile.src}
             srcSet={srcsMobile.srcSet}
             alt={props.image.altText}

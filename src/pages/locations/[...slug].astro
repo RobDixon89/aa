@@ -79,7 +79,7 @@ const { template, location, locations, services, settings } = Astro.props;
         uspList={template.banner.usps ? settings.usps : []}
         theme={template.banner.theme}
         location={location.name}
-        client:visible
+        client:load
       >
         {template.banner.blockContent ? (
           <PortableText blockContent={template.banner.blockContent} />

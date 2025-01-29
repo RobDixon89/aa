@@ -67,11 +67,11 @@ const Steps: React.FC<StepsProps> = (props) => {
                 data-theme={item.theme}
                 className={`${g.richText}`}
                 dangerouslySetInnerHTML={{
-                  __html: item.content,
-                  // children[
-                  //   stepIds.findIndex((s) => s === item.id) +
-                  //     (props.hasIntroduction ? 1 : 0)
-                  // ],
+                  __html:
+                    children[
+                      stepIds.findIndex((s) => s === item.id) +
+                        (props.hasIntroduction ? 1 : 0)
+                    ],
                 }}
               />
             ) : (
