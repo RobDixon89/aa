@@ -18,7 +18,7 @@ import sanity from "@sanity/astro";
 
 // Change this depending on your hosting provider (Vercel, Netlify etc)
 // https://docs.astro.build/en/guides/server-side-rendering/#adding-an-adapter
-import node from "@astrojs/node";
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,7 +26,7 @@ export default defineConfig({
   output: "hybrid",
   server: { port: 3333, host: true },
 
-  // adapter: vercel(),
+  adapter: cloudflare(),
   integrations: [
     sanity({
       projectId,
@@ -38,8 +38,4 @@ export default defineConfig({
     }),
     react(), // Required for Sanity Studio
   ],
-
-  adapter: node({
-    mode: "standalone",
-  }),
 });
