@@ -1,17 +1,18 @@
-import { motion, MotionConfig } from "motion/react";
-import React from "react";
-import { useFirstMountState } from "react-use";
-import g from "../../../lib/global.module.scss";
-import { clamp, insertLocationName } from "../../../utils";
-import Icon, { IconType } from "../../../utils/icon";
-import { useMediaQuery } from "../../../utils/useMediaQuery";
-import CtaBlock from "../../components/CtaBlock/CtaBlock";
-import Section, { Themes } from "../../components/Section/Section";
-import s from "./FAQs.module.scss";
+import { motion, MotionConfig } from 'motion/react';
+import React from 'react';
+import { useFirstMountState } from 'react-use';
+import g from '../../../lib/global.module.scss';
+import { clamp } from '../../../utils';
+import Icon, { IconType } from '../../../utils/icon';
+import { useMediaQuery } from '../../../utils/useMediaQuery';
+import CtaBlock from '../../components/CtaBlock/CtaBlock';
+import Section, { Themes } from '../../components/Section/Section';
+import s from './FAQs.module.scss';
 
 type FaqItem = {
   id: string;
   question: string;
+  answer: React.ReactNode;
   ctas: CtaModel[];
 };
 
@@ -19,13 +20,13 @@ export type FaqsProps = React.HTMLAttributes<HTMLDivElement> & {
   id: string;
   items: FaqItem[];
   title?: string | null;
-  variant: "default" | "dark";
+  variant: 'default' | 'dark';
   location?: string;
 };
 
 const Faqs: React.FC<FaqsProps> = (props) => {
   const isFirstMount = useFirstMountState();
-  const isMobile = useMediaQuery("(max-width: 1024px)");
+  const isMobile = useMediaQuery('(max-width: 1024px)');
 
   const [active, setActive] = React.useState<number>(0);
   const questions = React.useRef<HTMLButtonElement[]>([]);
@@ -36,18 +37,9 @@ const Faqs: React.FC<FaqsProps> = (props) => {
     }
 
     setTimeout(() => {
-      questions.current[active]?.scrollIntoView({ behavior: "auto" });
+      questions.current[active]?.scrollIntoView({ behavior: 'auto' });
     }, 301);
   }, [active]);
-
-  // Split children as each child div is a FAQ answer
-  const children = React.useMemo(
-    () =>
-      insertLocationName(props.children, props.location)
-        .split("</div>")
-        .filter((c) => c !== ""),
-    []
-  );
 
   if (!props.items || !props.items.length) {
     return null;
@@ -80,25 +72,25 @@ const Faqs: React.FC<FaqsProps> = (props) => {
                   const prevIndex = i === 0 ? max : clamp(i - 1, max);
 
                   switch (e.key) {
-                    case "ArrowDown":
+                    case 'ArrowDown':
                       e.preventDefault();
                       e.stopPropagation();
                       questions.current[nextIndex]?.focus();
                       break;
 
-                    case "ArrowUp":
+                    case 'ArrowUp':
                       e.preventDefault();
                       e.stopPropagation();
                       questions.current[prevIndex]?.focus();
                       break;
 
-                    case "End":
+                    case 'End':
                       e.preventDefault();
                       e.stopPropagation();
                       questions.current[max]?.focus();
                       break;
 
-                    case "Home":
+                    case 'Home':
                       e.preventDefault();
                       e.stopPropagation();
                       questions.current[0]?.focus();
@@ -112,17 +104,14 @@ const Faqs: React.FC<FaqsProps> = (props) => {
                 id={`${item.id}-content`}
                 role="region"
                 aria-labelledby={`${item.id}-button`}
-                style={{ overflow: "hidden" }}
-                variants={{ open: { height: "auto" }, closed: { height: 0 } }}
-                initial={active === i ? "open" : "closed"}
-                animate={active === i ? "open" : "closed"}
+                style={{ overflow: 'hidden' }}
+                variants={{ open: { height: 'auto' }, closed: { height: 0 } }}
+                initial={active === i ? 'open' : 'closed'}
+                animate={active === i ? 'open' : 'closed'}
                 tabIndex={active === i ? undefined : -1}
               >
                 <div className={s.answer}>
-                  <div
-                    className={g.richText}
-                    dangerouslySetInnerHTML={{ __html: children[i] }}
-                  ></div>
+                  <div className={g.richText}>{item.answer}</div>
 
                   {item.ctas && item.ctas.length > 0 ? (
                     <CtaBlock

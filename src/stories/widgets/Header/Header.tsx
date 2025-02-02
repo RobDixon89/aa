@@ -1,15 +1,15 @@
-import { AnimatePresence, motion, MotionConfig } from "motion/react";
-import React from "react";
-import Logo from "../../../img/logo.svg?url";
-import Icon, { IconType } from "../../../utils/icon";
-import { useMediaQuery } from "../../../utils/useMediaQuery";
-import Button, { LinkButton } from "../../components/Button/Button";
-import { Themes } from "../../components/Section/Section";
-import ss from "../../components/Section/Section.module.scss";
-import s from "./Header.module.scss";
+import { AnimatePresence, motion, MotionConfig } from 'motion/react';
+import Link from 'next/link';
+import React from 'react';
+import Icon, { IconType } from '../../../utils/icon';
+import { useMediaQuery } from '../../../utils/useMediaQuery';
+import Button, { LinkButton } from '../../components/Button/Button';
+import { Themes } from '../../components/Section/Section';
+import ss from '../../components/Section/Section.module.scss';
+import s from './Header.module.scss';
 
 type NavigationDropdownSimple = {
-  type: "simple";
+  type: 'simple';
   items: CtaModel[];
 };
 
@@ -19,7 +19,7 @@ export type NavigationDropdownGroup = {
 };
 
 type NavigationDropdownComplex = {
-  type: "complex";
+  type: 'complex';
   items: NavigationDropdownGroup[];
 };
 
@@ -34,31 +34,31 @@ export type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = (props) => {
-  const isMobile = useMediaQuery("(max-width: 1024px)");
-  const [active, setActive] = React.useState<string>("");
+  const isMobile = useMediaQuery('(max-width: 1024px)');
+  const [active, setActive] = React.useState<string>('');
 
   return (
     <>
       <header className={s.container} data-theme={Themes.blue}>
         <div className={`${ss.inner} ${s.inner}`}>
-          <a href="/" className={s.logo} aria-label="Go to homepage">
-            <img src={Logo} alt="Ashley Aerials Ltd Logo" />
-          </a>
+          <Link href="/" className={s.logo} aria-label="Go to homepage">
+            <img src="/logo.svg" alt="Ashley Aerials Ltd Logo" />
+          </Link>
 
           <nav className={s.navigation}>
             <ul
               onMouseLeave={() => handleUnhover()}
               onBlur={(e) => {
-                if (e.target.classList.contains("navigationLink"))
+                if (e.target.classList.contains('navigationLink'))
                   handleUnhover();
               }}
               role="menu"
               aria-label="Menu"
-              data-open={active !== ""}
+              data-open={active !== ''}
             >
               {props.links?.map((link) => (
                 <li data-type={link.dropdown?.type}>
-                  <a
+                  <Link
                     key={link.id}
                     href={link.url}
                     onMouseEnter={() => handleLinkHover(link.id)}
@@ -91,20 +91,20 @@ const Header: React.FC<HeaderProps> = (props) => {
                     </span>
 
                     <Icon icon={IconType.chevron} />
-                  </a>
+                  </Link>
 
-                  {link.dropdown.type === "simple" ? (
+                  {link.dropdown.type === 'simple' ? (
                     <Dropdown
                       id={`${link.id}-dropdown`}
                       active={active === link.id}
-                      backId={"menu"}
+                      backId={'menu'}
                       backLabel={link.text}
                       items={link.dropdown.items}
                       name={link.id}
                       setActive={setActive}
                       mobileLink={link}
                     />
-                  ) : link.dropdown.type === "complex" ? (
+                  ) : link.dropdown.type === 'complex' ? (
                     <ul
                       id={`${link.id}-dropdown`}
                       className={s.dropdownComplex}
@@ -119,7 +119,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                             e.preventDefault();
                             e.stopPropagation();
 
-                            setActive("menu");
+                            setActive('menu');
                           }}
                         />
                       </li>
@@ -132,7 +132,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                       </li>
 
                       {link.dropdown.items.map((dropdownItem) => {
-                        const id = `${link.id}-${dropdownItem.title.toLowerCase().replaceAll(" ", "-")}`;
+                        const id = `${link.id}-${dropdownItem.title.toLowerCase().replaceAll(' ', '-')}`;
 
                         return (
                           <React.Fragment key={id}>
@@ -183,71 +183,71 @@ const Header: React.FC<HeaderProps> = (props) => {
             </ul>
           </nav>
 
-          <MotionConfig transition={{ duration: 0.5, ease: "easeInOut" }}>
+          <MotionConfig transition={{ duration: 0.5, ease: 'easeInOut' }}>
             <motion.button
               className={s.menuButton}
               onClick={() => {
                 if (active) {
-                  setActive("");
+                  setActive('');
                 } else {
-                  setActive("menu");
+                  setActive('menu');
                 }
               }}
               aria-haspopup="menu"
-              aria-expanded={active !== ""}
-              aria-label={active !== "" ? "Close menu" : "Open menu"}
+              aria-expanded={active !== ''}
+              aria-label={active !== '' ? 'Close menu' : 'Open menu'}
               initial={false}
-              animate={active !== "" ? "open" : "closed"}
+              animate={active !== '' ? 'open' : 'closed'}
             >
               <motion.span
                 style={{
-                  top: "15%",
-                  left: "50%",
-                  x: "-50%",
-                  y: "-50%",
+                  top: '15%',
+                  left: '50%',
+                  x: '-50%',
+                  y: '-50%',
                 }}
                 variants={{
                   open: {
-                    rotate: ["0deg", "0deg", "45deg"],
-                    top: ["15%", "50%", "50%"],
+                    rotate: ['0deg', '0deg', '45deg'],
+                    top: ['15%', '50%', '50%'],
                   },
                   closed: {
-                    rotate: ["45deg", "0deg", "0deg"],
-                    top: ["50%", "50%", "15%"],
+                    rotate: ['45deg', '0deg', '0deg'],
+                    top: ['50%', '50%', '15%'],
                   },
                 }}
               />
               <motion.span
                 style={{
-                  top: "50%",
-                  left: "50%",
-                  x: "-50%",
-                  y: "-50%",
+                  top: '50%',
+                  left: '50%',
+                  x: '-50%',
+                  y: '-50%',
                 }}
                 variants={{
                   open: {
-                    rotate: ["0deg", "0deg", "45deg"],
+                    rotate: ['0deg', '0deg', '45deg'],
                   },
                   closed: {
-                    rotate: ["45deg", "0deg", "0deg"],
+                    rotate: ['45deg', '0deg', '0deg'],
                   },
                 }}
               />
               <motion.span
                 style={{
-                  bottom: "15%",
-                  left: "50%",
-                  x: "-50%",
-                  y: "50%",
+                  bottom: '15%',
+                  left: '50%',
+                  x: '-50%',
+                  y: '50%',
                 }}
                 variants={{
                   open: {
-                    rotate: ["0deg", "0deg", "-45deg"],
-                    bottom: ["15%", "50%", "50%"],
+                    rotate: ['0deg', '0deg', '-45deg'],
+                    bottom: ['15%', '50%', '50%'],
                   },
                   closed: {
-                    rotate: ["-45deg", "0deg", "0deg"],
-                    bottom: ["50%", "50%", "15%"],
+                    rotate: ['-45deg', '0deg', '0deg'],
+                    bottom: ['50%', '50%', '15%'],
                   },
                 }}
               />
@@ -278,7 +278,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 
   function handleUnhover(): void {
     if (!isMobile) {
-      setActive("");
+      setActive('');
     }
   }
 

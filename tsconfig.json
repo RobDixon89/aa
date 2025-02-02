@@ -1,21 +1,51 @@
 {
-  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "importsNotUsedAsValues": "remove",
-    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "rootDirs": [".", "__generated__"]
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@sanity/*": [
+        "../sanity/*"
+      ],
+      "@types": [
+        "../sanity/sanity.types"
+      ],
+      "@lib/*": [
+        "./src/lib/*"
+      ]
+    },
+    "target": "ES2017"
   },
-  "includes": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/**/*",
+    "../index.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

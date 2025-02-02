@@ -1,8 +1,9 @@
-import React from "react";
-import Icon, { IconType } from "../../../utils/icon";
-import s from "./Button.module.scss";
+import Link from 'next/link';
+import React from 'react';
+import Icon, { IconType } from '../../../utils/icon';
+import s from './Button.module.scss';
 
-type ButtonType = "default" | "outline" | "text";
+type ButtonType = 'default' | 'outline' | 'text';
 type ButtonCommonProps = {
   theme: ButtonType;
   label: string;
@@ -21,8 +22,8 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={`${s.button}${classes ? " " + classes : ""}`}
-      data-theme={theme ?? "default"}
+      className={`${s.button}${classes ? ' ' + classes : ''}`}
+      data-theme={theme ?? 'default'}
       data-icon={icon ?? IconType.arrow}
       {...attributes}
     >
@@ -40,18 +41,20 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
   icon,
   className: classes,
   label,
+  href,
   ...attributes
 }) => {
   return (
-    <a
-      className={`${s.button}${classes ? " " + classes : ""}`}
-      data-theme={theme ?? "default"}
+    <Link
+      href={href ?? ''}
+      className={`${s.button}${classes ? ' ' + classes : ''}`}
+      data-theme={theme ?? 'default'}
       data-icon={icon ?? IconType.arrow}
       {...attributes}
     >
       <span className={s.text}>{label}</span>
       <Icon icon={icon ?? IconType.arrow} />
-    </a>
+    </Link>
   );
 };
 

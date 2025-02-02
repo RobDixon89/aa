@@ -1,4 +1,4 @@
-@use "../../../lib/helpers" as *;
+@import '@/lib/helpers.scss';
 
 .container {
   position: fixed;
@@ -48,7 +48,7 @@
     max-width: 480px;
   }
 
-  &[data-open="false"] {
+  &[data-open='false'] {
     transform: translateX(101vw);
   }
 
@@ -59,7 +59,7 @@
     min-height: -webkit-fill-available;
   }
 
-  @include transition("transform, opacity", 0.5s);
+  @include transition('transform, opacity', 0.5s);
 }
 
 .navigation {
@@ -87,7 +87,7 @@
         height: 100%;
       }
 
-      > li[data-type="simple"] {
+      > li[data-type='simple'] {
         position: relative;
       }
     }
@@ -151,7 +151,7 @@ ul.dropdown {
   z-index: 1;
 
   @include until(tabletLarge) {
-    [class*="button"] {
+    [class*='button'] {
       width: 100%;
       justify-content: space-between;
       padding: 0 0 fluid(12, 18);
@@ -185,7 +185,7 @@ ul.dropdown {
     max-height: calc(100dvh - var(--headerHeight));
     overflow: auto;
 
-    &[data-open="false"] {
+    &[data-open='false'] {
       transform: translateY(-12px);
       pointer-events: none;
       opacity: 0;
@@ -194,7 +194,7 @@ ul.dropdown {
 }
 
 .backButton {
-  button[class*="button"] {
+  button[class*='button'] {
     color: var(--tertiaryLighter);
     flex-direction: row-reverse;
     justify-content: flex-end;
@@ -269,14 +269,14 @@ ul.dropdownComplex {
 }
 
 li.locationButton {
-  > button[class*="button"] {
+  > button[class*='button'] {
     svg {
       width: 8px;
     }
   }
 
   @include from(tabletLarge) {
-    button[class*="button"] {
+    button[class*='button'] {
       color: var(--tertiaryLighter);
       height: auto;
       font-size: var(--font-size-h5);

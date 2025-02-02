@@ -1,24 +1,23 @@
-import React from "react";
-import g from "../../../lib/global.module.scss";
-import { insertLocationName } from "../../../utils";
-import type { CtaIconModel } from "../../../utils/icon";
-import { getSrcs } from "../../../utils/image";
-import CtaBlock from "../../components/CtaBlock/CtaBlock";
-import Section, { Themes } from "../../components/Section/Section";
-import s from "./ImageText5050.module.scss";
+import React from 'react';
+import g from '../../../lib/global.module.scss';
+import type { CtaIconModel } from '../../../utils/icon';
+import { getSrcs } from '../../../utils/image';
+import CtaBlock from '../../components/CtaBlock/CtaBlock';
+import Section, { Themes } from '../../components/Section/Section';
+import s from './ImageText5050.module.scss';
 
 export type ImageText5050Props = React.HTMLAttributes<HTMLDivElement> & {
-  _type: "ImageText5050";
+  _type: 'ImageText5050';
   id: string;
   ctas?: CtaIconModel[];
   image: ImageModel;
   title?: string | null;
   theme?: Exclude<Themes, Themes.navy>;
-  imageAlign: "left" | "right";
+  imageAlign: 'left' | 'right';
   location?: string;
 };
 
-type Props = Omit<ImageText5050Props, "_type">;
+type Props = Omit<ImageText5050Props, '_type'>;
 
 const ImageText5050: React.FC<Props> = (props) => {
   const srcsMobile = getSrcs(props.image, 375, 1024, 6, 327 / 225);
@@ -27,11 +26,6 @@ const ImageText5050: React.FC<Props> = (props) => {
   if (!props.children) {
     return null;
   }
-
-  const children = React.useMemo(
-    () => insertLocationName(props.children, props.location),
-    []
-  );
 
   return (
     <Section
@@ -60,10 +54,7 @@ const ImageText5050: React.FC<Props> = (props) => {
       <div className={s.contentWrapper}>
         {props.title ? <h2 className={s.title}>{props.title}</h2> : null}
 
-        <div
-          className={`${g.richText}`}
-          dangerouslySetInnerHTML={{ __html: children }}
-        />
+        <div className={`${g.richText}`}>{props.children}</div>
 
         {props.ctas && props.ctas.length > 0 ? (
           <CtaBlock id={props.id} items={props.ctas} />

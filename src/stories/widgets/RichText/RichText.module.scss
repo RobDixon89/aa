@@ -1,7 +1,7 @@
-@use "../../../lib/helpers" as *;
+@import '@/lib/helpers.scss';
 
 .container {
-  &[data-align="center"] {
+  &[data-align='center'] {
     text-align: center;
 
     ul,
@@ -9,17 +9,17 @@
       text-align: left;
     }
 
-    [class*="ctaBlock"],
-    [class*="uspList"] {
+    [class*='ctaBlock'],
+    [class*='uspList'] {
       justify-content: center;
     }
   }
 
-  [class*="ctaBlock"] {
+  [class*='ctaBlock'] {
     margin-top: fluid(20, 32);
   }
 
-  [class*="uspList"] {
+  [class*='uspList'] {
     margin-top: fluid(32, 56);
   }
 
@@ -32,7 +32,7 @@ h2.title {
 }
 
 div.richText {
-  [data-columns="true"] & {
+  [data-columns='true'] & {
     @include from(mobileLarge) {
       columns: 2;
       gap: fluid(16, 24);

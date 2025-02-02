@@ -1,4 +1,4 @@
-@use "../../../lib/helpers" as *;
+@import '@/lib/helpers.scss';
 
 .homeHero {
   --gridRowGap: #{fluid(20, 24)};
@@ -7,6 +7,7 @@
   --sectionPaddingBottom: var(--paddingY);
   --sitePadding: 16px;
 
+  margin-top: var(--headerHeight);
   min-height: calc(100dvh - var(--headerHeight));
   position: relative;
   background-color: transparent;
@@ -17,7 +18,7 @@
     align-items: center;
   }
 
-  [class*="uspList"] {
+  [class*='uspList'] {
     grid-column: span 12;
     margin-bottom: auto;
     gap: var(--gridRowGap);
@@ -53,7 +54,7 @@
 .title {
   font-size: var(--font-size-h1);
 
-  [class~="highlight"] {
+  [class~='highlight'] {
     background: linear-gradient(
       to right,
       var(--highlight) 50%,
@@ -99,10 +100,10 @@
       gap: 10px;
 
       &::before {
-        content: "";
+        content: '';
         width: 30px;
         height: 30px;
-        mask-image: url("../../../img/icons/filled-tick.svg");
+        mask-image: url('/icons/filled-tick.svg');
         mask-repeat: no-repeat;
         background-color: var(--secondary);
       }

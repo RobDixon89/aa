@@ -1,29 +1,29 @@
-import { SplitVerticalIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { SplitVerticalIcon } from '@sanity/icons';
+import { defineField, defineType } from 'sanity';
 import {
   blockContent,
   contentOnlySnippet,
-} from "../../../../schema/blockContent";
+} from '../../../sanity/schema/blockContent';
 import {
   imageWithAltSnippet,
   type ImageWithAlt,
-} from "../../../../schema/image";
+} from '../../../sanity/schema/image';
 import {
   labelledLinkSnippet,
   type LabelledLink,
-} from "../../../../schema/linkList";
-import { themeList } from "../../../../schema/themes";
-import { Themes } from "../../components/Section/Section";
+} from '../../../sanity/schema/linkList';
+import { themeList } from '../../../sanity/schema/themes';
+import { Themes } from '../../components/Section/Section';
 
 export const imageText5050Schema = defineType({
   icon: SplitVerticalIcon,
-  name: "imageText5050",
-  type: "object",
-  title: "Image Text 50/50",
+  name: 'imageText5050',
+  type: 'object',
+  title: 'Image Text 50/50',
   preview: {
     select: {
-      title: "title",
-      blockContent: "blockContent",
+      title: 'title',
+      blockContent: 'blockContent',
     },
     prepare(selection) {
       const { title, blockContent } = selection;
@@ -34,35 +34,35 @@ export const imageText5050Schema = defineType({
   },
   fields: [
     defineField({
-      name: "image",
-      title: "Image",
-      type: "imageWithAlt",
+      name: 'image',
+      title: 'Image',
+      type: 'imageWithAlt',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "imageAlign",
-      title: "Image Alignment",
-      type: "string",
-      initialValue: "left",
+      name: 'imageAlign',
+      title: 'Image Alignment',
+      type: 'string',
+      initialValue: 'left',
       options: {
         list: [
-          { value: "left", title: "Left" },
-          { value: "right", title: "Right" },
+          { value: 'left', title: 'Left' },
+          { value: 'right', title: 'Right' },
         ],
       },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "title",
-      type: "string",
-      title: "Heading",
-      description: "Will be a h2 tag",
+      name: 'title',
+      type: 'string',
+      title: 'Heading',
+      description: 'Will be a h2 tag',
     }),
-    blockContent("contentOnly", undefined, "Text Content"),
+    blockContent('contentOnly', undefined, 'Text Content'),
     defineField({
-      name: "ctas",
-      title: "Link List",
-      type: "linkList",
+      name: 'ctas',
+      title: 'Link List',
+      type: 'linkList',
     }),
     themeList([Themes.navy]),
   ],
@@ -82,10 +82,10 @@ export const imageText5050Snippet = `
 `;
 
 export type ImageText5050Response = {
-  _type: "imageText5050";
+  _type: 'imageText5050';
   _key: string;
   image: ImageWithAlt;
-  imageAlign: "left" | "right";
+  imageAlign: 'left' | 'right';
   title: string | null;
   blockContent: any;
   ctas: LabelledLink[] | null;

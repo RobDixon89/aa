@@ -1,29 +1,29 @@
-import { DashboardIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { DashboardIcon } from '@sanity/icons';
+import { defineField, defineType } from 'sanity';
 import {
   blockContent,
   contentOnlySnippet,
-} from "../../../../schema/blockContent";
+} from '../../../sanity/schema/blockContent';
 import {
   imageWithAltSnippet,
   type ImageWithAlt,
-} from "../../../../schema/image";
+} from '../../../sanity/schema/image';
 import {
   labelledLinkSnippet,
   type LabelledLink,
-} from "../../../../schema/linkList";
-import { themeList } from "../../../../schema/themes";
-import { Themes } from "../../components/Section/Section";
+} from '../../../sanity/schema/linkList';
+import { themeList } from '../../../sanity/schema/themes';
+import { Themes } from '../../components/Section/Section';
 
 export const stepsSchema = defineType({
   icon: DashboardIcon,
-  name: "steps",
-  type: "object",
-  title: "Steps",
+  name: 'steps',
+  type: 'object',
+  title: 'Steps',
   preview: {
     select: {
-      title: "title",
-      blockContent: "blockContent",
+      title: 'title',
+      blockContent: 'blockContent',
     },
     prepare(selection) {
       const { title, blockContent } = selection;
@@ -34,57 +34,57 @@ export const stepsSchema = defineType({
   },
   fields: [
     defineField({
-      name: "title",
-      type: "string",
-      title: "Heading",
-      description: "Will be a h2 tag",
+      name: 'title',
+      type: 'string',
+      title: 'Heading',
+      description: 'Will be a h2 tag',
     }),
-    blockContent("contentOnly", undefined, "Introduction"),
+    blockContent('contentOnly', undefined, 'Introduction'),
     defineField({
-      name: "items",
-      title: "Steps",
-      type: "array",
+      name: 'items',
+      title: 'Steps',
+      type: 'array',
       of: [
         defineField({
-          name: "step",
-          type: "object",
-          title: "Content Step",
+          name: 'step',
+          type: 'object',
+          title: 'Content Step',
           preview: {
             select: {
-              title: "blockContent",
+              title: 'blockContent',
             },
           },
           fields: [
-            blockContent("contentOnly", undefined, "Content"),
+            blockContent('contentOnly', undefined, 'Content'),
             themeList([Themes.default, Themes.blue]),
           ],
         }),
         defineField({
-          name: "stepImage",
-          type: "object",
-          title: "Image Step",
+          name: 'stepImage',
+          type: 'object',
+          title: 'Image Step',
           preview: {
             select: {
-              title: "image.altText",
+              title: 'image.altText',
             },
           },
           fields: [
             defineField({
-              name: "image",
-              title: "Image",
-              type: "imageWithAlt",
+              name: 'image',
+              title: 'Image',
+              type: 'imageWithAlt',
             }),
             defineField({
-              name: "imageType",
-              title: "Image Type",
-              type: "string",
+              name: 'imageType',
+              title: 'Image Type',
+              type: 'string',
               description:
-                "Should the image expand to cover the entire square or should it be contained within without cropping (eg. a logo)",
-              initialValue: "cover",
+                'Should the image expand to cover the entire square or should it be contained within without cropping (eg. a logo)',
+              initialValue: 'cover',
               options: {
                 list: [
-                  { value: "contain", title: "Cover" },
-                  { value: "cover", title: "Contain" },
+                  { value: 'contain', title: 'Cover' },
+                  { value: 'cover', title: 'Contain' },
                 ],
               },
               validation: (Rule) => Rule.required(),
@@ -95,9 +95,9 @@ export const stepsSchema = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "ctas",
-      title: "Link List",
-      type: "linkList",
+      name: 'ctas',
+      title: 'Link List',
+      type: 'linkList',
     }),
     themeList([Themes.lightBlue, Themes.yellow, Themes.lightBlue]),
   ],
@@ -127,21 +127,21 @@ export const stepsSnippet = `
 `;
 
 export type ContentStep = {
-  _type: "step";
+  _type: 'step';
   _key: string;
   blockContent: any;
   theme: Themes;
 };
 
 export type ImageStep = {
-  _type: "stepImage";
+  _type: 'stepImage';
   _key: string;
-  imageType: "contain" | "cover";
+  imageType: 'contain' | 'cover';
   image: ImageWithAlt;
 };
 
 export type StepsResponse = {
-  _type: "steps";
+  _type: 'steps';
   _key: string;
   title: string | null;
   blockContent: any;

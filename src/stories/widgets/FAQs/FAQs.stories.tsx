@@ -1,10 +1,10 @@
-import type { Meta, StoryFn } from "@storybook/react";
-import Faqs, { type FaqsProps } from "./FAQs";
+import type { Meta, StoryFn } from '@storybook/react';
+import Faqs, { type FaqsProps } from './FAQs';
 
 const meta: Meta<FaqsProps> = {
   component: Faqs,
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 
@@ -50,12 +50,12 @@ const items = Array.from({ length: 8 }).map((_, i) => ({
     Math.random() < 0.5
       ? [
           {
-            text: "Button Text",
-            url: "#",
+            text: 'Button Text',
+            url: '#',
           },
           {
-            text: "Button Text",
-            url: "#",
+            text: 'Button Text',
+            url: '#',
           },
         ]
       : [],
@@ -63,15 +63,15 @@ const items = Array.from({ length: 8 }).map((_, i) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  id: "rt-675t872yg78322",
-  title: "Proin ut urna sit amet mauris",
+  id: 'rt-675t872yg78322',
+  title: 'Proin ut urna sit amet mauris',
   items,
-  variant: "default",
+  variant: 'default',
   children: items.map((item) => item.answer),
 };
 
 export const Dark = Template.bind({});
 Dark.args = {
   ...Default.args,
-  variant: "dark",
+  variant: 'dark',
 };

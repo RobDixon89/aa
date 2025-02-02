@@ -1,21 +1,21 @@
-import React from "react";
-import g from "../../../lib/global.module.scss";
-import Section from "../../components/Section/Section";
-import s from "./Testimonials.module.scss";
+import React from 'react';
+import g from '../../../lib/global.module.scss';
+import Section from '../../components/Section/Section';
+import s from './Testimonials.module.scss';
 
-import { StarFilledIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
-import { blockContent } from "../../../../schema/blockContent";
+import { StarFilledIcon } from '@sanity/icons';
+import { defineField, defineType } from 'sanity';
+import { blockContent } from '../../../sanity/schema/blockContent';
 
 export const testimonialsSchema = defineType({
   icon: StarFilledIcon,
-  name: "testimonials",
-  type: "object",
-  title: "Testimonial Cards",
+  name: 'testimonials',
+  type: 'object',
+  title: 'Testimonial Cards',
   preview: {
     select: {
-      title: "title",
-      blockContent: "blockContent",
+      title: 'title',
+      blockContent: 'blockContent',
     },
     prepare(selection) {
       const { title, blockContent } = selection;
@@ -26,30 +26,30 @@ export const testimonialsSchema = defineType({
   },
   fields: [
     defineField({
-      name: "title",
-      type: "string",
-      title: "Heading",
-      description: "Will be a h2 tag",
+      name: 'title',
+      type: 'string',
+      title: 'Heading',
+      description: 'Will be a h2 tag',
     }),
-    blockContent("contentOnly", undefined, "Introduction"),
+    blockContent('contentOnly', undefined, 'Introduction'),
     defineField({
-      name: "items",
-      title: "Testimonials",
+      name: 'items',
+      title: 'Testimonials',
       description: `Select specific tesimonials to display, if none are selected then 8 will be displayed at random`,
-      type: "array",
+      type: 'array',
       of: [
         defineField({
-          title: "Testimonial",
-          name: "testimonialLink",
-          type: "reference",
-          to: [{ type: "testimonial" }],
+          title: 'Testimonial',
+          name: 'testimonialLink',
+          type: 'reference',
+          to: [{ type: 'testimonial' }],
         }),
       ],
     }),
     defineField({
-      name: "ctas",
-      title: "Link List",
-      type: "linkList",
+      name: 'ctas',
+      title: 'Link List',
+      type: 'linkList',
     }),
   ],
 });

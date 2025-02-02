@@ -1,7 +1,7 @@
-@use "../../../lib/helpers" as *;
+@import '@/lib/helpers.scss';
 
 .container {
-  &[data-img-align="right"] {
+  &[data-img-align='right'] {
     @include from(tabletLarge) {
       .imageWrapper {
         grid-column: 7 / span 6;
@@ -21,7 +21,7 @@ div.contentWrapper {
   margin: auto 0;
   grid-column: 1 / -1;
 
-  [class*="ctaBlock"] {
+  [class*='ctaBlock'] {
     margin-top: fluid(16, 28);
   }
 
