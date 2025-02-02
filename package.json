@@ -59,7 +59,7 @@
   "resolutions": {
     "@babel/runtime": "^7.24.6"
   },
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "yarn@1.22.22",
   "engines": {
     "node": "20.12.0",
     "yarn": "1.22.22"
