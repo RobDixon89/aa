@@ -1,7 +1,7 @@
-@use "../../../lib/helpers" as *;
+@import '@/lib/helpers.scss';
 
 .container {
-  [class*="ctaBlock"] {
+  [class*='ctaBlock'] {
     grid-column: 1 / -1;
     justify-content: center;
   }
@@ -64,30 +64,30 @@ ol.cards {
       z-index: 0;
     }
 
-    &[data-theme="default"] {
+    &[data-theme='default'] {
       background-color: var(--white);
     }
 
-    &[data-theme="navy"] {
+    &[data-theme='navy'] {
       background-color: var(--body);
     }
 
-    &[data-theme="blue"] {
+    &[data-theme='blue'] {
       background-color: var(--secondary);
     }
 
-    &[data-theme="light-blue"] {
+    &[data-theme='light-blue'] {
       --accentColour: var(--body);
       --hoverColour: var(--white);
       background-color: var(--tertiary);
     }
 
-    &[data-theme="yellow"] {
+    &[data-theme='yellow'] {
       background-color: var(--highlight);
     }
 
-    &[data-theme="navy"],
-    &[data-theme="blue"] {
+    &[data-theme='navy'],
+    &[data-theme='blue'] {
       color: var(--white);
     }
 

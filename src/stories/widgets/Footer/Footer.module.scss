@@ -1,4 +1,4 @@
-@use "../../../lib/helpers" as *;
+@import '@/lib/helpers.scss';
 
 .container {
   --gridRowGap: #{fluid(42, 64)};
@@ -7,7 +7,7 @@
 .contact {
   grid-column: 1 / -1;
 
-  > [class*="button"] {
+  > [class*='button'] {
     margin: fluid(24, 36) 0 0;
   }
 
@@ -32,7 +32,7 @@ div.phoneNumbers {
   gap: fluid(6, 12);
   margin: fluid(24, 46) 0 0;
 
-  [class*="button"] {
+  [class*='button'] {
     svg {
       color: var(--highlight);
       order: -1;
@@ -87,10 +87,10 @@ button.listTitle {
     width: 9px;
     transform: translateX(-3px) rotate(90deg);
 
-    @include transition("transform");
+    @include transition('transform');
   }
 
-  &[aria-expanded="true"] svg {
+  &[aria-expanded='true'] svg {
     transform: translateX(-3px) rotate(270deg);
   }
 
@@ -121,11 +121,11 @@ button.listTitle {
   padding: fluid(12, 16) 0 0;
 
   p,
-  [class*="button"] {
+  [class*='button'] {
     font-size: var(--font-size-small);
   }
 
-  [class*="button"] {
+  [class*='button'] {
     min-height: calc(var(--font-size-small) * 1.5);
   }
 

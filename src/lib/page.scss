@@ -1,0 +1,134 @@
+@use '../lib/helpers' as *;
+
+// Global variables
+:root {
+  --font-family-sans: Poppins, sans-serif;
+
+  /* Colour Variables */
+  --whiteValues: 0, 0%, 100%;
+  --white: hsl(var(--whiteValues));
+  --bodyValues: 230, 75%, 12%;
+  --body: hsl(var(--bodyValues));
+  --secondaryValues: 197, 100%, 29%;
+  --secondary: hsl(var(--secondaryValues));
+  --tertiaryValues: 211, 93%, 73%;
+  --tertiary: hsl(var(--tertiaryValues));
+  --tertiaryLighter: #afd4fc;
+  --highlightValues: 51, 100%, 47%;
+  --highlight: hsl(var(--highlightValues));
+
+  --font-size-h1: #{fluid(32, 92)};
+  --font-size-h2: #{fluid(28, 70)};
+  --font-size-h3: #{fluid(26, 56)};
+  --font-size-h4: #{fluid(22, 42)};
+  --font-size-h5: #{fluid(21, 32)};
+  --font-size-subtitle: #{fluid(14, 18)};
+  --font-size-large: #{fluid(18, 20)};
+  --font-size-regular: #{fluid(16, 18)};
+  --font-size-small: #{fluid(12, 14)};
+
+  --maxWidth: calc(1760px - var(--sitePadding) * 2);
+  --sitePadding: #{fluid(24, 32)};
+  --gridRowGap: #{fluid(20, 32)};
+  --gutterWidth: #{fluid(16, 32)};
+  --headerHeight: 60px;
+
+  @include from(tabletLarge) {
+    --headerHeight: 65px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+  }
+}
+
+/* CSS Reset - https://www.joshwcomeau.com/css/custom-css-reset/ */
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+body {
+  /* 3. Add accessible line-height */
+  line-height: 1.5;
+  /* 4. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 5. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* unset max-width for sanity studio icons */
+#sanity,
+[data-portal] {
+  svg {
+    max-width: none;
+  }
+}
+
+/* 6. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+}
+
+/* 7. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 8. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/* 9. Create a root stacking context */
+#root {
+  isolation: isolate;
+}
+
+// Default styling
+body {
+  font-size: var(--font-size-regular);
+  line-height: 1.5;
+  font-family: var(--font-family-sans);
+  color: var(--body);
+}
+
+// Line heights
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.25;
+}

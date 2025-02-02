@@ -1,16 +1,17 @@
-import React from "react";
-import g from "../../../lib/global.module.scss";
-import { highlightTitleWords, insertLocationName } from "../../../utils";
-import Icon, { IconType, type CtaIconModel } from "../../../utils/icon";
-import { getSrcs } from "../../../utils/image";
-import CtaBlock from "../../components/CtaBlock/CtaBlock";
-import Section, { Themes } from "../../components/Section/Section";
-import type { UspModel } from "../../components/UspList/UspList";
-import UspList from "../../components/UspList/UspList";
-import s from "./InnerPageBanner.module.scss";
+import Link from 'next/link';
+import React from 'react';
+import g from '../../../lib/global.module.scss';
+import { highlightTitleWords } from '../../../utils';
+import Icon, { IconType, type CtaIconModel } from '../../../utils/icon';
+import { getSrcs } from '../../../utils/image';
+import CtaBlock from '../../components/CtaBlock/CtaBlock';
+import Section, { Themes } from '../../components/Section/Section';
+import type { UspModel } from '../../components/UspList/UspList';
+import UspList from '../../components/UspList/UspList';
+import s from './InnerPageBanner.module.scss';
 
 export type InnerPageBannerProps = React.HTMLAttributes<HTMLDivElement> & {
-  _type: "innerPageBanner";
+  _type: 'innerPageBanner';
   breadcrumbs: CtaModel[];
   ctas?: CtaIconModel[];
   image?: ImageModel;
@@ -21,20 +22,12 @@ export type InnerPageBannerProps = React.HTMLAttributes<HTMLDivElement> & {
   location?: string;
 };
 
-type Props = Omit<InnerPageBannerProps, "_type">;
+type Props = Omit<InnerPageBannerProps, '_type'>;
 
 const InnerPageBanner: React.FC<Props> = (props) => {
   const srcs = props.image
     ? getSrcs(props.image, 375, 1000, 16, 375 / 208)
     : undefined;
-
-  const children = React.useMemo(
-    () =>
-      props.children
-        ? insertLocationName(props.children, props.location)
-        : undefined,
-    []
-  );
 
   return (
     <Section className={s.innerPageBanner} grid={true} theme={props.theme}>
@@ -55,15 +48,15 @@ const InnerPageBanner: React.FC<Props> = (props) => {
         <ol>
           {props.breadcrumbs.map((b, i) => (
             <li key={`breadcrumb-${i}`}>
-              <a
+              <Link
                 href={b.url}
                 target={b.target}
                 aria-current={
-                  i === props.breadcrumbs.length - 1 ? "page" : undefined
+                  i === props.breadcrumbs.length - 1 ? 'page' : undefined
                 }
               >
                 {b.text}
-              </a>
+              </Link>
               {i < props.breadcrumbs.length - 1 ? (
                 <Icon icon={IconType.chevron} />
               ) : null}
@@ -79,11 +72,8 @@ const InnerPageBanner: React.FC<Props> = (props) => {
           dangerouslySetInnerHTML={{ __html: highlightTitleWords(props.title) }}
         />
 
-        {children ? (
-          <div
-            className={`${g.richText} ${s.content}`}
-            dangerouslySetInnerHTML={{ __html: children }}
-          />
+        {props.children ? (
+          <div className={`${g.richText} ${s.content}`}>{props.children}</div>
         ) : null}
 
         {props.ctas && props.ctas.length > 0 ? (
@@ -92,7 +82,7 @@ const InnerPageBanner: React.FC<Props> = (props) => {
       </div>
 
       {props.uspList && props.uspList.length > 0 ? (
-        <UspList id={"home-hero"} items={props.uspList} theme="default" />
+        <UspList id={'home-hero'} items={props.uspList} theme="default" />
       ) : null}
     </Section>
   );

@@ -1,7 +1,7 @@
-@use "../../../lib/helpers" as *;
+@import '@/lib/helpers.scss';
 
 .container {
-  [class*="ctaBlock"] {
+  [class*='ctaBlock'] {
     grid-column: 1 / -1;
     justify-content: center;
   }
@@ -86,20 +86,13 @@ a.card {
   @include from(tabletLarge) {
     &:not(:has(.imageWrapper)) {
       .cardContent {
-        justify-content: flex-start;
-      }
-
-      .descriptionWrapper {
-        flex: 1;
-        flex-direction: column;
-        align-items: flex-end;
-        justify-content: space-between;
+        justify-content: flex-end;
       }
     }
 
     svg {
       path {
-        @include transition("transform");
+        @include transition('transform');
 
         &:nth-child(1) {
           transform-origin: center;
@@ -126,7 +119,7 @@ a.card {
 }
 
 .imageWrapper {
-  aspect-ratio: 566 / 230;
+  aspect-ratio: 566 / 229;
   overflow: hidden;
 }
 
@@ -135,7 +128,7 @@ a.card {
   height: 100%;
   object-fit: cover;
 
-  @include transition("transform");
+  @include transition('transform');
 }
 
 .cardContent {

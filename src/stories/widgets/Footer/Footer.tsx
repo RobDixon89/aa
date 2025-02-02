@@ -1,11 +1,12 @@
-import { motion, MotionConfig } from "motion/react";
-import React from "react";
-import Logo from "../../../img/logo.svg?url";
-import Icon, { IconType } from "../../../utils/icon";
-import { useMediaQuery } from "../../../utils/useMediaQuery";
-import { LinkButton } from "../../components/Button/Button";
-import Section, { Themes } from "../../components/Section/Section";
-import s from "./Footer.module.scss";
+import { motion, MotionConfig } from 'motion/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import Icon, { IconType } from '../../../utils/icon';
+import { useMediaQuery } from '../../../utils/useMediaQuery';
+import { LinkButton } from '../../components/Button/Button';
+import Section, { Themes } from '../../components/Section/Section';
+import s from './Footer.module.scss';
 
 export type LinkList = {
   title: string;
@@ -21,7 +22,7 @@ export type FooterProps = {
 };
 
 const Footer: React.FC<FooterProps> = (props) => {
-  const isMobile = useMediaQuery("(max-width: 1024px)");
+  const isMobile = useMediaQuery('(max-width: 1024px)');
   const [active, setActive] = React.useState<number>(-1);
   const [copyright, setCopyright] = React.useState<string>(props.copyrightText);
 
@@ -29,16 +30,22 @@ const Footer: React.FC<FooterProps> = (props) => {
     if (props.copyrightText) {
       const year = new Date().getFullYear();
 
-      setCopyright(props.copyrightText.replaceAll("##year##", year.toString()));
+      setCopyright(props.copyrightText.replaceAll('##year##', year.toString()));
     }
   }, [props.copyrightText]);
 
   return (
     <Section className={s.container} grid={true} theme={Themes.navy}>
       <div className={s.contact}>
-        <a href="/" className={s.logo} aria-label="Go to homepage">
-          <img src={Logo} alt="Ashley Aerials Ltd Logo" />
-        </a>
+        <Link href="/" className={s.logo} aria-label="Go to homepage">
+          <Image
+            src="/logo.svg"
+            alt="Ashley Aerials Ltd Logo"
+            loading="lazy"
+            width={333}
+            height={20}
+          />
+        </Link>
 
         {props.phoneNumbers && props.phoneNumbers.length > 0 ? (
           <div className={s.phoneNumbers}>
@@ -71,9 +78,9 @@ const Footer: React.FC<FooterProps> = (props) => {
                 id={`footer-ll-${i}-links`}
                 key={`footer-ll-${i}`}
                 className={s.linkList}
-                variants={{ closed: { height: 35 }, open: { height: "auto" } }}
+                variants={{ closed: { height: 35 }, open: { height: 'auto' } }}
                 initial="closed"
-                animate={active === i ? "open" : "closed"}
+                animate={active === i ? 'open' : 'closed'}
               >
                 <li>
                   <button

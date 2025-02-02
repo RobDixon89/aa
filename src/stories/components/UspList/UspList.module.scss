@@ -1,4 +1,4 @@
-@use "../../../lib/helpers" as *;
+@import '@/lib/helpers.scss';
 
 .uspList {
   --cardBgColour: hsla(var(--bodyValues), 90%);
@@ -11,13 +11,13 @@
   gap: var(--gap);
   container-type: inline-size;
 
-  &[data-theme="light"] {
+  &[data-theme='light'] {
     --cardBgColour: hsla(var(--tertiaryValues), 25%);
     --cardFgColour: var(--body);
     --iconColour: var(--secondary);
   }
 
-  &[data-theme="dark"] {
+  &[data-theme='dark'] {
     --cardBgColour: var(--body);
   }
 }

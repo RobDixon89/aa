@@ -1,4 +1,4 @@
-@use "../../../lib/helpers" as *;
+@use '../../../lib/helpers' as *;
 
 .default-button {
   --bgColour: var(--body);
@@ -10,8 +10,8 @@
     opacity: 0.75;
   }
 
-  [data-theme="navy"] &,
-  [data-theme="blue"] & {
+  [data-theme='navy'] &,
+  [data-theme='blue'] & {
     --bgColour: var(--highlight);
     --bgColourHover: #ccac00;
     --fgColour: var(--body);
@@ -24,8 +24,8 @@
   --borderColour: var(--fgColour);
   --fgColour: var(--body);
 
-  [data-theme="navy"] &,
-  [data-theme="blue"] & {
+  [data-theme='navy'] &,
+  [data-theme='blue'] & {
     --fgColour: var(--white);
     --bgColourHover: hsla(var(--whiteValues), 15%);
 
@@ -44,7 +44,7 @@
   min-height: calc(var(--font-size-regular) * 1.5);
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: 3px;
     left: 0;
@@ -53,7 +53,7 @@
     background-color: currentColor;
     opacity: 0;
 
-    @include transition("opacity");
+    @include transition('opacity');
   }
 
   &:not(:disabled) {
@@ -94,9 +94,9 @@
       background-color: var(--bgColourHover);
     }
 
-    &[data-icon="arrow"] {
+    &[data-icon='arrow'] {
       path {
-        @include transition("transform");
+        @include transition('transform');
       }
 
       &:hover,
@@ -112,15 +112,15 @@
     }
   }
 
-  &[data-theme="default"] {
+  &[data-theme='default'] {
     @extend .default-button;
   }
 
-  &[data-theme="outline"] {
+  &[data-theme='outline'] {
     @extend .outline-button;
   }
 
-  &[data-theme="text"] {
+  &[data-theme='text'] {
     @extend .text-button;
   }
 
@@ -130,7 +130,7 @@
     flex-shrink: 0;
   }
 
-  &[data-icon="arrow"] {
+  &[data-icon='arrow'] {
     gap: fluid(6, 8);
 
     path:nth-child(1) {
@@ -143,7 +143,7 @@
     }
   }
 
-  @include transition("background-color");
+  @include transition('background-color');
 }
 
 .text {

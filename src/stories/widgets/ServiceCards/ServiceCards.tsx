@@ -1,11 +1,11 @@
-import React from "react";
-import g from "../../../lib/global.module.scss";
-import { insertLocationName } from "../../../utils";
-import Icon, { IconType } from "../../../utils/icon";
-import { getSrcs } from "../../../utils/image";
-import CtaBlock from "../../components/CtaBlock/CtaBlock";
-import Section from "../../components/Section/Section";
-import s from "./ServiceCards.module.scss";
+import Link from 'next/link';
+import React from 'react';
+import g from '../../../lib/global.module.scss';
+import Icon, { IconType } from '../../../utils/icon';
+import { getSrcs } from '../../../utils/image';
+import CtaBlock from '../../components/CtaBlock/CtaBlock';
+import Section from '../../components/Section/Section';
+import s from './ServiceCards.module.scss';
 
 export type ServiceModel = {
   id: string;
@@ -29,24 +29,13 @@ const ServiceCards: React.FC<ServiceCardsProps> = (props) => {
     return null;
   }
 
-  const children = React.useMemo(
-    () =>
-      props.children
-        ? insertLocationName(props.children, props.location)
-        : undefined,
-    []
-  );
-
   return (
     <Section className={s.container} grid={true}>
-      {props.title || children ? (
+      {props.title || props.children ? (
         <div className={s.contentWrapper}>
           {props.title && <h2 className={s.title}>{props.title}</h2>}
-          {children ? (
-            <div
-              className={`${g.richText}`}
-              dangerouslySetInnerHTML={{ __html: children }}
-            />
+          {props.children ? (
+            <div className={`${g.richText}`}>{props.children}</div>
           ) : null}
         </div>
       ) : null}
@@ -54,7 +43,7 @@ const ServiceCards: React.FC<ServiceCardsProps> = (props) => {
       <ul className={s.cards}>
         {props.items.map((service) => (
           <li key={`${props.id}-${service.id}`}>
-            <a href={service.url} className={s.card}>
+            <Link href={service.url} className={s.card}>
               {service.image ? renderCardImage(service.image) : null}
               <div className={s.cardContent}>
                 {service.parent ? (
@@ -65,7 +54,7 @@ const ServiceCards: React.FC<ServiceCardsProps> = (props) => {
                   <p>{service.description} </p> <Icon icon={IconType.arrow} />
                 </div>
               </div>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

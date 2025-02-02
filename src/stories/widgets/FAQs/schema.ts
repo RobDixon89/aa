@@ -1,59 +1,59 @@
-import { UnknownIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { UnknownIcon } from '@sanity/icons';
+import { defineField, defineType } from 'sanity';
 import {
   blockContent,
   contentOnlySnippet,
-} from "../../../../schema/blockContent";
+} from '../../../sanity/schema/blockContent';
 import {
   labelledLinkSnippet,
   type LabelledLink,
-} from "../../../../schema/linkList";
+} from '../../../sanity/schema/linkList';
 
 export const faqsSchema = defineType({
   icon: UnknownIcon,
-  name: "faqs",
-  type: "object",
-  title: "FAQs",
+  name: 'faqs',
+  type: 'object',
+  title: 'FAQs',
   fields: [
     defineField({
-      name: "title",
-      type: "string",
-      title: "Heading",
+      name: 'title',
+      type: 'string',
+      title: 'Heading',
     }),
     defineField({
-      name: "items",
-      type: "array",
-      title: "FAQ List",
+      name: 'items',
+      type: 'array',
+      title: 'FAQ List',
       of: [
         defineField({
-          type: "object",
-          name: "faq",
+          type: 'object',
+          name: 'faq',
           fields: [
             defineField({
-              name: "question",
-              type: "string",
-              title: "Question",
+              name: 'question',
+              type: 'string',
+              title: 'Question',
               validation: (Rule) => Rule.required(),
             }),
-            blockContent("contentOnly", undefined, "Answer", "answer"),
+            blockContent('contentOnly', undefined, 'Answer', 'answer'),
             defineField({
-              name: "ctas",
-              title: "Link List",
-              type: "linkList",
+              name: 'ctas',
+              title: 'Link List',
+              type: 'linkList',
             }),
           ],
         }),
       ],
     }),
     defineField({
-      name: "variant",
-      title: "Variant",
-      type: "string",
-      initialValue: "default",
+      name: 'variant',
+      title: 'Variant',
+      type: 'string',
+      initialValue: 'default',
       options: {
         list: [
-          { value: "default", title: "Light" },
-          { value: "dark", title: "Dark" },
+          { value: 'default', title: 'Light' },
+          { value: 'dark', title: 'Dark' },
         ],
       },
     }),
@@ -74,7 +74,7 @@ export const faqsSnippet = `
 `;
 
 type FaqItem = {
-  _type: "faq";
+  _type: 'faq';
   _key: string;
   question: string;
   answer: any;
@@ -82,9 +82,9 @@ type FaqItem = {
 };
 
 export type FaqsResponse = {
-  _type: "faqs";
+  _type: 'faqs';
   _key: string;
   title: string;
   items: FaqItem[];
-  variant: "default" | "dark" | null;
+  variant: 'default' | 'dark' | null;
 };

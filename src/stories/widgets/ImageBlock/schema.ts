@@ -1,28 +1,28 @@
-import { ImageIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { ImageIcon } from '@sanity/icons';
+import { defineField, defineType } from 'sanity';
 import {
   imageWithAltSnippet,
   type ImageWithAlt,
-} from "../../../../schema/image";
-import { themeList } from "../../../../schema/themes";
-import { Themes } from "../../components/Section/Section";
+} from '../../../sanity/schema/image';
+import { themeList } from '../../../sanity/schema/themes';
+import { Themes } from '../../components/Section/Section';
 
 export const imageBlockSchema = defineType({
   icon: ImageIcon,
-  name: "imageBlock",
-  type: "object",
-  title: "Image Block",
+  name: 'imageBlock',
+  type: 'object',
+  title: 'Image Block',
   fields: [
     defineField({
-      name: "image",
-      title: "Image",
-      type: "imageWithAlt",
+      name: 'image',
+      title: 'Image',
+      type: 'imageWithAlt',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "caption",
-      type: "string",
-      title: "Caption",
+      name: 'caption',
+      type: 'string',
+      title: 'Caption',
     }),
     themeList([Themes.blue, Themes.yellow]),
   ],
@@ -36,7 +36,7 @@ export const imageBlockSnippet = `
 `;
 
 export type ImageBlockResponse = {
-  _type: "imageBlock";
+  _type: 'imageBlock';
   _key: string;
   caption: string | null;
   image: ImageWithAlt;

@@ -1,31 +1,28 @@
-import { visionTool } from "@sanity/vision";
-import { defineConfig } from "sanity";
-import { media } from "sanity-plugin-media";
-import { structureTool } from "sanity/structure";
-import { schemaTypes } from "./schema";
-import { structure } from "./schema/structure";
+'use client';
 
-// Different environments use different variables
-const projectId = import.meta.env.PUBLIC_SANITY_STUDIO_PROJECT_ID! || "";
-const dataset = import.meta.env.PUBLIC_SANITY_STUDIO_DATASET! || "production";
+/**
+ * This configuration is used to for the Sanity Studio that’s mounted on the `\src\app\studio\[[...tool]]\page.tsx` route
+ */
 
-// Feel free to remove this check if you don't need it
-if (!projectId || !dataset) {
-  throw new Error(
-    `Missing environment variable(s). Check if named correctly in .env file.\n\nShould be:\nPUBLIC_SANITY_STUDIO_PROJECT_ID=${projectId}\nPUBLIC_SANITY_STUDIO_DATASET=${dataset}\n\nAvailable environment variables:\n${JSON.stringify(
-      import.meta.env,
-      null,
-      2
-    )}`
-  );
-}
+import { visionTool } from '@sanity/vision';
+import { defineConfig } from 'sanity';
+import { structureTool } from 'sanity/structure';
+
+// Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
+import { apiVersion, dataset, projectId } from './src/sanity/env';
+import { schemaTypes } from './src/sanity/schema';
+import { structure } from './src/sanity/structure';
 
 export default defineConfig({
-  name: "ashley-aerials",
-  title: "Ashley Aerials",
+  basePath: '/studio',
+  name: 'ashley-aerials',
+  title: 'Ashley Aerials',
   projectId,
   dataset,
-  plugins: [structureTool({ structure }), media(), visionTool()],
+  plugins: [
+    structureTool({ structure }),
+    visionTool({ defaultApiVersion: apiVersion }),
+  ],
   schema: {
     types: schemaTypes,
   },

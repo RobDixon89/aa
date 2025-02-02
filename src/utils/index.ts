@@ -1,12 +1,12 @@
-import type { ReactElement } from "react";
-import type { LocationLink } from "../../schema/linkList";
-import type { ServiceCardResponse } from "../stories/widgets/ServiceCards/schema";
+import { Widget } from '@/sanity/queries/blockContent';
+import type { LocationLink } from '@/sanity/schema/linkList';
+import type { ServiceCardResponse } from '@/stories/widgets/ServiceCards/schema';
 
 export function formatDate(date: string): string {
-  return new Date(date).toLocaleDateString("en-GB", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
+  return new Date(date).toLocaleDateString('en-GB', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
   });
 }
 
@@ -46,21 +46,22 @@ export const groupByParent = (services: ServiceCardResponse[]): ServiceGroup =>
     return acc;
   }, {});
 
-export function insertLocationName(children: any, location?: string): string {
-  const contentString = (children?.valueOf() as ReactElement).props.value;
-
+export function insertLocationName(content: string, location?: string): string {
   if (!location) {
-    return contentString;
+    return content;
   }
 
   return (
-    contentString
+    content
       // Replace all placeholders with location name
-      .replaceAll("##location##", location)
+      .replaceAll('##location##', location)
       // Update all service links to point at the service for that location
       .replaceAll(
         /href="([^"]+\/services\/[^"]+)"/g,
-        `href="$1/${location.toLowerCase().replaceAll(/\W+/g, "-")}"`
+        `href="$1/${location.toLowerCase().replaceAll(/\W+/g, '-')}"`
       )
   );
 }
+
+export const firstFormId = (widgets: Widget[]): string =>
+  widgets.find((wi) => wi._type === 'embeddedForm')?._key ?? '';

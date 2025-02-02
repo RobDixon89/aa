@@ -1,4 +1,4 @@
-@use "../../../lib/helpers" as *;
+@import '@/lib/helpers.scss';
 
 .innerPageBanner {
   --accentColour: var(--highlight);
@@ -13,11 +13,11 @@
   position: relative;
   background-color: transparent;
 
-  &[data-theme="blue"] {
+  &[data-theme='blue'] {
     --accentTextColour: var(--body);
   }
 
-  &[data-theme="yellow"] {
+  &[data-theme='yellow'] {
     --accentColour: var(--body);
     --accentTextColour: var(--highlight);
   }
@@ -30,7 +30,7 @@
     --sectionPaddingTop: calc(var(--paddingY) + var(--headerHeight)) !important;
   }
 
-  [class*="uspList"] {
+  [class*='uspList'] {
     grid-column: span 12;
     grid-row: 3;
     margin-bottom: auto;
@@ -45,7 +45,7 @@
 
     min-height: unset;
 
-    [class*="uspList"] {
+    [class*='uspList'] {
       @include from(tabletLarge) {
         grid-column: 8 / span 5;
         grid-row: 2 / span 1;
@@ -91,7 +91,7 @@
     grid-column: 8 / span 5;
   }
 
-  @include from("1700") {
+  @include from('1700') {
     width: calc(100% + var(--sitePadding) + ((100vw - var(--maxWidth)) / 2));
   }
 }
@@ -113,11 +113,11 @@
     grid-column: span 6;
   }
 
-  [class*="subtitle"] {
+  [class*='subtitle'] {
     margin-bottom: calc(var(--gap) * -1);
   }
 
-  [class*="ctaBlock"] {
+  [class*='ctaBlock'] {
     margin-top: fluid(12, 16);
   }
 }
@@ -142,7 +142,7 @@
         text-decoration-color: currentColor;
       }
 
-      @include transition("text-decoration-color");
+      @include transition('text-decoration-color');
     }
 
     li:last-of-type {
@@ -170,7 +170,7 @@
         }
 
         &::before {
-          content: "\2026";
+          content: '\2026';
         }
       }
     }
@@ -185,7 +185,7 @@
 .title {
   font-size: var(--font-size-h2);
 
-  [class~="highlight"] {
+  [class~='highlight'] {
     background: linear-gradient(
       to right,
       var(--accentColour) 50%,

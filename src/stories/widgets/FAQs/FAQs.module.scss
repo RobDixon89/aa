@@ -1,15 +1,15 @@
-@use "../../../lib/helpers" as *;
+@import '@/lib/helpers.scss';
 
 .wrapper {
   --answerBackground: hsla(var(--tertiaryValues), 25%);
 
-  &[data-variant="dark"] {
+  &[data-variant='dark'] {
     --answerBackground: var(--white);
 
     background-color: var(--body);
   }
 
-  [class*="ctaBlock"] {
+  [class*='ctaBlock'] {
     margin-top: fluid(16, 24);
   }
 }
@@ -28,7 +28,7 @@ h2.title {
   margin-bottom: fluid(6, 20);
   text-align: center;
 
-  [data-variant="dark"] & {
+  [data-variant='dark'] & {
     color: var(--white);
   }
 }
@@ -51,10 +51,10 @@ h2.title {
     width: 9px;
     transform: translateX(-3px) rotate(90deg);
 
-    @include transition("transform");
+    @include transition('transform');
   }
 
-  &[aria-expanded="true"] svg {
+  &[aria-expanded='true'] svg {
     transform: translateX(-3px) rotate(270deg);
   }
 }
