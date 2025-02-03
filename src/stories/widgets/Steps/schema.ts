@@ -13,7 +13,7 @@ import {
   type LabelledLink,
 } from '../../../sanity/schema/linkList';
 import { themeList } from '../../../sanity/schema/themes';
-import { Themes } from '../../components/Section/Section';
+import { ThemeKeys, Themes } from '../../Global/Section/Section';
 
 export const stepsSchema = defineType({
   icon: DashboardIcon,
@@ -130,7 +130,7 @@ export type ContentStep = {
   _type: 'step';
   _key: string;
   blockContent: any;
-  theme: Themes;
+  theme: ThemeKeys;
 };
 
 export type ImageStep = {
@@ -147,5 +147,5 @@ export type StepsResponse = {
   blockContent: any;
   items: (ContentStep | ImageStep)[];
   ctas: LabelledLink[] | null;
-  theme: Exclude<Themes, Themes.lightBlue | Themes.navy | Themes.yellow>;
+  theme: ThemeKeys;
 };

@@ -3,10 +3,10 @@ import g from '../../../lib/global.module.scss';
 import { highlightTitleWords } from '../../../utils';
 import type { CtaIconModel } from '../../../utils/icon';
 import { getSrcs } from '../../../utils/image';
-import { LinkButton } from '../../components/Button/Button';
-import Section from '../../components/Section/Section';
 import type { UspModel } from '../../components/UspList/UspList';
 import UspList from '../../components/UspList/UspList';
+import { LinkButton } from '../../Global/Button/Button';
+import Section from '../../Global/Section/Section';
 import s from './HomeHero.module.scss';
 
 export type HomeHeroProps = React.HTMLAttributes<HTMLDivElement> & {

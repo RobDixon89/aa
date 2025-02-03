@@ -1,16 +1,16 @@
-import React from "react";
-import { getSrcs } from "../../../utils/image";
-import Section, { Themes } from "../../components/Section/Section";
-import s from "./ImageBlock.module.scss";
+import React from 'react';
+import { getSrcs } from '../../../utils/image';
+import Section, { ThemeKeys } from '../../Global/Section/Section';
+import s from './ImageBlock.module.scss';
 
 export type ImageBlockProps = React.HTMLAttributes<HTMLDivElement> & {
-  _type: "ImageBlock";
+  _type: 'ImageBlock';
   image: ImageModel;
-  theme?: Exclude<Themes, Themes.blue | Themes.yellow>;
+  theme?: ThemeKeys;
   caption: string | null;
 };
 
-type Props = Omit<ImageBlockProps, "_type">;
+type Props = Omit<ImageBlockProps, '_type'>;
 
 const ImageBlock: React.FC<Props> = (props) => {
   const srcs = getSrcs(props.image, 375, 1020, 8, props.image.aspectRatio ?? 1);
@@ -21,7 +21,7 @@ const ImageBlock: React.FC<Props> = (props) => {
         className={s.imageWrapper}
         style={
           {
-            "--ar": props.image.aspectRatio ?? 1.6,
+            '--ar': props.image.aspectRatio ?? 1.6,
           } as React.CSSProperties
         }
       >

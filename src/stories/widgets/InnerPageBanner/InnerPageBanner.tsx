@@ -4,10 +4,10 @@ import g from '../../../lib/global.module.scss';
 import { highlightTitleWords } from '../../../utils';
 import Icon, { IconType, type CtaIconModel } from '../../../utils/icon';
 import { getSrcs } from '../../../utils/image';
-import CtaBlock from '../../components/CtaBlock/CtaBlock';
-import Section, { Themes } from '../../components/Section/Section';
 import type { UspModel } from '../../components/UspList/UspList';
 import UspList from '../../components/UspList/UspList';
+import CtaBlock from '../../Global/CtaBlock/CtaBlock';
+import Section, { ThemeKeys } from '../../Global/Section/Section';
 import s from './InnerPageBanner.module.scss';
 
 export type InnerPageBannerProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -16,7 +16,7 @@ export type InnerPageBannerProps = React.HTMLAttributes<HTMLDivElement> & {
   ctas?: CtaIconModel[];
   image?: ImageModel;
   subtitle?: string;
-  theme: Exclude<Themes, Themes.default | Themes.navy>;
+  theme: ThemeKeys;
   title: string;
   uspList?: UspModel[];
   location?: string;

@@ -10,9 +10,7 @@ async function asyncSlugGenerator(
   input: string,
   _schemaType: unknown,
   context: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     parent?: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getClient?: any;
   }
 ) {

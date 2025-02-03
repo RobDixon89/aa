@@ -3,9 +3,9 @@ import Link from 'next/link';
 import React from 'react';
 import Icon, { IconType } from '../../../utils/icon';
 import { useMediaQuery } from '../../../utils/useMediaQuery';
-import Button, { LinkButton } from '../../components/Button/Button';
-import { Themes } from '../../components/Section/Section';
-import ss from '../../components/Section/Section.module.scss';
+import Button, { LinkButton } from '../../Global/Button/Button';
+import { Themes } from '../../Global/Section/Section';
+import ss from '../../Global/Section/Section.module.scss';
 import s from './Header.module.scss';
 
 type NavigationDropdownSimple = {
@@ -57,7 +57,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               data-open={active !== ''}
             >
               {props.links?.map((link) => (
-                <li data-type={link.dropdown?.type}>
+                <li key={`navlink-${link.id}`} data-type={link.dropdown?.type}>
                   <Link
                     key={link.id}
                     href={link.url}

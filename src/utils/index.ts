@@ -64,4 +64,4 @@ export function insertLocationName(content: string, location?: string): string {
 }
 
 export const firstFormId = (widgets: Widget[]): string =>
-  widgets.find((wi) => wi._type === 'embeddedForm')?._key ?? '';
+  widgets?.find((wi) => wi._type === 'embeddedForm')?._key ?? '';

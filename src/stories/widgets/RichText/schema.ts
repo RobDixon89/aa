@@ -1,3 +1,4 @@
+import { ThemeKeys } from '@/stories/Global/Section/Section';
 import { MarkerIcon, TextIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 import {
@@ -9,7 +10,6 @@ import {
   type LabelledLink,
 } from '../../../sanity/schema/linkList';
 import { themeList } from '../../../sanity/schema/themes';
-import type { Themes } from '../../components/Section/Section';
 
 export const richTextSchema = defineType({
   icon: TextIcon,
@@ -82,7 +82,7 @@ export type RichTextResponse = {
   ctas: LabelledLink[] | null;
   alignment: 'left' | 'center' | null;
   usps: boolean | null;
-  theme: Themes;
+  theme: ThemeKeys;
 };
 
 export const locationListSchema = defineType({

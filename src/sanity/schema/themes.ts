@@ -1,7 +1,7 @@
-import { Themes } from '@/stories/components/Section/Section';
 import { defineField } from 'sanity';
+import { type ThemeKeys, Themes } from '../../stories/Global/Section/Section';
 
-export const themeList = (exclude?: Themes[]) =>
+export const themeList = (exclude?: ThemeKeys[]) =>
   defineField({
     name: 'theme',
     title: 'Theme',

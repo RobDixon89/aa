@@ -11,8 +11,8 @@
     "build-storybook": "storybook build",
     "types": "typed-scss-modules src --watch",
     "pages:build": "npx @cloudflare/next-on-pages",
-    "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy"
+    "preview": "yarn run pages:build && wrangler pages dev",
+    "deploy": "yarn run pages:build && wrangler pages deploy"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -54,12 +54,13 @@
     "eslint-config-next": "14.1.4",
     "eslint-plugin-storybook": "^0.8.0",
     "storybook": "^8.0.5",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^3.107.2"
   },
   "resolutions": {
     "@babel/runtime": "^7.24.6"
   },
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "yarn@1.22.22",
   "engines": {
     "node": "20.12.0",
     "yarn": "1.22.22"

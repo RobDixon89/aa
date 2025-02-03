@@ -5,7 +5,7 @@ import {
   type ImageWithAlt,
 } from '../../../sanity/schema/image';
 import { themeList } from '../../../sanity/schema/themes';
-import { Themes } from '../../components/Section/Section';
+import { Themes, type ThemeKeys } from '../../Global/Section/Section';
 
 export const imageBlockSchema = defineType({
   icon: ImageIcon,
@@ -40,5 +40,5 @@ export type ImageBlockResponse = {
   _key: string;
   caption: string | null;
   image: ImageWithAlt;
-  theme: Exclude<Themes, Themes.blue | Themes.yellow>;
+  theme: ThemeKeys;
 };
