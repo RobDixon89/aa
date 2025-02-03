@@ -57,10 +57,12 @@ export default function IndexRoute(props: Props): ReactElement {
         }
         uspList={props.template.banner.usps ? props.settings.usps : []}
       >
-        <PortableText
-          value={props.template.banner.blockContent}
-          components={portableTextComponents('', [], [], [], '')}
-        />
+        {props.template.banner.blockContent !== null ? (
+          <PortableText
+            value={props.template.banner.blockContent}
+            components={portableTextComponents('', [], [], [], '')}
+          />
+        ) : null}
       </HomeHero>
 
       {props.template.blockContent !== null ? (

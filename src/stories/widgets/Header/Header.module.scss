@@ -232,10 +232,10 @@ ul.dropdownComplex {
       position: static;
       opacity: 1;
       padding: 0;
+    }
 
-      [data-open='true'] & {
-        pointer-events: auto;
-      }
+    &[data-open='true'] ul.dropdown {
+      pointer-events: auto;
     }
 
     &:not(:has(> li.locationButton:nth-child(8))) {
