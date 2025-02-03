@@ -147,7 +147,7 @@ export default function PageRoute(props: Props): ReactElement {
         </InnerPageBanner>
       ) : null}
 
-      {props.template.blockContent ? (
+      {props.template.blockContent !== null ? (
         <PortableText
           value={props.template.blockContent}
           components={portableTextComponents(
@@ -158,7 +158,7 @@ export default function PageRoute(props: Props): ReactElement {
             firstFormId(props.template.blockContent)
           )}
         />
-      ) : undefined}
+      ) : null}
     </Page>
   );
 }

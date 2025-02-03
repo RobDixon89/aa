@@ -2,8 +2,8 @@ import React from 'react';
 import g from '../../../lib/global.module.scss';
 import type { CtaIconModel } from '../../../utils/icon';
 import { getSrcs } from '../../../utils/image';
-import CtaBlock from '../../components/CtaBlock/CtaBlock';
-import Section, { Themes } from '../../components/Section/Section';
+import CtaBlock from '../../Global/CtaBlock/CtaBlock';
+import Section, { ThemeKeys } from '../../Global/Section/Section';
 import s from './ImageText5050.module.scss';
 
 export type ImageText5050Props = React.HTMLAttributes<HTMLDivElement> & {
@@ -12,7 +12,7 @@ export type ImageText5050Props = React.HTMLAttributes<HTMLDivElement> & {
   ctas?: CtaIconModel[];
   image: ImageModel;
   title?: string | null;
-  theme?: Exclude<Themes, Themes.navy>;
+  theme?: ThemeKeys;
   imageAlign: 'left' | 'right';
   location?: string;
 };

@@ -24,7 +24,7 @@ import { ReactElement } from 'react';
 
 type ServicePageResponse = Omit<PageResponse, '_type' | 'parent'> & {
   _type: 'service' | 'location';
-  parent?: string;
+  parent: string | null;
   serviceLink: ServiceLink;
   locationName: string;
 };
@@ -141,7 +141,7 @@ export const getStaticProps: GetStaticProps<Props, Query> = async ({
         _createdAt: service._createdAt,
         _updatedAt: service._updatedAt,
         slug: getServiceLinkUrl(serviceLink, undefined, true).substring(1),
-        parent: service.parent ? service.parent : undefined,
+        parent: service.parent ? service.parent : null,
         title: service.title,
         ...service.landing,
         serviceLink: serviceLink,
@@ -235,20 +235,22 @@ export default function PageRoute(props: Props): ReactElement {
           uspList={props.page.banner.usps ? props.settings.usps : []}
           theme={props.page.banner.theme}
         >
-          <PortableText
-            value={props.page.banner.blockContent}
-            components={portableTextComponents(
-              props.page.locationName,
-              [],
-              [],
-              [],
-              ''
-            )}
-          />
+          {props.page.banner.blockContent !== null ? (
+            <PortableText
+              value={props.page.banner.blockContent}
+              components={portableTextComponents(
+                props.page.locationName,
+                [],
+                [],
+                [],
+                ''
+              )}
+            />
+          ) : null}
         </InnerPageBanner>
       ) : null}
 
-      {props.page.blockContent ? (
+      {props.page.blockContent !== null ? (
         <PortableText
           value={props.page.blockContent}
           components={portableTextComponents(
@@ -260,7 +262,7 @@ export default function PageRoute(props: Props): ReactElement {
             props.page.serviceLink
           )}
         />
-      ) : undefined}
+      ) : null}
     </Page>
   );
 }

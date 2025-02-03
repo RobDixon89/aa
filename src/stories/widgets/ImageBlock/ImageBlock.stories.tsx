@@ -1,11 +1,11 @@
-import type { Meta, StoryFn } from "@storybook/react";
-import { Themes } from "../../components/Section/Section";
-import ImageBlock, { type ImageBlockProps } from "./ImageBlock";
+import type { Meta, StoryFn } from '@storybook/react';
+import { Themes } from '../../Global/Section/Section';
+import ImageBlock, { type ImageBlockProps } from './ImageBlock';
 
 const meta: Meta<ImageBlockProps> = {
   component: ImageBlock,
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 
@@ -18,15 +18,15 @@ const Template: StoryFn<ImageBlockProps> = (args: ImageBlockProps) => (
 export const Default = Template.bind({});
 Default.args = {
   image: {
-    src: "/img/image-block.jpg",
-    altText: "Lorem ipsum dolor sit",
+    src: '/img/image-block.jpg',
+    altText: 'Lorem ipsum dolor sit',
   },
 };
 
 export const WithCaption = Template.bind({});
 WithCaption.args = {
   ...Default.args,
-  caption: "Praesent dapibus, neque id cursus faucibus",
+  caption: 'Praesent dapibus, neque id cursus faucibus',
 };
 
 export const LightBlue = Template.bind({});

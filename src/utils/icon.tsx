@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
 export enum IconType {
-  arrow = "arrow",
-  brain = "brain",
-  chevron = "chevron",
-  clipboard = "clipboard",
-  filledTick = "filled-tick",
-  none = "none",
-  phone = "phone",
-  ratingTick = "rating-tick",
-  thumbsUp = "thumbs-up",
+  arrow = 'arrow',
+  brain = 'brain',
+  chevron = 'chevron',
+  clipboard = 'clipboard',
+  filledTick = 'filled-tick',
+  none = 'none',
+  phone = 'phone',
+  ratingTick = 'rating-tick',
+  thumbsUp = 'thumbs-up',
 }
 
 type IconProps = React.HTMLAttributes<SVGElement> & {
@@ -22,7 +22,7 @@ export type CtaIconModel = CtaModel & {
 
 const Icon: React.FC<IconProps> = ({ icon, ...props }) => {
   switch (icon) {
-    case "arrow":
+    case 'arrow':
       return (
         <svg
           viewBox="0 0 14.2 11"
@@ -43,7 +43,7 @@ const Icon: React.FC<IconProps> = ({ icon, ...props }) => {
         </svg>
       );
 
-    case "brain":
+    case 'brain':
       return (
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -126,7 +126,7 @@ const Icon: React.FC<IconProps> = ({ icon, ...props }) => {
         </svg>
       );
 
-    case "clipboard":
+    case 'clipboard':
       return (
         <svg viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -160,7 +160,7 @@ const Icon: React.FC<IconProps> = ({ icon, ...props }) => {
         </svg>
       );
 
-    case "chevron":
+    case 'chevron':
       return (
         <svg viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -172,7 +172,7 @@ const Icon: React.FC<IconProps> = ({ icon, ...props }) => {
         </svg>
       );
 
-    case "filled-tick":
+    case 'filled-tick':
       return (
         <svg viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -184,19 +184,19 @@ const Icon: React.FC<IconProps> = ({ icon, ...props }) => {
         </svg>
       );
 
-    case "phone":
+    case 'phone':
       return (
         <svg viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M2.21221 0.0539551H5.3813C5.64521 0.0539551 5.88149 0.218678 5.9744 0.467433L7.20407 3.75992C7.24481 3.86891 7.25512 3.98702 7.23391 4.10149L6.61774 7.42977C7.37509 9.22324 8.62603 10.4285 10.7007 11.5096L13.9662 10.8724C14.0821 10.8498 14.202 10.8603 14.3123 10.9026L17.592 12.1611C17.8377 12.2554 18 12.4926 18 12.7574V15.8069C18 17.1898 16.79 18.3121 15.3746 18.002C12.7947 17.4367 8.01492 15.9998 4.6675 12.629C1.46105 9.40012 0.386747 4.93967 0.0251037 2.52866C-0.181242 1.15295 0.914402 0.0539551 2.21221 0.0539551Z"
             fill="currentColor"
           />
         </svg>
       );
 
-    case "rating-tick":
+    case 'rating-tick':
       return (
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -214,7 +214,7 @@ const Icon: React.FC<IconProps> = ({ icon, ...props }) => {
         </svg>
       );
 
-    case "thumbs-up":
+    case 'thumbs-up':
       return (
         <svg viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path

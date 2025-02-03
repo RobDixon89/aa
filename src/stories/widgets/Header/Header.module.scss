@@ -231,8 +231,11 @@ ul.dropdownComplex {
     ul.dropdown {
       position: static;
       opacity: 1;
-      pointer-events: auto;
       padding: 0;
+
+      [data-open='true'] & {
+        pointer-events: auto;
+      }
     }
 
     &:not(:has(> li.locationButton:nth-child(8))) {

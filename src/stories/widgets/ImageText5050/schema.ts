@@ -13,7 +13,7 @@ import {
   type LabelledLink,
 } from '../../../sanity/schema/linkList';
 import { themeList } from '../../../sanity/schema/themes';
-import { Themes } from '../../components/Section/Section';
+import { Themes, type ThemeKeys } from '../../Global/Section/Section';
 
 export const imageText5050Schema = defineType({
   icon: SplitVerticalIcon,
@@ -89,5 +89,5 @@ export type ImageText5050Response = {
   title: string | null;
   blockContent: any;
   ctas: LabelledLink[] | null;
-  theme: Exclude<Themes, Themes.navy>;
+  theme: ThemeKeys;
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import g from '../../../lib/global.module.scss';
-import Section from '../../components/Section/Section';
+import Section from '../../Global/Section/Section';
 import s from './Testimonials.module.scss';
 
 import { StarFilledIcon } from '@sanity/icons';

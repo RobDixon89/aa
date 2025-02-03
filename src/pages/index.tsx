@@ -63,7 +63,7 @@ export default function IndexRoute(props: Props): ReactElement {
         />
       </HomeHero>
 
-      {props.template.blockContent ? (
+      {props.template.blockContent !== null ? (
         <PortableText
           value={props.template.blockContent}
           components={portableTextComponents(
@@ -74,7 +74,7 @@ export default function IndexRoute(props: Props): ReactElement {
             firstFormId(props.template.blockContent)
           )}
         />
-      ) : undefined}
+      ) : null}
     </Page>
   );
 }

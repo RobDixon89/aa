@@ -3,8 +3,8 @@ import React from 'react';
 import g from '../../../lib/global.module.scss';
 import Icon, { IconType } from '../../../utils/icon';
 import { getSrcs } from '../../../utils/image';
-import CtaBlock from '../../components/CtaBlock/CtaBlock';
-import Section from '../../components/Section/Section';
+import CtaBlock from '../../Global/CtaBlock/CtaBlock';
+import Section from '../../Global/Section/Section';
 import s from './ServiceCards.module.scss';
 
 export type ServiceModel = {

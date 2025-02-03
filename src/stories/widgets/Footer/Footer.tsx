@@ -4,8 +4,8 @@ import Link from 'next/link';
 import React from 'react';
 import Icon, { IconType } from '../../../utils/icon';
 import { useMediaQuery } from '../../../utils/useMediaQuery';
-import { LinkButton } from '../../components/Button/Button';
-import Section, { Themes } from '../../components/Section/Section';
+import { LinkButton } from '../../Global/Button/Button';
+import Section, { Themes } from '../../Global/Section/Section';
 import s from './Footer.module.scss';
 
 export type LinkList = {

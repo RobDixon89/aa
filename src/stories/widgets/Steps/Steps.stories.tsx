@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react';
-import { Themes } from '../../components/Section/Section';
+import { Themes } from '../../Global/Section/Section';
 import Steps, { type StepsProps } from './Steps';
 
 const meta: Meta<StepsProps> = {

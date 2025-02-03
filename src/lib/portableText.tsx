@@ -49,6 +49,9 @@ export function portableTextComponents(
       bullet: ({ children }) => (
         <li>{doLocationReplace(children, locationName)}</li>
       ),
+      number: ({ children }) => (
+        <li>{doLocationReplace(children, locationName)}</li>
+      ),
     },
     marks: {
       strong: ({ children }) => (
@@ -89,6 +92,9 @@ export function portableTextComponents(
       blockquote: ({ children }) => (
         <blockquote>{doLocationReplace(children, locationName)}</blockquote>
       ),
+      span: ({ children }) => (
+        <span>{doLocationReplace(children, locationName)}</span>
+      ),
     },
 
     // Widgets
@@ -103,12 +109,12 @@ export function portableTextComponents(
           }
           location={locationName}
         >
-          {w.blockContent ? (
+          {w.blockContent !== null ? (
             <PortableText
               value={w.blockContent}
               components={portableTextComponents(locationName, [], [], [], '')}
             />
-          ) : undefined}
+          ) : null}
         </EmbeddedForm>
       ),
       faqs: ({ value: w }: { value: FaqsResponse }) => (
@@ -122,18 +128,19 @@ export function portableTextComponents(
           items={w.items?.map((item) => ({
             id: item._key,
             question: item.question,
-            answer: (
-              <PortableText
-                value={item.answer}
-                components={portableTextComponents(
-                  locationName,
-                  [],
-                  [],
-                  [],
-                  ''
-                )}
-              />
-            ),
+            answer:
+              item.answer !== null ? (
+                <PortableText
+                  value={item.answer}
+                  components={portableTextComponents(
+                    locationName,
+                    [],
+                    [],
+                    [],
+                    ''
+                  )}
+                />
+              ) : null,
             ctas:
               item.ctas !== null
                 ? item.ctas.map((cta) => mapLinkAttributes(cta, locationName))
@@ -143,7 +150,7 @@ export function portableTextComponents(
           location={locationName}
         />
       ),
-      imaegBlock: ({ value: w }: { value: ImageBlockResponse }) => {
+      imageBlock: ({ value: w }: { value: ImageBlockResponse }) => {
         const [width, height] = w.image.imageUrl.match(
           // @ts-ignore
           /(\d{1,})(?=\.|\x)/g
@@ -179,12 +186,12 @@ export function portableTextComponents(
           theme={w.theme}
           location={locationName}
         >
-          {w.blockContent ? (
+          {w.blockContent !== null ? (
             <PortableText
               value={w.blockContent}
               components={portableTextComponents(locationName, [], [], [], '')}
             />
-          ) : undefined}
+          ) : null}
         </ImageText5050>
       ),
       locationList: ({ value: w }: { value: LocationListResponse }) => (
@@ -213,7 +220,9 @@ export function portableTextComponents(
                     : 0
               )
               .map((location) => (
-                <li>
+                <li
+                  key={`${w._key}-l-${location.name.toLowerCase().replaceAll(/\W+/g, '-')}`}
+                >
                   <a
                     href={
                       service
@@ -249,12 +258,12 @@ export function portableTextComponents(
           theme={w.theme}
           location={locationName}
         >
-          {w.blockContent ? (
+          {w.blockContent !== null ? (
             <PortableText
               value={w.blockContent}
               components={portableTextComponents(locationName, [], [], [], '')}
             />
-          ) : undefined}
+          ) : null}
         </RichText>
       ),
       serviceCards: ({ value: w }: { value: ServiceCardsResponse }) => {
@@ -276,8 +285,6 @@ export function portableTextComponents(
                 : services.filter((s) => s.title !== service.title);
         }
 
-        console.log(w);
-
         return (
           <ServiceCards
             id={w._key}
@@ -296,7 +303,7 @@ export function portableTextComponents(
             }
             location={locationName}
           >
-            {w.blockContent ? (
+            {w.blockContent !== null ? (
               <PortableText
                 value={w.blockContent}
                 components={portableTextComponents(
@@ -307,7 +314,7 @@ export function portableTextComponents(
                   ''
                 )}
               />
-            ) : undefined}
+            ) : null}
           </ServiceCards>
         );
       },
@@ -326,14 +333,15 @@ export function portableTextComponents(
           location={locationName}
           theme={w.theme}
         >
-          {w.blockContent ? (
+          {w.blockContent !== null ? (
             <PortableText
               value={w.blockContent}
               components={portableTextComponents(locationName, [], [], [], '')}
             />
-          ) : undefined}
+          ) : null}
         </Steps>
       ),
+      undefined: () => null,
     },
   };
 }

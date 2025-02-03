@@ -5,8 +5,8 @@ import g from '../../../lib/global.module.scss';
 import { clamp } from '../../../utils';
 import Icon, { IconType } from '../../../utils/icon';
 import { useMediaQuery } from '../../../utils/useMediaQuery';
-import CtaBlock from '../../components/CtaBlock/CtaBlock';
-import Section, { Themes } from '../../components/Section/Section';
+import CtaBlock from '../../Global/CtaBlock/CtaBlock';
+import Section, { Themes } from '../../Global/Section/Section';
 import s from './FAQs.module.scss';
 
 type FaqItem = {
@@ -55,7 +55,13 @@ const Faqs: React.FC<FaqsProps> = (props) => {
             <div key={`faq-${item.id}`} data-theme={Themes.default}>
               <button
                 id={`${item.id}-button`}
-                ref={(el) => (questions.current[i] = el as HTMLButtonElement)}
+                ref={(el) => {
+                  if (!questions.current) {
+                    return;
+                  }
+
+                  questions.current[i] = el as HTMLButtonElement;
+                }}
                 className={s.question}
                 onClick={() => {
                   if (active === i) {

@@ -12,7 +12,7 @@ import {
   type LabelledLink,
 } from '../../../sanity/schema/linkList';
 import { themeList } from '../../../sanity/schema/themes';
-import { Themes } from '../../components/Section/Section';
+import { Themes, type ThemeKeys } from '../../Global/Section/Section';
 
 export const innerPageBannerSchema = defineType({
   name: 'innerPageBanner',
@@ -77,5 +77,5 @@ export type InnerPageBannerResponse = {
   blockContent: any;
   ctas: LabelledLink[] | null;
   usps: boolean | null;
-  theme: Exclude<Themes, Themes.default | Themes.navy>;
+  theme: ThemeKeys;
 };

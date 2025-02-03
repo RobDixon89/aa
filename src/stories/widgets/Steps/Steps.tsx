@@ -1,15 +1,15 @@
 import React from 'react';
 import g from '../../../lib/global.module.scss';
 import { getSrcs } from '../../../utils/image';
-import CtaBlock from '../../components/CtaBlock/CtaBlock';
-import Section, { Themes } from '../../components/Section/Section';
+import CtaBlock from '../../Global/CtaBlock/CtaBlock';
+import Section, { ThemeKeys } from '../../Global/Section/Section';
 import s from './Steps.module.scss';
 
 export type StepCardModel = {
   _type: 'step';
   id: string;
   content: React.ReactNode;
-  theme: Themes;
+  theme: ThemeKeys;
 };
 
 export type ImageCardModel = {
@@ -24,7 +24,7 @@ export type StepsProps = React.HTMLAttributes<HTMLDivElement> & {
   title?: string;
   items: (StepCardModel | ImageCardModel)[];
   ctas: CtaModel[];
-  theme: Exclude<Themes, Themes.lightBlue | Themes.yellow | Themes.navy>;
+  theme: ThemeKeys;
   location?: string;
 };
 
@@ -38,9 +38,7 @@ const Steps: React.FC<StepsProps> = (props) => {
       <div className={s.contentWrapper}>
         {props.title && <h2 className={s.title}>{props.title}</h2>}
         {props.children ? (
-          <div
-            className={`${g.richText}`}
-          >{props.children}</div>
+          <div className={`${g.richText}`}>{props.children}</div>
         ) : null}
       </div>
 
@@ -48,10 +46,9 @@ const Steps: React.FC<StepsProps> = (props) => {
         {props.items.map((item) => (
           <React.Fragment key={`${props.id}-${item.id}`}>
             {item._type === 'step' ? (
-              <li
-                data-theme={item.theme}
-                className={`${g.richText}`}
-              >{item.content}</li>
+              <li data-theme={item.theme} className={`${g.richText}`}>
+                {item.content}
+              </li>
             ) : (
               <li>{renderStepImage(item.image, item.imageType)}</li>
             )}

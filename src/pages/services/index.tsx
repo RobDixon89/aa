@@ -75,16 +75,16 @@ export default function IndexRoute(props: Props): ReactElement {
           uspList={props.template.banner.usps ? props.settings.usps : []}
           theme={props.template.banner.theme}
         >
-          {props.template.banner.blockContent ? (
+          {props.template.banner.blockContent !== null ? (
             <PortableText
               value={props.template.banner.blockContent}
               components={portableTextComponents('', [], [], [], '')}
             />
-          ) : undefined}
+          ) : null}
         </InnerPageBanner>
       ) : null}
 
-      {props.template.blockContent ? (
+      {props.template.blockContent !== null ? (
         <PortableText
           value={props.template.blockContent}
           components={portableTextComponents(
@@ -95,7 +95,7 @@ export default function IndexRoute(props: Props): ReactElement {
             firstFormId(props.template.blockContent)
           )}
         />
-      ) : undefined}
+      ) : null}
     </Page>
   );
 }

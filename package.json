@@ -11,8 +11,8 @@
     "build-storybook": "storybook build",
     "types": "typed-scss-modules src --watch",
     "pages:build": "npx @cloudflare/next-on-pages",
-    "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy"
+    "preview": "yarn run pages:build && wrangler pages dev",
+    "deploy": "yarn run pages:build && wrangler pages deploy"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

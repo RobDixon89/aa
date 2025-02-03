@@ -1,12 +1,12 @@
-import type { Meta, StoryFn } from "@storybook/react";
-import { Themes } from "../../components/Section/Section";
-import { Default as UspStories } from "../../components/UspList/UspList.stories";
-import InnerPageBanner, { type InnerPageBannerProps } from "./InnerPageBanner";
+import type { Meta, StoryFn } from '@storybook/react';
+import { Themes } from '../../Global/Section/Section';
+import { Default as UspStories } from '../../components/UspList/UspList.stories';
+import InnerPageBanner, { type InnerPageBannerProps } from './InnerPageBanner';
 
 const meta: Meta<InnerPageBannerProps> = {
   component: InnerPageBanner,
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 
@@ -20,20 +20,20 @@ export const Blue = Template.bind({});
 Blue.args = {
   breadcrumbs: [
     {
-      text: "Home",
-      url: "#",
+      text: 'Home',
+      url: '#',
     },
     {
-      text: "Parent Page",
-      url: "#",
+      text: 'Parent Page',
+      url: '#',
     },
     {
-      text: "Lorem Ipsum Dolor Sit",
-      url: "#",
+      text: 'Lorem Ipsum Dolor Sit',
+      url: '#',
     },
   ],
-  subtitle: "Parent Title",
-  title: "Lorem Ipsum Dolor Sit",
+  subtitle: 'Parent Title',
+  title: 'Lorem Ipsum Dolor Sit',
   children: (
     <>
       <p>
@@ -47,18 +47,18 @@ Blue.args = {
   ),
   ctas: [
     {
-      text: "Book an appointment",
-      url: "#",
+      text: 'Book an appointment',
+      url: '#',
     },
     {
-      text: "View all our services",
-      url: "#",
+      text: 'View all our services',
+      url: '#',
     },
   ],
   uspList: UspStories.args?.items ? UspStories.args?.items : undefined,
   image: {
-    src: "/img/inner-page-banner.jpg",
-    altText: "Lorem ipsum dolor",
+    src: '/img/inner-page-banner.jpg',
+    altText: 'Lorem ipsum dolor',
   },
   theme: Themes.blue,
 };
