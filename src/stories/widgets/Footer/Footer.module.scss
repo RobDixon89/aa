@@ -1,4 +1,4 @@
-@import '@/lib/helpers.scss';
+@import '../../../lib/helpers';
 
 .container {
   --gridRowGap: #{fluid(42, 64)};

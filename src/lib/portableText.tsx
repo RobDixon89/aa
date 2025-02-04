@@ -107,7 +107,19 @@ export function portableTextComponents(
               ? w.title.replaceAll('##location##', locationName ?? '')
               : undefined
           }
-          location={locationName}
+          serviceOptions={
+            services
+              ? services
+                  .sort((a, b) =>
+                    a.title.toLowerCase() < b.title.toLowerCase()
+                      ? -1
+                      : a.title.toLowerCase() > b.title.toLowerCase()
+                        ? 1
+                        : 0
+                  )
+                  .map((s) => s.title)
+              : []
+          }
         >
           {w.blockContent !== null ? (
             <PortableText
@@ -147,7 +159,6 @@ export function portableTextComponents(
                 : [],
           }))}
           variant={w.variant ? w.variant : 'default'}
-          location={locationName}
         />
       ),
       imageBlock: ({ value: w }: { value: ImageBlockResponse }) => {
@@ -184,7 +195,6 @@ export function portableTextComponents(
               : []
           }
           theme={w.theme}
-          location={locationName}
         >
           {w.blockContent !== null ? (
             <PortableText
@@ -256,7 +266,6 @@ export function portableTextComponents(
           }
           uspList={w.usps ? usps : []}
           theme={w.theme}
-          location={locationName}
         >
           {w.blockContent !== null ? (
             <PortableText
@@ -301,7 +310,6 @@ export function portableTextComponents(
                 ? w.ctas.map((cta) => mapLinkAttributes(cta, locationName))
                 : []
             }
-            location={locationName}
           >
             {w.blockContent !== null ? (
               <PortableText
@@ -330,7 +338,6 @@ export function portableTextComponents(
           ctas={
             w.ctas !== null ? w.ctas.map((cta) => mapLinkAttributes(cta)) : []
           }
-          location={locationName}
           theme={w.theme}
         >
           {w.blockContent !== null ? (

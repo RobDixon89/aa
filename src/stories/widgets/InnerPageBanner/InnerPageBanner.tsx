@@ -19,7 +19,6 @@ export type InnerPageBannerProps = React.HTMLAttributes<HTMLDivElement> & {
   theme: ThemeKeys;
   title: string;
   uspList?: UspModel[];
-  location?: string;
 };
 
 type Props = Omit<InnerPageBannerProps, '_type'>;

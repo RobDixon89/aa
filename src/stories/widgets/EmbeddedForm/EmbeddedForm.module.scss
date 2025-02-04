@@ -1,10 +1,102 @@
-@import '@/lib/helpers.scss';
+@import '../../../lib/helpers';
 
-.container {
+.contentContainer {
+  grid-column: 1 / -1;
   text-align: left;
 }
 
 h2.title {
   font-size: var(--font-size-h3);
   margin-bottom: 0.5em;
+}
+
+.form {
+  grid-column: 1 / -1;
+  background-color: var(--body);
+  color: var(--white);
+  padding: fluid(24, 32) fluid(20, 32);
+  display: flex;
+  flex-direction: column;
+  gap: fluid(16, 20);
+
+  p {
+    margin: 0 0 fluid(8, 12);
+  }
+
+  [class*='button'] {
+    margin: fluid(12, 16) 0 0 auto;
+  }
+}
+
+.field {
+  position: relative;
+}
+
+.label {
+  font-size: var(--font-size-regular);
+  color: inherit;
+  position: absolute;
+  top: 0;
+  left: fluid(3, 4);
+  transform: translateY(#{fluid(6, 12)});
+
+  .field:focus-within &,
+  .field:has(
+      input:not(:placeholder-shown),
+      textarea:not(:placeholder-shown),
+      option[value='']:not(:checked)
+    )
+    & {
+    transform: translate(-16.333%, -50%) scale(0.66);
+  }
+
+  .field:has(
+      input[aria-invalid='true'],
+      textarea[aria-invalid='true'],
+      select[aria-invalid='true']
+    )
+    & {
+    color: var(--error);
+  }
+
+  @include transition('transform, color');
+}
+
+.input {
+  font-size: var(--font-size-regular);
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--tertiary);
+  color: inherit;
+  padding: 8px fluid(3, 4);
+  height: fluid(36, 44);
+  width: 100%;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  option {
+    color: var(--body);
+  }
+
+  &[aria-invalid='true'] {
+    border-color: var(--error);
+    color: var(--error);
+  }
+
+  @include transition('border-color, color');
+}
+
+.select {
+  padding-left: 0;
+}
+
+.error {
+  color: var(--error);
+  font-size: var(--font-size-small);
 }

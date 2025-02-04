@@ -20,7 +20,7 @@ export type ServiceCardsProps = React.HTMLAttributes<HTMLDivElement> & {
   id: string;
   title?: string | null;
   items: ServiceModel[];
-  location?: string;
+
   ctas: CtaModel[];
 };
 

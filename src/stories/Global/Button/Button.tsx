@@ -10,7 +10,7 @@ type ButtonCommonProps = {
   icon?: IconType;
 };
 
-export type ButtonProps = React.HTMLAttributes<HTMLButtonElement> &
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   ButtonCommonProps;
 
 const Button: React.FC<ButtonProps> = ({

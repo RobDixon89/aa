@@ -16,6 +16,7 @@
   --tertiaryLighter: #afd4fc;
   --highlightValues: 51, 100%, 47%;
   --highlight: hsl(var(--highlightValues));
+  --error: hsl(4, 100%, 55%);
 
   --font-size-h1: #{fluid(32, 92)};
   --font-size-h2: #{fluid(28, 70)};
