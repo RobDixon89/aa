@@ -1,10 +1,10 @@
-import type { Meta, StoryFn } from "@storybook/react";
-import EmbeddedForm, { type EmbeddedFormProps } from "./EmbeddedForm";
+import type { Meta, StoryFn } from '@storybook/react';
+import EmbeddedForm, { type EmbeddedFormProps } from './EmbeddedForm';
 
 const meta: Meta<EmbeddedFormProps> = {
   component: EmbeddedForm,
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 
@@ -16,8 +16,8 @@ const Template: StoryFn<EmbeddedFormProps> = (args: EmbeddedFormProps) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  id: "cf-weiyfklhkfsksf",
-  title: "Book a Local Engineer Today",
+  id: 'cf-weiyfklhkfsksf',
+  title: 'Book a Local Engineer Today',
   children: (
     <>
       <p>
@@ -31,4 +31,9 @@ Default.args = {
       </p>
     </>
   ),
+  serviceOptions: [
+    'Satellite Installation',
+    'TV Aerial Installation',
+    'TV Installation',
+  ],
 };

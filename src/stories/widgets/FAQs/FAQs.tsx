@@ -21,7 +21,6 @@ export type FaqsProps = React.HTMLAttributes<HTMLDivElement> & {
   items: FaqItem[];
   title?: string | null;
   variant: 'default' | 'dark';
-  location?: string;
 };
 
 const Faqs: React.FC<FaqsProps> = (props) => {

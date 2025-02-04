@@ -25,7 +25,6 @@ export type StepsProps = React.HTMLAttributes<HTMLDivElement> & {
   items: (StepCardModel | ImageCardModel)[];
   ctas: CtaModel[];
   theme: ThemeKeys;
-  location?: string;
 };
 
 const Steps: React.FC<StepsProps> = (props) => {

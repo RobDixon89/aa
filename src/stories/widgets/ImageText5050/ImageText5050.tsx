@@ -14,7 +14,6 @@ export type ImageText5050Props = React.HTMLAttributes<HTMLDivElement> & {
   title?: string | null;
   theme?: ThemeKeys;
   imageAlign: 'left' | 'right';
-  location?: string;
 };
 
 type Props = Omit<ImageText5050Props, '_type'>;

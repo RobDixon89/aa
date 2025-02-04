@@ -14,7 +14,7 @@ export type RichTextProps = React.HTMLAttributes<HTMLDivElement> & {
   columns?: boolean;
   title?: string | null;
   uspList?: UspModel[];
-  location?: string;
+
   theme: ThemeKeys | null;
 };
 

@@ -41,6 +41,7 @@ export default function IndexRoute(): ReactElement {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [data, setData] = React.useState<any | undefined>(undefined);
   const [breadcrumbs, setBreadcrumbs] = React.useState<CtaModel[]>([]);
+  console.log(data);
 
   return (
     <Page
@@ -125,7 +126,7 @@ export default function IndexRoute(): ReactElement {
 
       {data ? (
         <>
-          {data._type === 'homepage' && data.template.banner ? (
+          {data._type === 'homepage' && data.template?.banner ? (
             <HomeHero
               image={mapImageAttributes(data.template.banner.image)}
               title={data.template.banner.title}
@@ -145,7 +146,7 @@ export default function IndexRoute(): ReactElement {
                 />
               ) : null}
             </HomeHero>
-          ) : data.template.banner ? (
+          ) : data.template && data.template.banner ? (
             <InnerPageBanner
               breadcrumbs={breadcrumbs}
               subtitle={
@@ -190,7 +191,7 @@ export default function IndexRoute(): ReactElement {
             </InnerPageBanner>
           ) : null}
 
-          {data.template.blockContent !== null ? (
+          {data.template && data.template.blockContent !== null ? (
             <PortableText
               value={data.template.blockContent}
               components={portableTextComponents(
@@ -214,7 +215,9 @@ export default function IndexRoute(): ReactElement {
             />
           ) : null}
 
-          {!data.template?.banner && !data.template?.blockContent ? (
+          {data._type === 'notFound' ? (
+            <p style={{ margin: 20 }}>Item not found</p>
+          ) : !data.template?.banner && !data.template?.blockContent ? (
             <p style={{ margin: 20 }}>No page content found</p>
           ) : null}
         </>
@@ -293,15 +296,17 @@ export default function IndexRoute(): ReactElement {
 
         if (!service) {
           setData({
-            _type: 'service',
+            _type: 'notFound',
             template: undefined,
           });
         } else {
-          const serviceLocation = res.locations.find(
-            (loc) =>
-              loc.name.toLowerCase().replaceAll(/\W+/g, '-') ===
-              locationValue.toLowerCase().replaceAll(/\W+/g, '-')
-          ) as LocationLink;
+          const serviceLocation = locationValue
+            ? (res.locations.find(
+                (loc) =>
+                  loc.name.toLowerCase().replaceAll(/\W+/g, '-') ===
+                  locationValue.toLowerCase().replaceAll(/\W+/g, '-')
+              ) as LocationLink)
+            : undefined;
 
           const serviceLink: ServiceLink = {
             _type: 'service',
@@ -443,39 +448,46 @@ export default function IndexRoute(): ReactElement {
             nameValue.toLowerCase().replaceAll(/\W+/g, '-')
         ) as LocationLink;
 
-        setData({
-          _type: 'location',
-          ...res,
-          template: {
-            ...res.template,
-            banner: res.template.banner
-              ? {
-                  ...res.template.banner,
-                  subtitle: res.template.banner?.subtitle
-                    ? res.template.banner.subtitle.replaceAll(
-                        '##location##',
-                        location.name
-                      )
-                    : location.area,
-                }
-              : null,
-          },
-          location,
-        });
-        setBreadcrumbs([
-          {
-            text: 'Home',
-            url: '/',
-          },
-          {
-            text: 'Areas We Cover',
-            url: '/locations/',
-          },
-          {
-            text: location.name,
-            url: `/locations/${location.name.toLowerCase().replaceAll(/\W+/g, '-')}`,
-          },
-        ]);
+        if (!location) {
+          setData({
+            _type: 'notFound',
+            template: undefined,
+          });
+        } else {
+          setData({
+            _type: 'location',
+            ...res,
+            template: {
+              ...res.template,
+              banner: res.template.banner
+                ? {
+                    ...res.template.banner,
+                    subtitle: res.template.banner?.subtitle
+                      ? res.template.banner.subtitle.replaceAll(
+                          '##location##',
+                          location.name
+                        )
+                      : location.area,
+                  }
+                : null,
+            },
+            location,
+          });
+          setBreadcrumbs([
+            {
+              text: 'Home',
+              url: '/',
+            },
+            {
+              text: 'Areas We Cover',
+              url: '/locations/',
+            },
+            {
+              text: location.name,
+              url: `/locations/${location.name.toLowerCase().replaceAll(/\W+/g, '-')}`,
+            },
+          ]);
+        }
         break;
 
       case 'page':
@@ -485,7 +497,7 @@ export default function IndexRoute(): ReactElement {
 
         if (!res.page) {
           setData({
-            _type: 'page',
+            _type: 'notFound',
             template: undefined,
           });
         } else {

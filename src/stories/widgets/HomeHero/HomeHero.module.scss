@@ -1,4 +1,4 @@
-@import '@/lib/helpers.scss';
+@import '../../../lib/helpers';
 
 .homeHero {
   --gridRowGap: #{fluid(20, 24)};
