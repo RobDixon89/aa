@@ -17,7 +17,6 @@ export const apiVersion = assertValue(
 
 function assertValue<T>(v: T | undefined, errorMessage: string): T {
   if (v === undefined) {
-    console.log(JSON.stringify(process.env));
     throw new Error(errorMessage);
   }
 
