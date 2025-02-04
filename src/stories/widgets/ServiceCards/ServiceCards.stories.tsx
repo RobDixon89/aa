@@ -1,10 +1,10 @@
-import type { Meta, StoryFn } from "@storybook/react";
-import ServiceCards, { type ServiceCardsProps } from "./ServiceCards";
+import type { Meta, StoryFn } from '@storybook/react';
+import ServiceCards, { type ServiceCardsProps } from './ServiceCards';
 
 const meta: Meta<ServiceCardsProps> = {
   component: ServiceCards,
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
 };
 
@@ -16,8 +16,8 @@ const Template: StoryFn<ServiceCardsProps> = (args: ServiceCardsProps) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  id: "sc-sjdgldskjabsaldj",
-  title: "Our Services",
+  id: 'sc-sjdgldskjabsaldj',
+  title: 'Our Services',
   children: (
     <>
       <p>
@@ -33,46 +33,45 @@ Default.args = {
   ),
   items: [
     {
-      id: "sjhsjhs",
-      parent: "TV Installation",
-      name: "Digital TV Aerial Installation",
+      id: 'sjhsjhs',
+      parent: 'TV Installation',
+      name: 'Digital TV Aerial Installation',
       description:
-        "Cras rhoncus nunc tempus purus pretium, sit amet mattis ante mattis. Mauris vel fringilla felis, et eleifend ex.",
+        'Cras rhoncus nunc tempus purus pretium, sit amet mattis ante mattis. Mauris vel fringilla felis, et eleifend ex.',
       image: {
-        src: "/img/image-text-5050.jpg",
-        altText: "Lorem ipsum dolor sit",
+        src: '/img/image-text-5050.jpg',
+        altText: 'Lorem ipsum dolor sit',
       },
-      url: "#",
+      url: '#',
     },
     {
-      id: "reeafbryw",
-      name: "FreeSat Dish installation",
+      id: 'reeafbryw',
+      name: 'FreeSat Dish installation',
       description:
-        "Cras rhoncus nunc tempus purus pretium, sit amet mattis ante mattis. Mauris vel fringilla felis, et eleifend ex.",
+        'Cras rhoncus nunc tempus purus pretium, sit amet mattis ante mattis. Mauris vel fringilla felis, et eleifend ex.',
       image: null,
-      url: "#",
+      url: '#',
     },
     {
-      id: "gdjgjsgd",
-      name: "Sky Satellite Dish Installers",
+      id: 'gdjgjsgd',
+      name: 'Sky Satellite Dish Installers',
       description:
-        "Cras rhoncus nunc tempus purus pretium, sit amet mattis ante mattis. Mauris vel fringilla felis, et eleifend ex.",
+        'Cras rhoncus nunc tempus purus pretium, sit amet mattis ante mattis. Mauris vel fringilla felis, et eleifend ex.',
       image: {
-        src: "/img/image-text-5050.jpg",
-        altText: "Lorem ipsum dolor sit",
+        src: '/img/image-text-5050.jpg',
+        altText: 'Lorem ipsum dolor sit',
       },
-      url: "#",
+      url: '#',
     },
   ],
   ctas: [
     {
-      text: "Button Text",
-      url: "#",
+      text: 'Button Text',
+      url: '#',
     },
     {
-      text: "Button Text",
-      url: "#",
+      text: 'Button Text',
+      url: '#',
     },
   ],
-  location: "",
 };
