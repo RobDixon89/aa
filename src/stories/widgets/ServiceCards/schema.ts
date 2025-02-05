@@ -88,7 +88,8 @@ export const serviceCardSnippet = `
   },    
   "metaImage": landingMetaMetaImage {
     ${imageWithAltSnippet}
-  }
+  },
+  "hasLocationPage": defined(locationContent) && defined(locationContent)
 `;
 
 export const serviceCardsSnippet = `
@@ -115,6 +116,7 @@ export type ServiceCardResponse = {
   parent: string | null;
   bannerImage: ImageWithAlt | null;
   metaImage: ImageWithAlt | null;
+  hasLocationPage: boolean;
 };
 
 export type ServiceCardsResponse = {
