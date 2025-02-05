@@ -50,3 +50,53 @@ export type EmbeddedFormResponse = {
   title: string | null;
   blockContent: any;
 };
+
+export const globalFormFields = [
+  defineField({
+    name: 'formIntroduction',
+    type: 'string',
+    title: 'Form introduction text',
+    description: 'Will be displayed directly above each embedded form',
+    group: 'contact',
+  }),
+  defineField({
+    name: 'successMessage',
+    type: 'string',
+    title: 'Success Message',
+    description: 'Message to display when an enquiry form is submitted',
+    validation: (Rule) => Rule.required(),
+    group: 'contact',
+  }),
+  defineField({
+    name: 'targetEmail',
+    title: 'Target Email',
+    description: 'Where should the embedded form submissions be sent?',
+    type: 'email',
+    validation: (Rule) => Rule.required(),
+    group: 'contact',
+  }),
+  defineField({
+    name: 'confirmationMessage',
+    type: 'string',
+    title: 'Success Message',
+    description: `When an enquiry has been submitted we'll send an email to the customer, this will be what it says in that email`,
+    validation: (Rule) => Rule.required(),
+    group: 'contact',
+  }),
+];
+
+export const globalFormFieldQuery = `
+  "form": {
+    formIntroduction,
+    successMessage,
+    targetEmail,
+    confirmationMessage,
+  }
+`;
+
+export type GlobalFormFieldsResponse = {
+  formIntroduction: string | null;
+  successMessage: string;
+  targetEmail: string;
+  confirmationMessage: string;
+};

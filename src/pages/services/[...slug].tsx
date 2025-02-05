@@ -122,31 +122,41 @@ export const getStaticProps: GetStaticProps<Props, Query> = async ({
     parent: service.parent,
   };
 
-  const page: ServicePageResponse = location
-    ? {
-        _type: 'location',
-        _id: `${service._id}-${location.name.toLowerCase().replaceAll(/\W+/g, '-')}`,
-        _createdAt: service._createdAt,
-        _updatedAt: service._updatedAt,
-        slug: getServiceLinkUrl(serviceLink, location.name, true).substring(1),
-        title: `${service.title} in ${location.name}`,
-        parent: location.area,
-        ...service.location,
-        serviceLink: serviceLink,
-        locationName: location.name,
-      }
-    : {
-        _type: 'service',
-        _id: service._id,
-        _createdAt: service._createdAt,
-        _updatedAt: service._updatedAt,
-        slug: getServiceLinkUrl(serviceLink, undefined, true).substring(1),
-        parent: service.parent ? service.parent : null,
-        title: service.title,
-        ...service.landing,
-        serviceLink: serviceLink,
-        locationName: '',
+  let page: ServicePageResponse;
+
+  if (location) {
+    if (!service.location.banner && !service.location.blockContent) {
+      return {
+        notFound: true,
       };
+    }
+
+    page = {
+      _type: 'location',
+      _id: `${service._id}-${location.name.toLowerCase().replaceAll(/\W+/g, '-')}`,
+      _createdAt: service._createdAt,
+      _updatedAt: service._updatedAt,
+      slug: getServiceLinkUrl(serviceLink, location.name, true).substring(1),
+      title: `${service.title} in ${location.name}`,
+      parent: location.area,
+      ...service.location,
+      serviceLink: serviceLink,
+      locationName: location.name,
+    };
+  } else {
+    page = {
+      _type: 'service',
+      _id: service._id,
+      _createdAt: service._createdAt,
+      _updatedAt: service._updatedAt,
+      slug: getServiceLinkUrl(serviceLink, undefined, true).substring(1),
+      parent: service.parent ? service.parent : null,
+      title: service.title,
+      ...service.landing,
+      serviceLink: serviceLink,
+      locationName: '',
+    };
+  }
 
   return {
     props: {
@@ -259,6 +269,7 @@ export default function PageRoute(props: Props): ReactElement {
             props.services,
             props.settings.usps,
             firstFormId(props.page.blockContent),
+            props.settings.form,
             props.page.serviceLink
           )}
         />

@@ -25,7 +25,7 @@ const Section: React.FC<SectionProps> = (props) => {
   return (
     <section
       {...attributes}
-      className={`${s.container}${classes ? ' ' + classes : ''}`}
+      className={`${s.sectionContainer}${classes ? ' ' + classes : ''}`}
       data-theme={theme}
       data-grid={grid}
     >

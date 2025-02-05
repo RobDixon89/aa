@@ -1,7 +1,10 @@
 import { LocationLink, ServiceLink } from '@/sanity/schema/linkList';
 import { UspModel } from '@/stories/components/UspList/UspList';
 import EmbeddedForm from '@/stories/widgets/EmbeddedForm/EmbeddedForm';
-import { EmbeddedFormResponse } from '@/stories/widgets/EmbeddedForm/schema';
+import {
+  EmbeddedFormResponse,
+  GlobalFormFieldsResponse,
+} from '@/stories/widgets/EmbeddedForm/schema';
 import Faqs from '@/stories/widgets/FAQs/FAQs';
 import { FaqsResponse } from '@/stories/widgets/FAQs/schema';
 import ImageBlock from '@/stories/widgets/ImageBlock/ImageBlock';
@@ -38,6 +41,7 @@ export function portableTextComponents(
   services: ServiceCardResponse[],
   usps: UspModel[],
   firstFormId: string,
+  formSettings?: GlobalFormFieldsResponse,
   service?: ServiceLink
 ): Partial<PortableTextReactComponents> {
   return {
@@ -120,6 +124,10 @@ export function portableTextComponents(
                   .map((s) => s.title)
               : []
           }
+          formIntroduction={formSettings?.formIntroduction ?? ''}
+          confirmationMessage={formSettings?.confirmationMessage ?? ''}
+          successMessage={formSettings?.successMessage ?? ''}
+          target={formSettings?.targetEmail ?? ''}
         >
           {w.blockContent !== null ? (
             <PortableText

@@ -204,6 +204,7 @@ export default function IndexRoute(): ReactElement {
                 data.services,
                 data.settings.usps,
                 firstFormId(data.template.blockContent),
+                data.settings.form,
                 data._type === 'service'
                   ? {
                       _type: 'service',

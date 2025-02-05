@@ -31,9 +31,21 @@ Default.args = {
       </p>
     </>
   ),
+  formIntroduction: 'Get in touch with us today',
+  target: '',
   serviceOptions: [
     'Satellite Installation',
     'TV Aerial Installation',
     'TV Installation',
   ],
+  successMessage: 'Thanks for getting in touch!',
+  confirmationMessage:
+    'We have received your website enquiry, someone will be in touch with you as soon as possible',
+};
+
+export const FormOnly = Template.bind({});
+FormOnly.args = {
+  ...Default.args,
+  title: undefined,
+  children: undefined,
 };
