@@ -1,4 +1,8 @@
 import {
+  globalFormFieldQuery,
+  GlobalFormFieldsResponse,
+} from '@/stories/widgets/EmbeddedForm/schema';
+import {
   footerQuery,
   type FooterFieldResponse,
 } from '@/stories/widgets/Footer/schema';
@@ -12,11 +16,13 @@ export const siteSettingsQuery = `*[_type == "siteSettings"][0]{
   gaID,
   ${headerQuery},
   ${footerQuery},
-  ${uspListQuery}
+  ${uspListQuery},
+  ${globalFormFieldQuery}
 }`;
 
 export type SiteSettingsResponse = HeaderFieldResponse &
   FooterFieldResponse &
   UspFieldResponse & {
     gaID: string | null;
+    form: GlobalFormFieldsResponse;
   };

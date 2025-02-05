@@ -1,6 +1,7 @@
 import { Widget } from '@/sanity/queries/blockContent';
 import type { LocationLink } from '@/sanity/schema/linkList';
 import type { ServiceCardResponse } from '@/stories/widgets/ServiceCards/schema';
+import { ValidationRule } from 'react-hook-form';
 
 export function formatDate(date: string): string {
   return new Date(date).toLocaleDateString('en-GB', {
@@ -65,3 +66,37 @@ export function insertLocationName(content: string, location?: string): string {
 
 export const firstFormId = (widgets: Widget[]): string =>
   widgets?.find((wi) => wi._type === 'embeddedForm')?._key ?? '';
+
+/**
+ * Rule structure for react-hook-form
+ */
+export const EMAIL_RULE: ValidationRule<RegExp> = {
+  message: `Please enter a valid email address`,
+  value: /^[\w\-.\d*]+@[\w\-\d.]+(\.\w*)$/,
+};
+
+/**
+ * Rule structure for react-hook-form
+ */
+export const PHONE_NUMBER_RULE: ValidationRule<RegExp> = {
+  message: `Please enter a valid phone number`,
+  value: /^[\d+()\-x ]+$/,
+};
+
+/**
+ * Rule structure for full name. At least two words separated by a space
+ */
+export const FULL_NAME_RULE: ValidationRule<RegExp> = {
+  message: `Please enter a valid full name with first and last names`,
+  value: /^([\w\-\u00C0-\u017F]{3,})+\s+([\w\s\-\u00C0-\u017F]{3,})+$/i,
+};
+
+/**
+ * Rule structure for react-hook-form
+ * Pattern based on https://andrewwburns.com/2018/04/10/uk-postcode-validation-regex/, but allows both lower and uppercase
+ */
+export const POSTCODE_RULE: ValidationRule<RegExp> = {
+  message: `Please enter a valid postcode`,
+  value:
+    /^(([A-Za-z][0-9]{1,2})|(([A-Za-z][A-HJ-Ya-hj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-HJ-Ya-hj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2}$/,
+};

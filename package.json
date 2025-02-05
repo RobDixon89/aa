@@ -49,6 +49,7 @@
     "@storybook/nextjs": "^8.0.5",
     "@storybook/react": "^8.0.5",
     "@storybook/test": "^8.0.5",
+    "@types/mailgun-js": "^0.22.18",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

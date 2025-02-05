@@ -1,6 +1,6 @@
 @import '../../../lib/helpers';
 
-.container {
+.sectionContainer {
   --accentColour: var(--tertiary);
   --hoverColour: var(--body);
   --sectionPadding: #{fluid(24, 40)};

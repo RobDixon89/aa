@@ -15,6 +15,16 @@ export const apiVersion = assertValue(
   'Missing environment variable: NEXT_PUBLIC_SANITY_API_VERSION'
 );
 
+export const mailgunApi = assertValue(
+  process.env.NEXT_PUBLIC_FORM_API_KEY,
+  'Missing environment variable: NEXT_PUBLIC_FORM_API_KEY'
+);
+
+export const mailgunDomain = assertValue(
+  process.env.NEXT_PUBLIC_FORM_DOMAIN,
+  'Missing environment variable: NEXT_PUBLIC_FORM_DOMAIN'
+);
+
 function assertValue<T>(v: T | undefined, errorMessage: string): T {
   if (v === undefined) {
     throw new Error(errorMessage);

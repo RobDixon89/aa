@@ -134,7 +134,8 @@ export default function PageRoute(props: Props): ReactElement {
             props.locations,
             props.services,
             props.settings.usps,
-            firstFormId(props.page.blockContent)
+            firstFormId(props.page.blockContent),
+            props.settings.form
           )}
         />
       ) : null}

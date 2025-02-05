@@ -5,4 +5,6 @@ export declare const form: string;
 export declare const input: string;
 export declare const label: string;
 export declare const select: string;
+export declare const success: string;
+export declare const textarea: string;
 export declare const title: string;

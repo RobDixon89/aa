@@ -3,6 +3,23 @@
 .contentContainer {
   grid-column: 1 / -1;
   text-align: left;
+
+  @include from(tabletSmall) {
+    grid-column: 2 / -2;
+  }
+
+  @include from(tablet) {
+    grid-column: 3 / -3;
+  }
+
+  @include from(tabletLarge) {
+    grid-column: 1 / span 5;
+    margin: auto 0;
+  }
+
+  @include from(desktop) {
+    grid-column: 2 / span 4;
+  }
 }
 
 h2.title {
@@ -11,6 +28,7 @@ h2.title {
 }
 
 .form {
+  position: relative;
   grid-column: 1 / -1;
   background-color: var(--body);
   color: var(--white);
@@ -21,10 +39,41 @@ h2.title {
 
   p {
     margin: 0 0 fluid(8, 12);
+
+    &[data-error] {
+      color: var(--error);
+    }
   }
 
   [class*='button'] {
     margin: fluid(12, 16) 0 0 auto;
+  }
+
+  @include from(tabletSmall) {
+    grid-column: 2 / -2;
+  }
+
+  @include from(tablet) {
+    grid-column: 3 / -3;
+  }
+
+  @include from(tabletLarge) {
+    grid-column: 7 / span 6;
+    margin: auto 0;
+  }
+
+  @include from(desktop) {
+    grid-column: 8 / span 4;
+  }
+
+  [class*='sectionContainer']:not(:has(.contentContainer)) & {
+    @include from(tabletLarge) {
+      grid-column: 4 / -4;
+    }
+
+    @include from(desktop) {
+      grid-column: 5 / -5;
+    }
   }
 }
 
@@ -39,6 +88,7 @@ h2.title {
   top: 0;
   left: fluid(3, 4);
   transform: translateY(#{fluid(6, 12)});
+  pointer-events: none;
 
   .field:focus-within &,
   .field:has(
@@ -65,15 +115,19 @@ h2.title {
 .input {
   font-size: var(--font-size-regular);
   background-color: transparent;
+  box-shadow: inset 0 0 20px 20px var(--body); // override autofill background
   border: 0;
   border-bottom: 1px solid var(--tertiary);
-  color: inherit;
+  -webkit-text-fill-color: var(--white); // override autofill text colour
+  caret-color: var(--white); // override autofill text colour
+  color: var(--white);
   padding: 8px fluid(3, 4);
   height: fluid(36, 44);
   width: 100%;
 
   &::placeholder {
     color: transparent;
+    -webkit-text-fill-color: transparent;
   }
 
   &:focus {
@@ -96,7 +150,33 @@ h2.title {
   padding-left: 0;
 }
 
+.textarea {
+  height: 150px;
+}
+
 .error {
   color: var(--error);
   font-size: var(--font-size-small);
+}
+
+.success {
+  display: grid;
+  place-content: center;
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--body);
+  color: var(--white);
+  text-align: center;
+  overflow: hidden;
+  padding: fluid(16, 32);
+
+  p:nth-child(1) {
+    font-size: var(--font-size-h4);
+  }
+
+  p:nth-child(2) {
+    font-size: var(--font-size-large);
+  }
 }

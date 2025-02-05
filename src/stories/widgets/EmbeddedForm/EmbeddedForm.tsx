@@ -1,4 +1,6 @@
 import Button from '@/stories/Global/Button/Button';
+import { EMAIL_RULE, PHONE_NUMBER_RULE, POSTCODE_RULE } from '@/utils';
+import { IconType } from '@/utils/icon';
 import { AnimatePresence, motion, Variants } from 'motion/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,8 +10,12 @@ import s from './EmbeddedForm.module.scss';
 
 export type EmbeddedFormProps = React.HTMLAttributes<HTMLDivElement> & {
   id: string;
-  title?: string | null;
+  confirmationMessage: string;
+  formIntroduction: string | null;
   serviceOptions: string[];
+  successMessage: string;
+  target: string;
+  title?: string | null;
 };
 
 type FormState = {
@@ -17,6 +23,9 @@ type FormState = {
 };
 
 const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
+  const [status, setStatus] = React.useState<
+    'initial' | 'submitting' | 'error' | 'complete'
+  >('initial');
   const formIds = {
     name: `${props.id}-full-name`,
     postcode: `${props.id}-postcode`,
@@ -36,7 +45,42 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
     formState: { errors },
   } = useForm<FormState>();
 
-  const onSubmit = async (data: FormState) => console.log(data);
+  const onSubmit = async (data: FormState) => {
+    console.log(data);
+    setStatus('submitting');
+    await new Promise((r) => setTimeout(r, 1000));
+
+    const sent = true;
+
+    // const sent = await sendEmail({
+    //   to: props.target,
+    //   from: data[formIds.email],
+    //   subject: `Website contact request from ${data[formIds.name]}`,
+    //   message: `<div style="font-family: sans-serif;
+    //     <p><strong>Name:</strong> ${data[formIds.name]}</p>
+    //     <p><strong>Postcode:</strong> ${data[formIds.postcode]}</p>
+    //     <p><strong>Email:</strong> ${data[formIds.email]}</p>
+    //     <p><strong>Phone Number:</strong> ${data[formIds.phone]}</p>
+    //     <p><strong>Interested In:</strong> ${data[formIds.service]}</p>
+    //     <p><strong>Message:</strong> ${data[formIds.message]}</p>
+    //   `,
+    // });
+
+    if (!sent) {
+      setStatus('error');
+    } else {
+      setStatus('complete');
+
+      // await sendEmail({
+      //   to: data[formIds.email],
+      //   from: props.target,
+      //   subject: `Thanks for getting in touch with Ashley Aerials`,
+      //   message: `<div style="font-family: sans-serif;
+      //     <p>${props.confirmationMessage}}</p>
+      //   `,
+      // });
+    }
+  };
 
   return (
     <Section id={props.id} grid={true}>
@@ -55,7 +99,20 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
           onSubmit={handleSubmit(onSubmit)}
           data-theme={Themes.navy}
         >
-          <p>Get in touch with us today</p>
+          {status === 'error' ? (
+            <motion.p
+              layoutId={`${formIds}-error-msg`}
+              variants={errorVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              data-error
+            >
+              Something went wrong, please try again.
+            </motion.p>
+          ) : null}
+
+          {props.formIntroduction ? <p>{props.formIntroduction}</p> : null}
 
           <div className={s.field}>
             <label className={s.label} htmlFor={formIds.name}>
@@ -70,6 +127,7 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
                 required: 'Please enter your full name',
               })}
               aria-invalid={!!errors[formIds.name]}
+              disabled={status === 'submitting' || status === 'complete'}
             />
             {errors[formIds.name] ? (
               <motion.p
@@ -96,8 +154,10 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
               placeholder="Postcode"
               {...register(formIds.postcode, {
                 required: 'Please enter your postcode',
+                pattern: POSTCODE_RULE,
               })}
               aria-invalid={!!errors[formIds.postcode]}
+              disabled={status === 'submitting' || status === 'complete'}
             />
             {errors[formIds.postcode] ? (
               <motion.p
@@ -109,6 +169,66 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
                 exit="hidden"
               >
                 {errors[formIds.postcode]?.message}
+              </motion.p>
+            ) : null}
+          </div>
+
+          <div className={s.field}>
+            <label className={s.label} htmlFor={formIds.email}>
+              Email Address*
+            </label>
+            <input
+              className={s.input}
+              id={formIds.email}
+              type="text"
+              placeholder="Email Address"
+              {...register(formIds.email, {
+                required: 'Please enter your email address',
+                pattern: EMAIL_RULE,
+              })}
+              aria-invalid={!!errors[formIds.email]}
+              disabled={status === 'submitting' || status === 'complete'}
+            />
+            {errors[formIds.email] ? (
+              <motion.p
+                layoutId={`${formIds.email}-id`}
+                className={s.error}
+                variants={errorVariants}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+              >
+                {errors[formIds.email]?.message}
+              </motion.p>
+            ) : null}
+          </div>
+
+          <div className={s.field}>
+            <label className={s.label} htmlFor={formIds.phone}>
+              Phone Number*
+            </label>
+            <input
+              className={s.input}
+              id={formIds.phone}
+              type="text"
+              placeholder="Phone Number"
+              {...register(formIds.phone, {
+                required: 'Please enter your phone number',
+                pattern: PHONE_NUMBER_RULE,
+              })}
+              aria-invalid={!!errors[formIds.phone]}
+              disabled={status === 'submitting' || status === 'complete'}
+            />
+            {errors[formIds.phone] ? (
+              <motion.p
+                layoutId={`${formIds.phone}-id`}
+                className={s.error}
+                variants={errorVariants}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+              >
+                {errors[formIds.phone]?.message}
               </motion.p>
             ) : null}
           </div>
@@ -125,6 +245,7 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
                   required: `Please select the service you're interested in`,
                 })}
                 aria-invalid={!!errors[formIds.service]}
+                disabled={status === 'submitting' || status === 'complete'}
               >
                 <option value=""></option>
                 {props.serviceOptions.map((so) => (
@@ -136,7 +257,7 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
                   </option>
                 ))}
               </select>
-              {errors[formIds.postcode] ? (
+              {errors[formIds.service] ? (
                 <motion.p
                   layoutId={`${formIds.service}-id`}
                   className={s.error}
@@ -151,7 +272,58 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
             </div>
           ) : null}
 
-          <Button type="submit" theme="default" label="Send Enquiry" />
+          <div className={s.field}>
+            <label className={s.label} htmlFor={formIds.message}>
+              Your Enquiry*
+            </label>
+            <textarea
+              className={`${s.input} ${s.textarea}`}
+              id={formIds.message}
+              placeholder="Your Enquiry"
+              {...register(formIds.message, {
+                required: 'Please enter your enquiry details',
+              })}
+              aria-invalid={!!errors[formIds.message]}
+              disabled={status === 'submitting' || status === 'complete'}
+            />
+            {errors[formIds.message] ? (
+              <motion.p
+                layoutId={`${formIds.message}-id`}
+                className={s.error}
+                variants={errorVariants}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+              >
+                {errors[formIds.message]?.message}
+              </motion.p>
+            ) : null}
+          </div>
+
+          <Button
+            type="submit"
+            theme="default"
+            label={status === 'submitting' ? 'Submitting' : 'Send Enquiry'}
+            icon={status === 'submitting' ? IconType.none : IconType.arrow}
+            disabled={status === 'submitting' || status === 'complete'}
+          />
+
+          {status === 'complete' ? (
+            <motion.div
+              layoutId={`${formIds.email}-success-msg`}
+              className={s.success}
+              variants={{
+                hidden: { scale: 0, borderRadius: 5000, opacity: 0 },
+                visible: { scale: 1, borderRadius: 0, opacity: 1 },
+              }}
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 0.65 }}
+            >
+              <p>Enquiry Submitted</p>
+              <p>{props.successMessage}</p>
+            </motion.div>
+          ) : null}
         </form>
       </AnimatePresence>
     </Section>

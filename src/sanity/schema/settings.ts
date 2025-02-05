@@ -1,3 +1,4 @@
+import { globalFormFields } from '@/stories/widgets/EmbeddedForm/schema';
 import { footerFields } from '@/stories/widgets/Footer/schema';
 import { headerFields } from '@/stories/widgets/Header/schema';
 import { defineField, defineType } from 'sanity';
@@ -24,6 +25,10 @@ export default defineType({
       title: 'USP List',
       name: 'usps',
     },
+    {
+      title: 'Contact Form',
+      name: 'contact',
+    },
   ],
   fields: [
     defineField({
@@ -41,5 +46,6 @@ export default defineType({
       description: `These will be used within any Banner or Rich Text block where "Display USP List" is enabled`,
       group: 'usps',
     }),
+    ...globalFormFields,
   ],
 });
