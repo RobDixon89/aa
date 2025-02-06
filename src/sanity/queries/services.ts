@@ -12,7 +12,7 @@ import { siteSettingsQuery, type SiteSettingsResponse } from './settings';
 export const serviceSlugsQuery = `{
   "services": *[_type == "service"] {
     title,
-    "parent": parentService-> title,,
+    "parent": parentService-> title,
     "hasLocationPage": defined(locationContent) && defined(locationContent)
   },
   "locations": *[_type == "location"] { name },

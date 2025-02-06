@@ -10,6 +10,7 @@ export const internalLink = defineField({
     return !!parent?.externalUrl || !!parent?.contactLink;
   },
   to: [
+    { type: 'homepage' },
     { type: 'page' },
     { type: 'location' },
     { type: 'locationTemplates' },
@@ -53,7 +54,11 @@ export const serviceLinkSnippet = `
 `;
 
 export const internalLinkSnippet = `
-  ...,  
+  ...,
+  _type=='homepage'=>{
+    title,
+    "url": "",
+  },
   _type=='location'=>{ ${locationLinkSnippet} },
   _type=='locationTemplates'=>{
     title,
