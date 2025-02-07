@@ -25,6 +25,11 @@ export const mailgunDomain = assertValue(
   'Missing environment variable: NEXT_PUBLIC_FORM_DOMAIN'
 );
 
+export const siteDomain = assertValue(
+  process.env.NEXT_PUBLIC_SITE_URL,
+  'Missing environment variable: NEXT_PUBLIC_SITE_URL'
+);
+
 function assertValue<T>(v: T | undefined, errorMessage: string): T {
   if (v === undefined) {
     throw new Error(errorMessage);

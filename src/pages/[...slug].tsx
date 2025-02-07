@@ -88,12 +88,17 @@ export default function PageRoute(props: Props): ReactElement {
 
   return (
     <Page
-      title={props.page.metaTitle ? props.page.metaTitle : props.page.title}
+      title={
+        props.page.metaTitle
+          ? props.page.metaTitle
+          : `${props.page.title} | Ashley Aerials LTD`
+      }
       description={props.page.metaDescription}
       image={props.page.metaImage}
       settings={props.settings}
       locations={props.locations}
       services={props.services}
+      slug={`/${props.page.slug}`}
     >
       {props.page.banner ? (
         <InnerPageBanner

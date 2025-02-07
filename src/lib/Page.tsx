@@ -1,5 +1,4 @@
 import { SiteSettingsResponse } from '@/sanity/queries/settings';
-import { ImageWithAlt } from '@/sanity/schema/image';
 import { LocationLink } from '@/sanity/schema/linkList';
 import Footer from '@/stories/widgets/Footer/Footer';
 import Header, { NavigationLink } from '@/stories/widgets/Header/Header';
@@ -11,11 +10,9 @@ import {
   mapNavigationDropdown,
 } from '@/utils/mapping';
 import { ReactElement } from 'react';
+import Meta, { Metadata } from './Meta';
 
-type Props = {
-  title: string;
-  description: string | null;
-  image: ImageWithAlt | null;
+type Props = Metadata & {
   settings?: SiteSettingsResponse;
   locations: LocationLink[];
   services: ServiceCardResponse[];
@@ -30,6 +27,8 @@ export default function Page(props: Props): ReactElement {
 
   return (
     <>
+      <Meta {...props} />
+
       {props.settings ? (
         <Header
           links={headerLinks}

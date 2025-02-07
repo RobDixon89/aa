@@ -41,13 +41,14 @@ export default function IndexRoute(props: Props): ReactElement {
       title={
         props.template.metaTitle
           ? props.template.metaTitle
-          : props.template.title
+          : `${props.template.title} | Ashley Aerials LTD`
       }
       description={props.template.metaDescription}
       image={props.template.metaImage}
       settings={props.settings}
       locations={props.locations}
       services={props.services}
+      slug="/services"
     >
       {props.template.banner ? (
         <InnerPageBanner
