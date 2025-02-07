@@ -44,6 +44,7 @@ h2.title {
   top: calc(var(--sectionPaddingTop) + var(--headerHeight));
   display: block;
   grid-column: 1 / -1;
+  margin-bottom: auto;
 
   @include from(tabletLarge) {
     grid-column: span 6;
