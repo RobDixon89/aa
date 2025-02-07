@@ -1,7 +1,7 @@
 import Button from '@/stories/Global/Button/Button';
 import { EMAIL_RULE, PHONE_NUMBER_RULE, POSTCODE_RULE } from '@/utils';
 import { IconType } from '@/utils/icon';
-import { AnimatePresence, motion, Variants } from 'motion/react';
+import { AnimatePresence, motion, useInView, Variants } from 'motion/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import g from '../../../lib/global.module.scss';
@@ -23,9 +23,16 @@ type FormState = {
 };
 
 const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, {
+    once: true,
+    margin: '0px 175px -50px 0px',
+  });
+
   const [status, setStatus] = React.useState<
     'initial' | 'submitting' | 'error' | 'complete'
   >('initial');
+
   const formIds = {
     name: `${props.id}-full-name`,
     postcode: `${props.id}-postcode`,
@@ -34,6 +41,12 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
     service: `${props.id}-service`,
     message: `${props.id}-message`,
   };
+
+  const formVariants: Variants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+  };
+
   const errorVariants: Variants = {
     hidden: { height: 0, marginTop: 0, opacity: 0 },
     visible: { height: 'auto', marginTop: 4, opacity: 1 },
@@ -83,21 +96,30 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
   };
 
   return (
-    <Section id={props.id} grid={true}>
+    <Section ref={ref} id={props.id} grid={true}>
       {props.title || props.children ? (
-        <div className={s.contentContainer}>
+        <motion.div className={s.contentContainer}>
           {props.title !== null && <h2 className={s.title}>{props.title}</h2>}
           {props.children ? (
             <div className={`${g.richText}`}>{props.children}</div>
           ) : null}
-        </div>
+        </motion.div>
       ) : null}
 
       <AnimatePresence>
-        <form
+        <motion.form
           className={s.form}
           onSubmit={handleSubmit(onSubmit)}
           data-theme={Themes.navy}
+          variants={formVariants}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          transition={{
+            staggerChildren: 0.2,
+            duration: 0.65,
+            type: 'spring',
+            bounce: 0.5,
+          }}
         >
           {status === 'error' ? (
             <motion.p
@@ -112,9 +134,13 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
             </motion.p>
           ) : null}
 
-          {props.formIntroduction ? <p>{props.formIntroduction}</p> : null}
+          {props.formIntroduction ? (
+            <motion.p variants={formVariants}>
+              {props.formIntroduction}
+            </motion.p>
+          ) : null}
 
-          <div className={s.field}>
+          <motion.div className={s.field} variants={formVariants}>
             <label className={s.label} htmlFor={formIds.name}>
               Full Name*
             </label>
@@ -141,9 +167,9 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
                 {errors[formIds.name]?.message}
               </motion.p>
             ) : null}
-          </div>
+          </motion.div>
 
-          <div className={s.field}>
+          <motion.div className={s.field} variants={formVariants}>
             <label className={s.label} htmlFor={formIds.postcode}>
               Postcode*
             </label>
@@ -171,9 +197,9 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
                 {errors[formIds.postcode]?.message}
               </motion.p>
             ) : null}
-          </div>
+          </motion.div>
 
-          <div className={s.field}>
+          <motion.div className={s.field} variants={formVariants}>
             <label className={s.label} htmlFor={formIds.email}>
               Email Address*
             </label>
@@ -201,9 +227,9 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
                 {errors[formIds.email]?.message}
               </motion.p>
             ) : null}
-          </div>
+          </motion.div>
 
-          <div className={s.field}>
+          <motion.div className={s.field} variants={formVariants}>
             <label className={s.label} htmlFor={formIds.phone}>
               Phone Number*
             </label>
@@ -231,10 +257,10 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
                 {errors[formIds.phone]?.message}
               </motion.p>
             ) : null}
-          </div>
+          </motion.div>
 
           {props.serviceOptions && props.serviceOptions.length > 0 ? (
-            <div className={s.field}>
+            <motion.div className={s.field} variants={formVariants}>
               <label className={s.label} htmlFor={formIds.service}>
                 Select a Service*
               </label>
@@ -269,10 +295,10 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
                   {errors[formIds.service]?.message}
                 </motion.p>
               ) : null}
-            </div>
+            </motion.div>
           ) : null}
 
-          <div className={s.field}>
+          <motion.div className={s.field} variants={formVariants}>
             <label className={s.label} htmlFor={formIds.message}>
               Your Enquiry*
             </label>
@@ -298,7 +324,7 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
                 {errors[formIds.message]?.message}
               </motion.p>
             ) : null}
-          </div>
+          </motion.div>
 
           <Button
             type="submit"
@@ -324,7 +350,7 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
               <p>{props.successMessage}</p>
             </motion.div>
           ) : null}
-        </form>
+        </motion.form>
       </AnimatePresence>
     </Section>
   );

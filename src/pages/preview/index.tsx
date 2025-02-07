@@ -50,6 +50,7 @@ export default function IndexRoute(): ReactElement {
       settings={undefined}
       locations={[]}
       services={[]}
+      slug=""
     >
       <h1 style={{ margin: 20 }}>Page Content Preview</h1>
       <div
