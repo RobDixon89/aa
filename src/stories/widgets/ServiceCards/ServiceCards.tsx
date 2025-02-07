@@ -1,3 +1,4 @@
+import { motion, useInView, Variants } from 'motion/react';
 import Link from 'next/link';
 import React from 'react';
 import g from '../../../lib/global.module.scss';
@@ -25,24 +26,51 @@ export type ServiceCardsProps = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 const ServiceCards: React.FC<ServiceCardsProps> = (props) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, {
+    once: true,
+    margin: '0px 175px -50px 0px',
+  });
+
   if (!props.items || props.items.length === 0) {
     return null;
   }
 
+  const variants: Variants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+  };
+
   return (
-    <Section className={s.container} grid={true}>
+    <Section ref={ref} className={s.container} grid={true}>
       {props.title || props.children ? (
-        <div className={s.contentWrapper}>
-          {props.title && <h2 className={s.title}>{props.title}</h2>}
+        <motion.div
+          className={s.contentWrapper}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          transition={{ staggerChildren: 0.2 }}
+        >
+          {props.title && (
+            <motion.h2 className={s.title} variants={variants}>
+              {props.title}
+            </motion.h2>
+          )}
           {props.children ? (
-            <div className={`${g.richText}`}>{props.children}</div>
+            <motion.div className={`${g.richText}`} variants={variants}>
+              {props.children}
+            </motion.div>
           ) : null}
-        </div>
+        </motion.div>
       ) : null}
 
-      <ul className={s.cards}>
+      <motion.ul
+        className={s.cards}
+        initial="hidden"
+        animate={isInView ? 'visible' : 'hidden'}
+        transition={{ staggerChildren: 0.2, delay: 0.85 }}
+      >
         {props.items.map((service) => (
-          <li key={`${props.id}-${service.id}`}>
+          <motion.li key={`${props.id}-${service.id}`} variants={variants}>
             <Link href={service.url} className={s.card}>
               {service.image ? renderCardImage(service.image) : null}
               <div className={s.cardContent}>
@@ -55,12 +83,19 @@ const ServiceCards: React.FC<ServiceCardsProps> = (props) => {
                 </div>
               </div>
             </Link>
-          </li>
+          </motion.li>
         ))}
-      </ul>
+      </motion.ul>
 
       {props.ctas && props.ctas.length > 0 ? (
-        <CtaBlock id={props.id} items={props.ctas} />
+        <CtaBlock
+          id={props.id}
+          items={props.ctas}
+          variants={variants}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          transition={{ delay: props.items.length * 0.175 }}
+        />
       ) : null}
     </Section>
   );

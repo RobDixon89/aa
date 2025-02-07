@@ -1,3 +1,4 @@
+import { motion, useInView } from 'motion/react';
 import React from 'react';
 import { getSrcs } from '../../../utils/image';
 import Section, { ThemeKeys } from '../../Global/Section/Section';
@@ -13,11 +14,17 @@ export type ImageBlockProps = React.HTMLAttributes<HTMLDivElement> & {
 type Props = Omit<ImageBlockProps, '_type'>;
 
 const ImageBlock: React.FC<Props> = (props) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, {
+    once: true,
+    margin: '0px 175px -50px 0px',
+  });
+
   const srcs = getSrcs(props.image, 375, 1020, 8, props.image.aspectRatio ?? 1);
 
   return (
-    <Section theme={props.theme} grid={true}>
-      <figure
+    <Section ref={ref} theme={props.theme} grid={true}>
+      <motion.figure
         className={s.imageWrapper}
         style={
           {
@@ -25,18 +32,36 @@ const ImageBlock: React.FC<Props> = (props) => {
           } as React.CSSProperties
         }
       >
-        <img
+        <motion.img
           className={s.image}
           src={srcs.src}
           srcSet={srcs.srcSet}
           alt={props.image.altText}
           loading="lazy"
           sizes={`(max-width: 767px) 100%, (max-width: 1023px) 83%, (max-width: 1599px) 66%, (max-width: 1919px) 50%, 802px`}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1 },
+          }}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          transition={{ duration: 0.65 }}
         />
         {props.caption ? (
-          <figcaption className={s.caption}>{props.caption}</figcaption>
+          <motion.figcaption
+            className={s.caption}
+            variants={{
+              hidden: { y: -20, opacity: 0 },
+              visible: { y: 0, opacity: 1 },
+            }}
+            initial="hidden"
+            animate={isInView ? 'visible' : 'hidden'}
+            transition={{ delay: 0.65 }}
+          >
+            {props.caption}
+          </motion.figcaption>
         ) : null}
-      </figure>
+      </motion.figure>
     </Section>
   );
 };

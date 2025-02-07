@@ -74,7 +74,7 @@ export function getServiceLinkUrl(
   locationName?: string,
   isSlug?: boolean
 ): string {
-  return `/${!isSlug ? 'services/' : ''}${service.parent ? `${service.parent.toLowerCase().replaceAll(/\W+/g, '-')}/` : ''}${service.title.toLowerCase().replaceAll(/\W+/g, '-')}${locationName ? `/${locationName.toLowerCase().replaceAll(/\W+/g, '-')}` : ''}`;
+  return `/${!isSlug ? 'services/' : ''}${service.parent ? `${service.parent.toLowerCase().replaceAll(/\W+/g, '-')}/` : ''}${service.title.toLowerCase().replaceAll(/\W+/g, '-')}${locationName && service.hasLocationPage ? `/${locationName.toLowerCase().replaceAll(/\W+/g, '-')}` : ''}`;
 }
 
 export function getLocationLinkUrl(location: LocationLink): string {

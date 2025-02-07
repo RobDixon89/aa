@@ -13,12 +13,17 @@ export const serviceSlugsQuery = `{
   "services": *[_type == "service"] {
     title,
     "parent": parentService-> title,
+    "hasLocationPage": defined(locationContent) && defined(locationContent)
   },
   "locations": *[_type == "location"] { name },
 }`;
 
 export type ServiceSlugsResponse = {
-  services: { title: string; parent: string | null }[];
+  services: {
+    title: string;
+    parent: string | null;
+    hasLocationPage: boolean;
+  }[];
   locations: { name: string }[];
 };
 

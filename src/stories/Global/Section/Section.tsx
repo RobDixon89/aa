@@ -1,3 +1,4 @@
+import { HTMLMotionProps, motion } from 'motion/react';
 import React from 'react';
 import s from './Section.module.scss';
 
@@ -12,18 +13,21 @@ export const Themes = {
 // Convert object key in a type
 export type ThemeKeys = (typeof Themes)[keyof typeof Themes];
 
-type SectionProps = React.HTMLAttributes<HTMLDivElement> & {
+type SectionProps = HTMLMotionProps<'div'> & {
   theme?: ThemeKeys;
   innerClass?: string;
   grid?: boolean;
+  children: React.ReactNode;
 };
 
-const Section: React.FC<SectionProps> = (props) => {
+const Section = React.forwardRef<HTMLDivElement, SectionProps>((props, ref) => {
   const { theme, grid, ...attr } = props;
   const { className: classes, innerClass, children, ...attributes } = attr;
 
   return (
-    <section
+    //@ts-ignore
+    <motion.section
+      ref={ref}
       {...attributes}
       className={`${s.sectionContainer}${classes ? ' ' + classes : ''}`}
       data-theme={theme}
@@ -32,8 +36,10 @@ const Section: React.FC<SectionProps> = (props) => {
       <div className={`${s.inner}${innerClass ? ' ' + innerClass : ''}`}>
         {children}
       </div>
-    </section>
+    </motion.section>
   );
-};
+});
+
+Section.displayName = 'SectionWrapper';
 
 export default Section;

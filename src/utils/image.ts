@@ -54,6 +54,6 @@ export function getSrcs(
   };
 }
 
-function urlFor(source: SanityReference) {
+export function urlFor(source: SanityReference) {
   return builder.image(source);
 }

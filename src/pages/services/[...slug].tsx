@@ -54,14 +54,17 @@ export const getStaticPaths = async (): Promise<{
       _type: 'service',
       title: service.title,
       parent: service.parent,
+      hasLocationPage: service.hasLocationPage,
     };
 
-    // Map all location children page slugs for this service
-    res.locations.map((location) => {
-      locations.push(
-        `/services${getServiceLinkUrl(serviceLink, location.name, true)}`
-      );
-    });
+    if (service.hasLocationPage) {
+      // Map all location children page slugs for this service
+      res.locations.map((location) => {
+        locations.push(
+          `/services${getServiceLinkUrl(serviceLink, location.name, true)}`
+        );
+      });
+    }
 
     return `/services${getServiceLinkUrl(serviceLink, undefined, true)}`;
   });
@@ -102,6 +105,8 @@ export const getStaticProps: GetStaticProps<Props, Query> = async ({
     description: service.description,
     bannerImage: service.landing.banner?.image ?? null,
     metaImage: service.landing.metaImage,
+    hasLocationPage:
+      !!service.location.banner && !!service.location.blockContent,
   }));
 
   const service = res.services.find(
@@ -120,6 +125,8 @@ export const getStaticProps: GetStaticProps<Props, Query> = async ({
     _type: 'service',
     title: service.title,
     parent: service.parent,
+    hasLocationPage:
+      !!service.location.banner && !!service.location.blockContent,
   };
 
   let page: ServicePageResponse;
@@ -189,6 +196,7 @@ export default function PageRoute(props: Props): ReactElement {
           _type: 'service',
           title: props.page.parent,
           parent: null,
+          hasLocationPage: false,
         },
         undefined
       ),
@@ -209,12 +217,17 @@ export default function PageRoute(props: Props): ReactElement {
 
   return (
     <Page
-      title={props.page.metaTitle ? props.page.metaTitle : props.page.title}
+      title={
+        props.page.metaTitle
+          ? props.page.metaTitle
+          : `${props.page.title} | Ashley Aerials LTD`
+      }
       description={props.page.metaDescription}
       image={props.page.metaImage}
       settings={props.settings}
       locations={props.locations}
       services={props.services}
+      slug={`/services/${props.slug}`}
     >
       {props.page.banner ? (
         <InnerPageBanner

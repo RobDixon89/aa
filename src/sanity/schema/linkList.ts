@@ -1,40 +1,42 @@
-import { LinkIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { LinkIcon } from '@sanity/icons';
+import { defineField, defineType } from 'sanity';
 
 export const internalLink = defineField({
-  title: "Internal Link",
-  name: "internalLink",
-  description: "Select pages for navigation",
-  type: "reference",
+  title: 'Internal Link',
+  name: 'internalLink',
+  description: 'Select pages for navigation',
+  type: 'reference',
   readOnly: ({ parent }) => {
     return !!parent?.externalUrl || !!parent?.contactLink;
   },
   to: [
-    { type: "page" },
-    { type: "location" },
-    { type: "locationTemplates" },
-    { type: "service" },
-    { type: "serviceLandingTemplate" },
+    { type: 'homepage' },
+    { type: 'page' },
+    { type: 'location' },
+    { type: 'locationTemplates' },
+    { type: 'service' },
+    { type: 'serviceLandingTemplate' },
   ],
 });
 
 type PageLink = {
-  _type: "page" | "serviceLandingTemplate" | "locationTemplates";
+  _type: 'page' | 'serviceLandingTemplate' | 'locationTemplates';
   title: string;
   url: string;
 };
 
 export type LocationLink = {
-  _type: "location";
+  _type: 'location';
   name: string;
   area: string;
   addToNav: boolean | null;
 };
 
 export type ServiceLink = {
-  _type: "service";
+  _type: 'service';
   title: string;
   parent: string | null;
+  hasLocationPage: boolean;
 };
 
 export type InternalLink = PageLink | LocationLink | ServiceLink;
@@ -47,11 +49,16 @@ export const locationLinkSnippet = `
 
 export const serviceLinkSnippet = `
   title,
-  "parent": parentService-> title
+  "parent": parentService-> title,
+  "hasLocationPage": defined(locationContent) && defined(locationContent)
 `;
 
 export const internalLinkSnippet = `
-  ...,  
+  ...,
+  _type=='homepage'=>{
+    title,
+    "url": "",
+  },
   _type=='location'=>{ ${locationLinkSnippet} },
   _type=='locationTemplates'=>{
     title,
@@ -69,22 +76,22 @@ export const internalLinkSnippet = `
 `;
 
 const externalLink = defineField({
-  name: "externalUrl",
-  title: "External URL",
+  name: 'externalUrl',
+  title: 'External URL',
   description:
-    "Use fully qualified URLS for external link (E.g. https://your-website.co.uk)",
-  type: "url",
+    'Use fully qualified URLS for external link (E.g. https://your-website.co.uk)',
+  type: 'url',
   readOnly: ({ parent }) => {
     return !!parent?.internalLink || !!parent?.contactLink;
   },
   validation: (Rule) =>
-    Rule.uri({ scheme: ["https", "http", "mailto", "tel"] }),
+    Rule.uri({ scheme: ['https', 'http', 'mailto', 'tel'] }),
 });
 
 const contactLink = defineField({
-  name: "contactLink",
-  title: "Contact Form Link?",
-  type: "boolean",
+  name: 'contactLink',
+  title: 'Contact Form Link?',
+  type: 'boolean',
   description: `If this is set to true, the user will be scrolled to the contact form on that page when the button is clicked`,
   readOnly: ({ parent }) => {
     return !!parent?.internalLink || !!parent?.externalUrl;
@@ -93,21 +100,21 @@ const contactLink = defineField({
 
 export const linkField = defineField({
   icon: LinkIcon,
-  name: "contentLink",
-  type: "object",
-  title: "Link",
+  name: 'contentLink',
+  type: 'object',
+  title: 'Link',
   fields: [internalLink, externalLink, contactLink],
 });
 
 export const labelledLinkField = defineField({
-  name: "link",
-  type: "object",
-  title: "Link",
+  name: 'link',
+  type: 'object',
+  title: 'Link',
   fields: [
     defineField({
-      name: "text",
-      type: "string",
-      title: "Link Text",
+      name: 'text',
+      type: 'string',
+      title: 'Link Text',
       description: `If this isn't populated will default to the Page Title for internal links, the URL for external links, or "Make an enquiry" for contact links`,
     }),
     internalLink,
@@ -138,8 +145,8 @@ export type LabelledLink = {
 
 export default defineType({
   icon: LinkIcon,
-  name: "linkList",
-  type: "array",
-  title: "Link List",
+  name: 'linkList',
+  type: 'array',
+  title: 'Link List',
   of: [labelledLinkField],
 });

@@ -41,7 +41,6 @@ export default function IndexRoute(): ReactElement {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [data, setData] = React.useState<any | undefined>(undefined);
   const [breadcrumbs, setBreadcrumbs] = React.useState<CtaModel[]>([]);
-  console.log(data);
 
   return (
     <Page
@@ -51,6 +50,7 @@ export default function IndexRoute(): ReactElement {
       settings={undefined}
       locations={[]}
       services={[]}
+      slug=""
     >
       <h1 style={{ margin: 20 }}>Page Content Preview</h1>
       <div
@@ -205,13 +205,7 @@ export default function IndexRoute(): ReactElement {
                 data.settings.usps,
                 firstFormId(data.template.blockContent),
                 data.settings.form,
-                data._type === 'service'
-                  ? {
-                      _type: 'service',
-                      title: data.template.title,
-                      parent: data.template.parent,
-                    }
-                  : undefined
+                data._type === 'service' ? data.template.serviceLink : undefined
               )}
             />
           ) : null}
@@ -286,6 +280,8 @@ export default function IndexRoute(): ReactElement {
             description: service.description,
             bannerImage: service.landing.banner?.image ?? null,
             metaImage: service.landing.metaImage,
+            hasLocationPage:
+              !!service.location.banner && !!service.location.blockContent,
           })
         );
 
@@ -313,6 +309,8 @@ export default function IndexRoute(): ReactElement {
             _type: 'service',
             title: service.title,
             parent: service.parent,
+            hasLocationPage:
+              !!service.location.banner && !!service.location.blockContent,
           };
 
           const template = serviceLocation
@@ -387,6 +385,7 @@ export default function IndexRoute(): ReactElement {
                   _type: 'service',
                   title: template.parent,
                   parent: null,
+                  hasLocationPage: false,
                 },
                 undefined
               ),
