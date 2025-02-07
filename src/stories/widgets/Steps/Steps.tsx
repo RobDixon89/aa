@@ -32,7 +32,7 @@ const Steps: React.FC<StepsProps> = (props) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, {
     once: true,
-    margin: '0px 175px -50px 0px',
+    margin: '0px 0px -35% 0px',
   });
 
   if (!props.items || props.items.length === 0) {

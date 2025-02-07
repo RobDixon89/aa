@@ -17,7 +17,7 @@ const ImageBlock: React.FC<Props> = (props) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, {
     once: true,
-    margin: '0px 175px -50px 0px',
+    margin: '0px 0px -35% 0px',
   });
 
   const srcs = getSrcs(props.image, 375, 1020, 8, props.image.aspectRatio ?? 1);
