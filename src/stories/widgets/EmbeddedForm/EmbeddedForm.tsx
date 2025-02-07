@@ -26,7 +26,7 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, {
     once: true,
-    margin: '0px 175px -50px 0px',
+    margin: '0px 0px -35% 0px',
   });
 
   const [status, setStatus] = React.useState<

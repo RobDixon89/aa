@@ -12,7 +12,10 @@ const meta: Meta<ImageText5050Props> = {
 export default meta;
 
 const Template: StoryFn<ImageText5050Props> = (args: ImageText5050Props) => (
-  <ImageText5050 {...args} />
+  <>
+    <div style={{ height: 1800 }} />
+    <ImageText5050 {...args} />
+  </>
 );
 
 export const Default = Template.bind({});

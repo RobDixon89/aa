@@ -23,7 +23,7 @@ const ImageText5050: React.FC<Props> = (props) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, {
     once: true,
-    margin: '0px 175px -50px 0px',
+    margin: '0px 0px -35% 0px',
   });
 
   const srcsMobile = getSrcs(props.image, 375, 1024, 6, 327 / 225);
