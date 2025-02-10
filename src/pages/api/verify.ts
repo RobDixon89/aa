@@ -9,9 +9,6 @@ const secret = process.env.NEXT_PUBLIC_TURNSILE_SECRET as string;
 export default async function handler(req: Request) {
   const { token } = await req.json();
 
-  console.log('token', token);
-  console.log('secret', secret);
-
   const d = await fetch(verifyEndpoint, {
     method: 'POST',
     body: `secret=${encodeURIComponent(secret)}&response=${encodeURIComponent(token)}`,
