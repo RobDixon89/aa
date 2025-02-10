@@ -1,3 +1,4 @@
+import { pageTitle } from '@/pages/404';
 import { SiteSettingsResponse } from '@/sanity/queries/settings';
 import { LocationLink } from '@/sanity/schema/linkList';
 import Footer from '@/stories/widgets/Footer/Footer';
@@ -36,7 +37,7 @@ export default function Page(props: Props): ReactElement {
             props.settings.headerButtonText
               ? {
                   text: props.settings.headerButtonText,
-                  url: `#${CONTACTFORM_ID}`,
+                  url: `${props.title === pageTitle ? '/' : ''}#${CONTACTFORM_ID}`,
                 }
               : undefined
           }
@@ -62,7 +63,7 @@ export default function Page(props: Props): ReactElement {
             props.settings.footerButtonText
               ? {
                   text: props.settings.footerButtonText,
-                  url: `#${CONTACTFORM_ID}`,
+                  url: `${props.title === pageTitle ? '/' : ''}#${CONTACTFORM_ID}`,
                 }
               : undefined
           }

@@ -34,6 +34,7 @@ import {
   mapStepAttributes,
 } from '@/utils/mapping';
 import { PortableText, PortableTextReactComponents } from '@portabletext/react';
+import { turnstileKey } from '../../env';
 
 export function portableTextComponents(
   locationName: string,
@@ -128,6 +129,7 @@ export function portableTextComponents(
           confirmationMessage={formSettings?.confirmationMessage ?? ''}
           successMessage={formSettings?.successMessage ?? ''}
           target={formSettings?.targetEmail ?? ''}
+          turnstileKey={turnstileKey}
         >
           {w.blockContent !== null ? (
             <PortableText

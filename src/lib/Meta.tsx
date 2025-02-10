@@ -16,16 +16,30 @@ function Meta(props: Metadata): ReactElement {
   return (
     <>
       <Head>
-        {/* <link
-    rel="icon"
-    href={urlForImage(metadata.siteIcon)!.url()}
-    type="image/png"
-    sizes="32x32"
-  /> 
+        {/* 
   <meta
   name="google-site-verification"
   content="47dbfiXng2ARaZdnZcZQo0czN1yE4rMhRGW_YzICs5w"
 /> */}
+
+        <link
+          rel="icon"
+          type="image/png"
+          href="favicon/favicon-96x96.png"
+          sizes="96x96"
+        />
+        <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+        <link rel="shortcut icon" href="favicon/favicon.ico" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="favicon/apple-touch-icon.png"
+        />
+        <meta
+          name="apple-mobile-web-app-title"
+          content="Ashley TV Aerials LTD"
+        />
+        <link rel="manifest" href="favicon/site.webmanifest" />
 
         <title>{props.title}</title>
 

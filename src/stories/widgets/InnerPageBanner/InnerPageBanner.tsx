@@ -19,6 +19,7 @@ export type InnerPageBannerProps = React.HTMLAttributes<HTMLDivElement> & {
   theme: ThemeKeys;
   title: string;
   uspList?: UspModel[];
+  errorBanner?: boolean;
 };
 
 type Props = Omit<InnerPageBannerProps, '_type'>;
@@ -29,7 +30,11 @@ const InnerPageBanner: React.FC<Props> = (props) => {
     : undefined;
 
   return (
-    <Section className={s.innerPageBanner} grid={true} theme={props.theme}>
+    <Section
+      className={`${s.innerPageBanner}${props.errorBanner ? ` ${s.errorBanner}` : ''}`}
+      grid={true}
+      theme={props.theme}
+    >
       {props.image && props.image.src && srcs ? (
         <div className={s.imageWrapper}>
           <img

@@ -8,3 +8,4 @@ export declare const select: string;
 export declare const success: string;
 export declare const textarea: string;
 export declare const title: string;
+export declare const turnstile: string;
