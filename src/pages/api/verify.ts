@@ -2,6 +2,8 @@ import type { TurnstileServerValidationResponse } from '@marsidev/react-turnstil
 import { NextApiRequest, NextApiResponse } from 'next';
 import { turnstileSecret } from '../../../env';
 
+export const runtime = 'edge';
+
 const verifyEndpoint =
   'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const secret = turnstileSecret;
