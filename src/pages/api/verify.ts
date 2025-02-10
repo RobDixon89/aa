@@ -1,18 +1,13 @@
 import type { TurnstileServerValidationResponse } from '@marsidev/react-turnstile';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { turnstileSecret } from '../../../env';
 
 export const runtime = 'edge';
 
 const verifyEndpoint =
   'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-const secret = turnstileSecret;
+const secret = process.env.NEXT_PUBLIC_TURNSILE_SECRET as string;
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<TurnstileServerValidationResponse>
-) {
-  const token = req.body.token;
+export default async function handler(req: Request) {
+  const { token } = await req.json();
 
   const d = await fetch(verifyEndpoint, {
     method: 'POST',
@@ -24,5 +19,10 @@ export default async function handler(
 
   const data = (await d.json()) as TurnstileServerValidationResponse;
 
-  res.status(data.success ? 200 : 400).json(data);
+  return new Response(JSON.stringify(data), {
+    status: data.success ? 200 : 400,
+    headers: {
+      'content-type': 'application/json',
+    },
+  });
 }
