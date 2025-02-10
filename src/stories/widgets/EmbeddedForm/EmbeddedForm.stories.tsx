@@ -41,6 +41,7 @@ Default.args = {
   successMessage: 'Thanks for getting in touch!',
   confirmationMessage:
     'We have received your website enquiry, someone will be in touch with you as soon as possible',
+  turnstileKey: '3x00000000000000000000FF',
 };
 
 export const FormOnly = Template.bind({});

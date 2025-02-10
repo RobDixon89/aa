@@ -46,7 +46,7 @@ h2.title {
   }
 
   [class*='button'] {
-    margin: fluid(12, 16) 0 0 auto;
+    margin: 0 0 0 auto;
   }
 
   @include from(tabletSmall) {
@@ -74,6 +74,19 @@ h2.title {
     @include from(desktop) {
       grid-column: 5 / -5;
     }
+  }
+}
+
+.turnstile {
+  margin-left: auto;
+  transform-origin: left;
+
+  @include until(mobile) {
+    transform: scale(0.85);
+  }
+
+  @include until(344) {
+    transform: scale(0.8);
   }
 }
 

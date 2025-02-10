@@ -1,6 +1,7 @@
 import Button from '@/stories/Global/Button/Button';
 import { EMAIL_RULE, PHONE_NUMBER_RULE, POSTCODE_RULE } from '@/utils';
 import { IconType } from '@/utils/icon';
+import { Turnstile } from '@marsidev/react-turnstile';
 import { AnimatePresence, motion, useInView, Variants } from 'motion/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -16,6 +17,7 @@ export type EmbeddedFormProps = React.HTMLAttributes<HTMLDivElement> & {
   successMessage: string;
   target: string;
   title?: string | null;
+  turnstileKey: string;
 };
 
 type FormState = {
@@ -32,6 +34,7 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
   const [status, setStatus] = React.useState<
     'initial' | 'submitting' | 'error' | 'complete'
   >('initial');
+  const [token, setToken] = React.useState<string>('');
 
   const formIds = {
     name: `${props.id}-full-name`,
@@ -59,9 +62,22 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
   } = useForm<FormState>();
 
   const onSubmit = async (data: FormState) => {
-    console.log(data);
     setStatus('submitting');
     await new Promise((r) => setTimeout(r, 1000));
+
+    const res = await fetch('/api/verify', {
+      method: 'POST',
+      body: JSON.stringify({ token }),
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+
+    const tokenData = await res.json();
+
+    if (!tokenData.success) {
+      setStatus('error');
+    }
 
     const sent = true;
 
@@ -325,6 +341,19 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
               </motion.p>
             ) : null}
           </motion.div>
+
+          <Turnstile
+            className={s.turnstile}
+            siteKey={props.turnstileKey}
+            onSuccess={setToken}
+            options={{
+              theme: 'light',
+              appearance: 'interaction-only',
+            }}
+            scriptOptions={{
+              appendTo: 'body',
+            }}
+          />
 
           <Button
             type="submit"
