@@ -61,6 +61,11 @@
   }
 }
 
+.errorBanner {
+  min-height: 100dvh !important;
+  padding-top: var(--sitePadding);
+}
+
 .imageWrapper {
   display: contents;
 
