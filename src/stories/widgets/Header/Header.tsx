@@ -136,7 +136,14 @@ const Header: React.FC<HeaderProps> = (props) => {
 
                         return (
                           <React.Fragment key={id}>
-                            <li className={s.locationButton}>
+                            <li
+                              className={s.locationButton}
+                              style={
+                                {
+                                  '--rows': dropdownItem.items.length,
+                                } as React.CSSProperties
+                              }
+                            >
                               <Button
                                 theme="text"
                                 label={dropdownItem.title}

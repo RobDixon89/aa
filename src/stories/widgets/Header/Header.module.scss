@@ -34,6 +34,9 @@
   flex-direction: column;
   gap: fluid(12, 16);
   height: calc(100dvh - var(--headerHeight));
+  overflow-x: clip;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   width: 100%;
   position: fixed;
   top: var(--headerHeight);
@@ -80,6 +83,7 @@
       width: auto;
       padding: 0;
       transform: none !important;
+      overflow: visible;
 
       > li {
         display: flex;
@@ -183,12 +187,31 @@ ul.dropdown {
     opacity: 1;
     white-space: nowrap;
     max-height: calc(100dvh - var(--headerHeight));
-    overflow: auto;
+
+    [class*='button'] {
+      line-height: 1.35;
+    }
 
     &[data-open='false'] {
       transform: translateY(-12px);
       pointer-events: none;
       opacity: 0;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 8px;
+      background-color: hsla(var(--whiteValues), 40%);
+      border: none;
+      box-shadow: inset 0 0 6px hsla(var(--bodyValues), 30%);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: var(--body);
     }
   }
 }
@@ -221,25 +244,26 @@ ul.dropdownComplex {
   @extend .dropdown;
 
   @include from(tabletLarge) {
-    flex-direction: row;
-    flex-wrap: wrap;
+    --colGap: #{fluid(24, 28)};
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     max-width: calc(var(--maxWidth) - (var(--sitePadding) * 2));
     width: calc(100vw - (var(--sitePadding) * 2));
     right: 0;
-    gap: fluid(28, 36) fluid(24, 28);
+    gap: fluid(28, 36) var(--colGap);
 
     ul.dropdown {
       position: static;
       opacity: 1;
       padding: 0;
+      gap: 12px;
+      white-space: normal;
+      width: 100%;
     }
 
     &[data-open='true'] ul.dropdown {
       pointer-events: auto;
-    }
-
-    &:not(:has(> li.locationButton:nth-child(8))) {
-      justify-content: center;
     }
   }
 }
@@ -279,13 +303,17 @@ li.locationButton {
   }
 
   @include from(tabletLarge) {
+    grid-row: span var(--rows, 1);
+
     button[class*='button'] {
       color: var(--tertiaryLighter);
       height: auto;
-      font-size: var(--font-size-h5);
+      font-size: var(--font-size-large);
+      font-weight: 500;
       padding: 0;
-      margin-bottom: fluid(14, 18);
+      margin-bottom: fluid(8, 12);
       cursor: default;
+      text-align: left;
 
       svg,
       &::after {
