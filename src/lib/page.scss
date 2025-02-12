@@ -41,6 +41,51 @@
   @media (prefers-reduced-motion: no-preference) {
     scroll-behavior: smooth;
   }
+
+  #open_preferences_center {
+    position: fixed;
+    z-index: 99;
+    right: fluid(8, 12);
+    bottom: fluid(8, 12);
+    background: hsla(var(--bodyValues), 65%);
+    border: 1px solid currentColor;
+    text-decoration: none;
+    color: var(--white);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: var(--font-size-small);
+    cursor: pointer;
+
+    &:focus-visible,
+    &:hover {
+      background-color: var(--body);
+    }
+
+    @include transition('background-color');
+  }
+
+  // Overwrite cookie banner styles
+  .termsfeed-com---nb-interstitial {
+    max-width: 620px;
+    width: calc(100% - 32px);
+    inset: auto auto 20px 50%;
+    transform: translateX(-50%);
+
+    @include from(tabletLarge) {
+      top: 50%;
+      bottom: auto;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  // @include from(tabletLarge) {
+  //   .termsfeed-com---pc-dialog {
+  //     max-width: 680px;
+  //     width: calc(100% - 32px);
+  //     inset: 50% auto auto 50%;
+  //     transform: translate(-50%, -50%);
+  //   }
+  // }
 }
 
 /* CSS Reset - https://www.joshwcomeau.com/css/custom-css-reset/ */

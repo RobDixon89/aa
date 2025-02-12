@@ -79,7 +79,7 @@ export const globalFormFields = [
     name: 'confirmationMessage',
     type: 'string',
     title: 'Success Message',
-    description: `When an enquiry has been submitted we'll send an email to the customer, this will be what it says in that email`,
+    description: `When an enquiry has been submitted we'll send an email to the customer, this will be what it says in that email. If you use the placeholder ##name## that will be replaced with the user's name when sending`,
     validation: (Rule) => Rule.required(),
     group: 'contact',
   }),

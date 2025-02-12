@@ -115,13 +115,7 @@ export function portableTextComponents(
           serviceOptions={
             services
               ? services
-                  .sort((a, b) =>
-                    a.title.toLowerCase() < b.title.toLowerCase()
-                      ? -1
-                      : a.title.toLowerCase() > b.title.toLowerCase()
-                        ? 1
-                        : 0
-                  )
+                  .sort((a, b) => a.title.localeCompare(b.title))
                   .map((s) => s.title)
               : []
           }
@@ -232,13 +226,7 @@ export function portableTextComponents(
               .filter(
                 (location) => !locationName || location.name !== locationName
               )
-              .sort((a, b) =>
-                a.name.toLowerCase() < b.name.toLowerCase()
-                  ? -1
-                  : a.name.toLowerCase() > b.name.toLowerCase()
-                    ? 1
-                    : 0
-              )
+              .sort((a, b) => a.name.localeCompare(b.name))
               .map((location) => (
                 <li
                   key={`${w._key}-l-${location.name.toLowerCase().replaceAll(/\W+/g, '-')}`}

@@ -165,14 +165,18 @@ export function mapNavigationDropdown(
         text: link.text,
         url: '/locations/',
         dropdown: {
-          type: 'complex',
-          items: Object.entries(areas).map(([key, value]) => ({
-            title: key,
-            items: value.map((loc) => ({
-              text: loc.name,
-              url: getLocationLinkUrl(loc),
-            })),
-          })),
+          type: 'complex-location',
+          items: Object.entries(areas)
+            .map(([key, value]) => ({
+              title: key,
+              items: value
+                .map((loc) => ({
+                  text: loc.name,
+                  url: getLocationLinkUrl(loc),
+                }))
+                .sort((a, b) => a.text.localeCompare(b.text)),
+            }))
+            .sort((a, b) => a.title.localeCompare(b.title)),
         },
       };
 
@@ -185,13 +189,15 @@ export function mapNavigationDropdown(
         url: '/services/',
         dropdown: {
           type: 'complex',
-          items: Object.entries(groups).map(([key, value]) => ({
-            title: key,
-            items: value.map((service) => ({
-              text: service.title,
-              url: getServiceLinkUrl(service),
-            })),
-          })),
+          items: Object.entries(groups)
+            .map(([key, value]) => ({
+              title: key,
+              items: value.map((service) => ({
+                text: service.title,
+                url: getServiceLinkUrl(service),
+              })),
+            }))
+            .sort((a, b) => a.title.localeCompare(b.title)),
         },
       };
   }

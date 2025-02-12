@@ -12,7 +12,7 @@ export function formatDate(date: string): string {
 }
 
 export function highlightTitleWords(title: string): string {
-  return title.replaceAll(/\*([^*]+)\*/g, "<span class='highlight'>$1</i>");
+  return title.replaceAll(/\*([^*]+)\*/g, "<span class='highlight'>$1</span>");
 }
 
 export function clamp(value: number, max: number): number {

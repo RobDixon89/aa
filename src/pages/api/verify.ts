@@ -18,7 +18,6 @@ export default async function handler(req: Request) {
   });
 
   const data = (await d.json()) as TurnstileServerValidationResponse;
-  console.log('data', data);
 
   return new Response(JSON.stringify(data), {
     status: data.success ? 200 : 400,

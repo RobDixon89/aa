@@ -104,9 +104,9 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
       //   to: data[formIds.email],
       //   from: props.target,
       //   subject: `Thanks for getting in touch with Ashley Aerials`,
-      //   message: `<div style="font-family: sans-serif;
-      //     <p>${props.confirmationMessage}}</p>
-      //   `,
+      //   message: `<div style="font-family: sans-serif; margin: 12px 0;">
+      //     <p>${props.confirmationMessage.replaceAll('##name##', data[formIds.name].split(' ')[0])}</p>
+      //   </div>`,
       // });
     }
   };

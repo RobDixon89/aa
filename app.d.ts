@@ -20,3 +20,8 @@ declare type ImageModel = {
   hotspot?: SanityImageHotspot;
   asset?: SanityReference;
 };
+
+interface Window {
+  cookieconsent: any;
+  TRACKING: boolean;
+}

@@ -23,6 +23,12 @@
     margin-top: fluid(32, 56);
   }
 
+  &[data-columns='true'] {
+    @include from(desktopLarge) {
+      grid-column: 3 / -3;
+    }
+  }
+
   @include richTextColumns();
 }
 
@@ -33,13 +39,15 @@ h2.title {
 
 div.richText {
   [data-columns='true'] & {
-    @include from(mobileLarge) {
-      columns: 2;
-      gap: fluid(16, 24);
+    columns: 2;
+    gap: fluid(16, 24);
+
+    @include from(tablet) {
+      columns: 3;
     }
 
-    @include from(tabletLarge) {
-      columns: 3;
+    @include from(desktop) {
+      columns: 4;
     }
   }
 }

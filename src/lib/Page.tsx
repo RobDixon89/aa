@@ -10,7 +10,8 @@ import {
   getInternalLinkUrl,
   mapNavigationDropdown,
 } from '@/utils/mapping';
-import { ReactElement } from 'react';
+import { GoogleAnalytics } from '@next/third-parties/google';
+import React, { ReactElement } from 'react';
 import Meta, { Metadata } from './Meta';
 
 type Props = Metadata & {
@@ -26,9 +27,31 @@ export default function Page(props: Props): ReactElement {
       mapNavigationDropdown(link, i + 1, props.locations, props.services)
     ) ?? [];
 
+  const [trackingAllowed, setTrackingAllowed] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (!props.settings?.gaID || props.settings.gaID === null) {
+      return;
+    }
+
+    function checkPermissions() {
+      setTrackingAllowed(window.TRACKING);
+    }
+
+    document.addEventListener('permission_check', checkPermissions);
+
+    return () => {
+      document.removeEventListener('permission_check', checkPermissions);
+    };
+  }, []);
+
   return (
     <>
       <Meta {...props} />
+
+      {trackingAllowed ? (
+        <GoogleAnalytics gaId={props.settings?.gaID ?? ''} />
+      ) : null}
 
       {props.settings ? (
         <Header
