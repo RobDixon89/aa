@@ -3,7 +3,6 @@ import {
   HomeIcon,
   MarkerIcon,
   MasterDetailIcon,
-  StarFilledIcon,
   WrenchIcon,
 } from '@sanity/icons';
 import type { ListBuilder, StructureBuilder } from 'sanity/structure';
@@ -75,10 +74,6 @@ export const structure = (S: StructureBuilder): ListBuilder =>
                 ),
             ])
         ),
-      S.listItem()
-        .title('Testimonials')
-        .icon(StarFilledIcon)
-        .child(S.documentTypeList('testimonial').title('All Testimonials')),
       S.divider(),
       S.listItem()
         .title('Settings')

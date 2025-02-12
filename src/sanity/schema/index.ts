@@ -16,7 +16,6 @@ import {
 } from '@/stories/widgets/RichText/schema';
 import { serviceCardsSchema } from '@/stories/widgets/ServiceCards/schema';
 import { stepsSchema } from '@/stories/widgets/Steps/schema';
-import { testimonialsSchema } from '@/stories/widgets/Testimonials/Testimonials';
 
 // Page schema definitions
 import area from './area';
@@ -27,7 +26,6 @@ import innerPage from './page';
 import service from './service';
 import serviceLandingTemplate from './serviceLandingTemplate';
 import settings from './settings';
-import testimonial from './testimonial';
 
 export const schemaTypes = [
   settings,
@@ -48,7 +46,6 @@ export const schemaTypes = [
   richTextSchema,
   serviceCardsSchema,
   stepsSchema,
-  testimonialsSchema,
 
   // Pages
   area,
@@ -58,5 +55,4 @@ export const schemaTypes = [
   locationTemplates,
   service,
   serviceLandingTemplate,
-  testimonial,
 ];
