@@ -11,6 +11,7 @@ const poppins = Poppins({
 export default function App({ Component, pageProps }: AppProps) {
   // Load Cookie Consent script
   React.useEffect(() => {
+    const permissionEvent = new Event('permission_check');
     const script = document.createElement('script');
     script.src =
       'https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js';
@@ -28,11 +29,28 @@ export default function App({ Component, pageProps }: AppProps) {
         preferences_center_close_button_hide: false,
         page_refresh_confirmation_buttons: false,
         website_name: 'Ashley TV Aerials LTD',
+
+        callbacks: {
+          user_consent_saved: () => {
+            window.TRACKING = false;
+            document.dispatchEvent(permissionEvent);
+          },
+          scripts_specific_loaded: (level: string) => {
+            switch (level) {
+              case 'tracking':
+                window.TRACKING = true;
+                document.dispatchEvent(permissionEvent);
+            }
+          },
+        },
+        callbacks_force: true,
       });
     };
 
     document.head.appendChild(script);
   }, []);
+
+  React.useEffect(() => {}, []);
 
   return (
     <>

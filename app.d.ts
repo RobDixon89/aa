@@ -23,4 +23,5 @@ declare type ImageModel = {
 
 interface Window {
   cookieconsent: any;
+  TRACKING: boolean;
 }

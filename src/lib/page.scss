@@ -78,14 +78,14 @@
     }
   }
 
-  @include from(tabletLarge) {
-    .termsfeed-com---pc-dialog {
-      max-width: 680px;
-      width: calc(100% - 32px);
-      inset: 50% auto auto 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
+  // @include from(tabletLarge) {
+  //   .termsfeed-com---pc-dialog {
+  //     max-width: 680px;
+  //     width: calc(100% - 32px);
+  //     inset: 50% auto auto 50%;
+  //     transform: translate(-50%, -50%);
+  //   }
+  // }
 }
 
 /* CSS Reset - https://www.joshwcomeau.com/css/custom-css-reset/ */
