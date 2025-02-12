@@ -53,6 +53,15 @@ export default function Page(props: Props): ReactElement {
         <GoogleAnalytics gaId={props.settings?.gaID ?? ''} />
       ) : null}
 
+      <noscript>
+        Free cookie consent management tool by{' '}
+        <a href="https://www.termsfeed.com/" rel="nofollow">
+          TermsFeed
+        </a>
+      </noscript>
+
+      <button id="open_preferences_center">Update cookies preferences</button>
+
       {props.settings ? (
         <Header
           links={headerLinks}
