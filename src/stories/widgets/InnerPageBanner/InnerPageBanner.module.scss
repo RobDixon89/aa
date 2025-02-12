@@ -17,6 +17,10 @@
     --accentTextColour: var(--body);
   }
 
+  &[data-theme='light-blue'] {
+    --accentTextColour: var(--white);
+  }
+
   &[data-theme='yellow'] {
     --accentColour: var(--body);
     --accentTextColour: var(--highlight);

@@ -251,15 +251,24 @@ ul.dropdownComplex {
     max-width: calc(var(--maxWidth) - (var(--sitePadding) * 2));
     width: calc(100vw - (var(--sitePadding) * 2));
     right: 0;
-    gap: fluid(28, 36) var(--colGap);
+    gap: fluid(24, 32) var(--colGap);
 
     ul.dropdown {
       position: static;
       opacity: 1;
       padding: 0;
-      gap: 12px;
+      gap: fluid(2, 4);
       white-space: normal;
       width: 100%;
+    }
+
+    &[data-location='true'] {
+      grid-template-columns: repeat(2, 1fr);
+
+      .dropdown {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
 
     &[data-open='true'] ul.dropdown {
@@ -311,7 +320,7 @@ li.locationButton {
       font-size: var(--font-size-large);
       font-weight: 500;
       padding: 0;
-      margin-bottom: fluid(8, 12);
+      margin-bottom: fluid(6, 8);
       cursor: default;
       text-align: left;
 

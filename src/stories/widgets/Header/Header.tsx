@@ -19,7 +19,7 @@ export type NavigationDropdownGroup = {
 };
 
 type NavigationDropdownComplex = {
-  type: 'complex';
+  type: 'complex' | 'complex-location';
   items: NavigationDropdownGroup[];
 };
 
@@ -93,7 +93,9 @@ const Header: React.FC<HeaderProps> = (props) => {
                     <Icon icon={IconType.chevron} />
                   </Link>
 
-                  {link.dropdown.type === 'simple' ? (
+                  {link.dropdown.items &&
+                  link.dropdown.items.length > 0 &&
+                  link.dropdown.type === 'simple' ? (
                     <Dropdown
                       id={`${link.id}-dropdown`}
                       active={active === link.id}
@@ -104,12 +106,16 @@ const Header: React.FC<HeaderProps> = (props) => {
                       setActive={setActive}
                       mobileLink={link}
                     />
-                  ) : link.dropdown.type === 'complex' ? (
+                  ) : (link.dropdown.items &&
+                      link.dropdown.items.length > 0 &&
+                      link.dropdown.type === 'complex') ||
+                    link.dropdown.type === 'complex-location' ? (
                     <ul
                       id={`${link.id}-dropdown`}
                       className={s.dropdownComplex}
                       data-open={active.includes(link.id)}
                       role="menu"
+                      data-location={link.dropdown.type === 'complex-location'}
                     >
                       <li className={s.backButton}>
                         <Button
@@ -140,7 +146,12 @@ const Header: React.FC<HeaderProps> = (props) => {
                               className={s.locationButton}
                               style={
                                 {
-                                  '--rows': dropdownItem.items.length,
+                                  '--rows': Math.ceil(
+                                    dropdownItem.items.length /
+                                      (link.dropdown.type === 'complex-location'
+                                        ? 4
+                                        : 1)
+                                  ),
                                 } as React.CSSProperties
                               }
                             >
@@ -265,7 +276,13 @@ const Header: React.FC<HeaderProps> = (props) => {
       </header>
 
       <AnimatePresence>
-        {!!active && (
+        {!!active &&
+        !!props.links.find(
+          (item) =>
+            item.id === active &&
+            item.dropdown.items &&
+            item.dropdown.items.length > 0
+        ) ? (
           <motion.div
             className={s.background}
             variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
@@ -273,7 +290,7 @@ const Header: React.FC<HeaderProps> = (props) => {
             animate="visible"
             exit="hidden"
           />
-        )}
+        ) : null}
       </AnimatePresence>
     </>
   );

@@ -165,14 +165,16 @@ export function mapNavigationDropdown(
         text: link.text,
         url: '/locations/',
         dropdown: {
-          type: 'complex',
+          type: 'complex-location',
           items: Object.entries(areas)
             .map(([key, value]) => ({
               title: key,
-              items: value.map((loc) => ({
-                text: loc.name,
-                url: getLocationLinkUrl(loc),
-              })),
+              items: value
+                .map((loc) => ({
+                  text: loc.name,
+                  url: getLocationLinkUrl(loc),
+                }))
+                .sort((a, b) => a.text.localeCompare(b.text)),
             }))
             .sort((a, b) => a.title.localeCompare(b.title)),
         },
