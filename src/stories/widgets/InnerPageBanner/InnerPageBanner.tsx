@@ -86,7 +86,7 @@ const InnerPageBanner: React.FC<Props> = (props) => {
       </div>
 
       {props.uspList && props.uspList.length > 0 ? (
-        <UspList id={'home-hero'} items={props.uspList} theme="default" />
+        <UspList id={'inner-banner'} items={props.uspList} theme="default" />
       ) : null}
     </Section>
   );
