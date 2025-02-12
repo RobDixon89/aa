@@ -184,6 +184,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                     href={props.contactLink.url}
                     onMouseEnter={() => handleUnhover()}
                     onFocus={() => handleUnhover()}
+                    onClick={() => setActive('')}
                   />
                 </li>
               ) : null}
