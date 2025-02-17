@@ -6,7 +6,7 @@ import { getSrcs } from '../../../utils/image';
 import type { UspModel } from '../../components/UspList/UspList';
 import UspList from '../../components/UspList/UspList';
 import { LinkButton } from '../../Global/Button/Button';
-import Section from '../../Global/Section/Section';
+import Section, { Themes } from '../../Global/Section/Section';
 import s from './HomeHero.module.scss';
 
 export type HomeHeroProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -29,6 +29,7 @@ const HomeHero: React.FC<Props> = (props) => {
         <picture className={s.bgImage}>
           <source media="(min-width:768px)" srcSet={srcs.srcSet} />
           <img
+            className={s.bgImage}
             src={srcsMobile.src}
             srcSet={srcsMobile.srcSet}
             alt={props.image.altText}
@@ -47,7 +48,7 @@ const HomeHero: React.FC<Props> = (props) => {
         ) : null}
 
         {props.ctas && props.ctas.length > 0 ? (
-          <div className={s.ctaBlock}>
+          <div className={s.ctaBlock} data-theme={Themes.blue}>
             {props.ctas.map((cta, i) => (
               <LinkButton
                 key={`home-hero-cta-${i}`}
