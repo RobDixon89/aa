@@ -27,8 +27,6 @@ export const homeHeroSchema = defineType({
       name: 'title',
       type: 'string',
       title: 'Heading',
-      description:
-        'Wrap words in asterisks to add a highlight, eg. Your local TV Aerial and Satellite *specialists*',
       validation: (Rule) => Rule.required(),
     }),
     blockContent('contentOnly', undefined, 'Text Content'),

@@ -193,34 +193,6 @@
 
 .title {
   font-size: var(--font-size-h2);
-
-  [class~='highlight'] {
-    background: linear-gradient(
-      to right,
-      var(--accentColour) 50%,
-      transparent 50%
-    );
-    background-size: calc(200% + 1px) 100%;
-    background-position: left bottom;
-    color: var(--accentTextColour);
-
-    @include shouldAnimate() {
-      background-position: right bottom;
-      color: currentColor;
-      animation: highlightWord 0.5s forwards 1s;
-    }
-
-    @keyframes highlightWord {
-      0% {
-        background-position: right bottom;
-        color: currentColor;
-      }
-      100% {
-        background-position: left bottom;
-        color: var(--accentTextColour);
-      }
-    }
-  }
 }
 
 .content {
