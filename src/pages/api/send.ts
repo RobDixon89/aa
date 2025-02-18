@@ -2,8 +2,6 @@ import { mailgunApi, mailgunDomain } from '../../../env';
 
 export const runtime = 'edge';
 
-// btoa
-
 export type EmailParams = {
   to: string;
   from: string;
@@ -13,29 +11,40 @@ export type EmailParams = {
 
 export default async function handler(req: Request) {
   const params = await req.json();
-  let formData = new FormData(params);
 
-  //the link below has a domainName specific to your account
-  await fetch(`https://api.eu.mailgun.net/v3/${mailgunDomain}/messages`, {
-    method: 'POST',
-    body: formData,
-    headers: {
-      Authorization: btoa(`api:${mailgunApi}`),
-    },
-  })
-    .then((response) => {
-      if (response.status == 200) {
-        console.log('email sent successfully!');
-        return true;
-      } else {
-        console.log(
-          'email NOT sent, please try again later or contact your developer'
-        );
-        return false;
+  let formData = new FormData();
+
+  Object.entries(params as EmailParams).map(([key, value]) =>
+    formData.append(key, value)
+  );
+
+  try {
+    const d = await fetch(
+      `https://api.eu.mailgun.net/v3/${mailgunDomain}/messages`,
+      {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Authorization: btoa(`api:${mailgunApi}`),
+        },
       }
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      return false;
+    );
+
+    const data = await d.json();
+
+    return new Response(JSON.stringify(data), {
+      status: data.success ? 200 : 400,
+      headers: {
+        'content-type': 'application/json',
+      },
     });
+  } catch (error) {
+    console.error(error);
+    return new Response(JSON.stringify({ success: false }), {
+      status: 400,
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  }
 }
