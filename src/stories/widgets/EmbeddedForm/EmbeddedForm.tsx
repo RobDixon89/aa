@@ -5,6 +5,7 @@ import { Turnstile } from '@marsidev/react-turnstile';
 import { AnimatePresence, motion, useInView, Variants } from 'motion/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { mailgunDomain } from '../../../../env';
 import g from '../../../lib/global.module.scss';
 import Section, { Themes } from '../../Global/Section/Section';
 import s from './EmbeddedForm.module.scss';
@@ -110,7 +111,7 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
 
       const messageParams = {
         to: data[formIds.email],
-        from: `Ashley Aerials <noreply@ashleyaerials.org.uk>`,
+        from: `Ashley Aerials <noreply@${mailgunDomain}>`,
         subject: `Thanks for getting in touch with Ashley Aerials`,
         html: `<div style="font-family: sans-serif; margin: 12px 0; font-size: 1rem;">
           <p>${props.confirmationMessage.replaceAll('##name##', data[formIds.name].split(' ')[0])}</p>
