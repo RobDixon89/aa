@@ -145,7 +145,7 @@ export function mapNavigationDropdown(
       return {
         id: `nav-link-${index}`,
         text: link.text ? link.text : link.pageTitle,
-        url: link.url,
+        url: `/${link.url}`,
         dropdown: {
           type: 'simple',
           items: link.links

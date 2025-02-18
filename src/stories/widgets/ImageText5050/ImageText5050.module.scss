@@ -40,14 +40,14 @@ h2.title {
 }
 
 .imageWrapper {
-  position: sticky;
-  top: calc(var(--sectionPaddingTop) + var(--headerHeight));
   display: block;
   grid-column: 1 / -1;
   margin-bottom: auto;
 
   @include from(tabletLarge) {
     grid-column: span 6;
+    position: sticky;
+    top: calc(var(--sectionPaddingTop) + var(--headerHeight));
   }
 }
 
