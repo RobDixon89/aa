@@ -79,21 +79,27 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
       setStatus('error');
     }
 
-    const sent = true;
+    const messageParams = {
+      to: props.target,
+      from: data[formIds.email],
+      subject: `Website contact request from ${data[formIds.name]}`,
+      message: `<div style="font-family: sans-serif;
+        <p><strong>Name:</strong> ${data[formIds.name]}</p>
+        <p><strong>Postcode:</strong> ${data[formIds.postcode]}</p>
+        <p><strong>Email:</strong> ${data[formIds.email]}</p>
+        <p><strong>Phone Number:</strong> ${data[formIds.phone]}</p>
+        <p><strong>Interested In:</strong> ${data[formIds.service]}</p>
+        <p><strong>Message:</strong> ${data[formIds.message]}</p>
+      `,
+    };
 
-    // const sent = await sendEmail({
-    //   to: props.target,
-    //   from: data[formIds.email],
-    //   subject: `Website contact request from ${data[formIds.name]}`,
-    //   message: `<div style="font-family: sans-serif;
-    //     <p><strong>Name:</strong> ${data[formIds.name]}</p>
-    //     <p><strong>Postcode:</strong> ${data[formIds.postcode]}</p>
-    //     <p><strong>Email:</strong> ${data[formIds.email]}</p>
-    //     <p><strong>Phone Number:</strong> ${data[formIds.phone]}</p>
-    //     <p><strong>Interested In:</strong> ${data[formIds.service]}</p>
-    //     <p><strong>Message:</strong> ${data[formIds.message]}</p>
-    //   `,
-    // });
+    const sent = await fetch('/api/send', {
+      method: 'POST',
+      body: JSON.stringify(messageParams),
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
 
     if (!sent) {
       setStatus('error');
