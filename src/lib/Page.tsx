@@ -61,6 +61,7 @@ export default function Page(props: Props): ReactElement {
       </noscript>
 
       <button
+        id="open_preferences_center"
         onClick={() => {
           window.cookieconsent.openPreferencesCenter();
         }}
