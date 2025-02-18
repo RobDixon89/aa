@@ -1,5 +1,3 @@
-import { mailgunApi, mailgunDomain } from '../../../env';
-
 export const runtime = 'edge';
 
 export type EmailParams = {
@@ -8,6 +6,9 @@ export type EmailParams = {
   subject: string;
   message: string;
 };
+
+const endpoint = `https://api.eu.mailgun.net/v3/${process.env.NEXT_PUBLIC_FORM_DOMAIN}/messages`;
+const secret = btoa(`api:${process.env.NEXT_PUBLIC_FORM_API_KEY}`);
 
 export default async function handler(req: Request) {
   const params = await req.json();
@@ -19,16 +20,13 @@ export default async function handler(req: Request) {
   );
 
   try {
-    const d = await fetch(
-      `https://api.eu.mailgun.net/v3/${mailgunDomain}/messages`,
-      {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Authorization: btoa(`api:${mailgunApi}`),
-        },
-      }
-    );
+    const d = await fetch(endpoint, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Authorization: secret,
+      },
+    });
 
     const data = await d.json();
 
