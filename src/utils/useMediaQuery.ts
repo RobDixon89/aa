@@ -1,34 +1,19 @@
-import React from "react";
+import { useEffect, useState } from 'react';
 
-export function useMediaQuery(query: string): boolean {
-  const [browser, setBrowser] = React.useState<boolean>(false);
+export const useMediaQuery = (query) => {
+  const [matches, setMatches] = useState(false);
 
-  const mediaQuery = React.useMemo(() => {
-    if (browser == true) {
-      return window?.matchMedia(query);
-    } else {
-      return false;
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) {
+      setMatches(media.matches);
     }
-  }, [query, browser]);
+    const listener = () => setMatches(media.matches);
+    window.addEventListener('resize', listener);
+    return () => window.removeEventListener('resize', listener);
+  }, [matches, query]);
 
-  const [match, setMatch] = React.useState(
-    mediaQuery ? mediaQuery.matches : false
-  );
+  return matches;
+};
 
-  React.useEffect(() => {
-    setBrowser(true);
-  }, []);
-
-  React.useEffect(() => {
-    if (!mediaQuery) {
-      return;
-    }
-
-    const onChange = () => setMatch(mediaQuery?.matches);
-    mediaQuery?.addEventListener("change", onChange);
-
-    return () => mediaQuery?.removeEventListener("change", onChange);
-  }, [mediaQuery]);
-
-  return match;
-}
+export default useMediaQuery;
