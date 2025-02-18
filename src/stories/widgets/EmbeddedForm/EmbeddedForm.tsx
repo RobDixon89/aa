@@ -80,7 +80,7 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
 
     const messageParams = {
       to: props.target,
-      from: data[formIds.email],
+      from: `${data[formIds.name]} <data[formIds.email]>`,
       subject: `Website contact request from ${data[formIds.name]}`,
       html: `<div style="font-family: sans-serif; margin: 16px 0;">
         <p><strong>Name:</strong> ${data[formIds.name]}</p>
@@ -103,21 +103,27 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
 
     const sent = await sentRes.json();
 
-    console.log(sent);
-
     if (!sent.success) {
       setStatus('error');
     } else {
       setStatus('complete');
 
-      // await sendEmail({
-      //   to: data[formIds.email],
-      //   from: props.target,
-      //   subject: `Thanks for getting in touch with Ashley Aerials`,
-      //   message: `<div style="font-family: sans-serif; margin: 12px 0;">
-      //     <p>${props.confirmationMessage.replaceAll('##name##', data[formIds.name].split(' ')[0])}</p>
-      //   </div>`,
-      // });
+      const messageParams = {
+        to: data[formIds.email],
+        from: `Ashley Aerials <noreply@ashleyaerials.org.uk>`,
+        subject: `Thanks for getting in touch with Ashley Aerials`,
+        message: `<div style="font-family: sans-serif; margin: 12px 0;">
+          <p>${props.confirmationMessage.replaceAll('##name##', data[formIds.name].split(' ')[0])}</p>
+        </div>`,
+      };
+
+      await fetch('/api/send', {
+        method: 'POST',
+        body: JSON.stringify(messageParams),
+        headers: {
+          'content-type': 'application/json',
+        },
+      });
     }
   };
 

@@ -24,14 +24,12 @@ export default async function handler(req: Request) {
       method: 'POST',
       body: formData,
       headers: {
-        Authorization: secret,
+        Authorization: `Basic ${secret}`,
       },
     });
 
-    const data = await d.json();
-
-    return new Response(JSON.stringify(data), {
-      status: data.success ? 200 : 400,
+    return new Response(JSON.stringify({ success: d.ok }), {
+      status: d.ok ? 200 : 400,
       headers: {
         'content-type': 'application/json',
       },
