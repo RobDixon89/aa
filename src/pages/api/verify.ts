@@ -9,20 +9,30 @@ const secret = process.env.NEXT_PUBLIC_TURNSILE_SECRET as string;
 export default async function handler(req: Request) {
   const { token } = await req.json();
 
-  const d = await fetch(verifyEndpoint, {
-    method: 'POST',
-    body: `secret=${encodeURIComponent(secret)}&response=${encodeURIComponent(token)}`,
-    headers: {
-      'content-type': 'application/x-www-form-urlencoded',
-    },
-  });
+  try {
+    const d = await fetch(verifyEndpoint, {
+      method: 'POST',
+      body: `secret=${encodeURIComponent(secret)}&response=${encodeURIComponent(token)}`,
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+    });
 
-  const data = (await d.json()) as TurnstileServerValidationResponse;
+    const data = (await d.json()) as TurnstileServerValidationResponse;
 
-  return new Response(JSON.stringify(data), {
-    status: data.success ? 200 : 400,
-    headers: {
-      'content-type': 'application/json',
-    },
-  });
+    return new Response(JSON.stringify(data), {
+      status: data.success ? 200 : 400,
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return new Response(JSON.stringify({ success: false }), {
+      status: 400,
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  }
 }

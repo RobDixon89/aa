@@ -63,7 +63,6 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
 
   const onSubmit = async (data: FormState) => {
     setStatus('submitting');
-    await new Promise((r) => setTimeout(r, 1000));
 
     const res = await fetch('/api/verify', {
       method: 'POST',
@@ -93,7 +92,7 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
       `,
     };
 
-    const sent = await fetch('/api/send', {
+    const sentRes = await fetch('/api/send', {
       method: 'POST',
       body: JSON.stringify(messageParams),
       headers: {
@@ -101,7 +100,11 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
       },
     });
 
-    if (!sent) {
+    const sent = await sentRes.json();
+
+    console.log(sent);
+
+    if (!sent.success) {
       setStatus('error');
     } else {
       setStatus('complete');
