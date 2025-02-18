@@ -60,7 +60,13 @@ export default function Page(props: Props): ReactElement {
         </a>
       </noscript>
 
-      <button id="open_preferences_center">Update cookies preferences</button>
+      <button
+        onClick={() => {
+          window.cookieconsent.openPreferencesCenter();
+        }}
+      >
+        Update cookies preferences
+      </button>
 
       {props.settings ? (
         <Header

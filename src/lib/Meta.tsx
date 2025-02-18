@@ -16,11 +16,10 @@ function Meta(props: Metadata): ReactElement {
   return (
     <>
       <Head>
-        {/* 
-  <meta
-  name="google-site-verification"
-  content="47dbfiXng2ARaZdnZcZQo0czN1yE4rMhRGW_YzICs5w"
-/> */}
+        <meta
+          name="google-site-verification"
+          content="RO3iLyxuZanAfiGfZSJXoy6fafb_M_qvgEmuxZr6t48"
+        />
 
         <link
           rel="icon"
