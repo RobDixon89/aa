@@ -63,4 +63,5 @@ h2.title {
 .answer {
   background-color: var(--answerBackground);
   padding: fluid(12, 16) fluid(12, 24);
+  word-break: break-word;
 }

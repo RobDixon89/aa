@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, MotionConfig } from 'motion/react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 import Icon, { IconType } from '../../../utils/icon';
 import { useMediaQuery } from '../../../utils/useMediaQuery';
@@ -34,8 +35,13 @@ export type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = (props) => {
+  const pathname = usePathname();
   const isMobile = useMediaQuery('(max-width: 1024px)');
   const [active, setActive] = React.useState<string>('');
+
+  React.useEffect(() => {
+    setActive('');
+  }, [pathname]);
 
   return (
     <>
