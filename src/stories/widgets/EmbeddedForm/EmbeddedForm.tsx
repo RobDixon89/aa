@@ -80,9 +80,9 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
 
     const messageParams = {
       to: props.target,
-      from: `${data[formIds.name]} <data[formIds.email]>`,
+      from: `${data[formIds.name]} <${data[formIds.email]}>`,
       subject: `Website contact request from ${data[formIds.name]}`,
-      html: `<div style="font-family: sans-serif; margin: 16px 0;">
+      html: `<div style="font-family: sans-serif; margin: 12px 0; font-size: 1rem;">
         <p><strong>Name:</strong> ${data[formIds.name]}</p>
         <p><strong>Postcode:</strong> ${data[formIds.postcode]}</p>
         <p><strong>Email:</strong> ${data[formIds.email]}</p>
@@ -112,7 +112,7 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
         to: data[formIds.email],
         from: `Ashley Aerials <noreply@ashleyaerials.org.uk>`,
         subject: `Thanks for getting in touch with Ashley Aerials`,
-        message: `<div style="font-family: sans-serif; margin: 12px 0;">
+        html: `<div style="font-family: sans-serif; margin: 12px 0; font-size: 1rem;">
           <p>${props.confirmationMessage.replaceAll('##name##', data[formIds.name].split(' ')[0])}</p>
         </div>`,
       };
