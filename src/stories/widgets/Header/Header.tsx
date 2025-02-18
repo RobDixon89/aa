@@ -106,10 +106,10 @@ const Header: React.FC<HeaderProps> = (props) => {
                       setActive={setActive}
                       mobileLink={link}
                     />
-                  ) : (link.dropdown.items &&
-                      link.dropdown.items.length > 0 &&
-                      link.dropdown.type === 'complex') ||
-                    link.dropdown.type === 'complex-location' ? (
+                  ) : link.dropdown.items &&
+                    link.dropdown.items.length > 0 &&
+                    (link.dropdown.type === 'complex' ||
+                      link.dropdown.type === 'complex-location') ? (
                     <ul
                       id={`${link.id}-dropdown`}
                       className={s.dropdownComplex}
@@ -310,6 +310,8 @@ const Header: React.FC<HeaderProps> = (props) => {
   function handleLinkClick(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
     if (isMobile) {
       e.preventDefault();
+      e.stopPropagation();
+
       setActive(id);
     }
   }
