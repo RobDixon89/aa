@@ -82,13 +82,14 @@ const EmbeddedForm: React.FC<EmbeddedFormProps> = (props) => {
       to: props.target,
       from: data[formIds.email],
       subject: `Website contact request from ${data[formIds.name]}`,
-      message: `<div style="font-family: sans-serif;
+      html: `<div style="font-family: sans-serif; margin: 16px 0;">
         <p><strong>Name:</strong> ${data[formIds.name]}</p>
         <p><strong>Postcode:</strong> ${data[formIds.postcode]}</p>
         <p><strong>Email:</strong> ${data[formIds.email]}</p>
         <p><strong>Phone Number:</strong> ${data[formIds.phone]}</p>
         <p><strong>Interested In:</strong> ${data[formIds.service]}</p>
         <p><strong>Message:</strong> ${data[formIds.message]}</p>
+      </div>
       `,
     };
 

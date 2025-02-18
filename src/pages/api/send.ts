@@ -4,7 +4,7 @@ export type EmailParams = {
   to: string;
   from: string;
   subject: string;
-  message: string;
+  html: string;
 };
 
 const endpoint = `https://api.eu.mailgun.net/v3/${process.env.NEXT_PUBLIC_FORM_DOMAIN}/messages`;
@@ -38,7 +38,7 @@ export default async function handler(req: Request) {
     });
   } catch (error) {
     console.error(error);
-    return new Response(JSON.stringify({ success: false }), {
+    return new Response(JSON.stringify({ success: false, error }), {
       status: 400,
       headers: {
         'content-type': 'application/json',
