@@ -219,7 +219,10 @@ export default function PageRoute(props: Props): ReactElement {
     <Page
       title={
         props.page.metaTitle
-          ? props.page.metaTitle
+          ? props.page.metaTitle.replaceAll(
+              '##location##',
+              props.page.locationName
+            )
           : `${props.page.title} | Ashley Aerials LTD`
       }
       description={props.page.metaDescription}

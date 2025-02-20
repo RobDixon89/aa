@@ -233,7 +233,7 @@ export function portableTextComponents(
                 >
                   <a
                     href={
-                      service
+                      service && service.hasLocationPage
                         ? getServiceLinkUrl(
                             service as ServiceLink,
                             location.name
